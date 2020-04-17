@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public bool isGround;
     public bool isHoldingObject;
     public Vector2 holdingPosition;
+    public Vector2 releasePosition;
     public GameObject holdingObject;
     private bool canInteractable;
     private bool isHoldable;

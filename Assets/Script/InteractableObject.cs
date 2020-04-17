@@ -38,6 +38,7 @@ public class InteractableObject : MonoBehaviour
         {
             Debug.Log("here");
             player.isHoldingObject = false;
+            this.transform.localPosition = player.releasePosition;
             this.transform.parent = player.transform.parent;
             this.rb.simulated = true;
         }
