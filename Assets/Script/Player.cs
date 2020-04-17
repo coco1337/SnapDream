@@ -11,19 +11,14 @@ public class Player : MonoBehaviour
     public int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
-    public bool isHoldingObject;
     public Vector2 holdingPosition;
     public Vector2 releasePosition;
-    public GameObject holdingObject;
-    private bool canInteractable;
-    private bool isHoldable;
-    private InteractableObject interactableObject;
     Animator animator;
     
 
-    enum PlayerState
+    public enum PlayerState
     {
-        Idle, Move, Jump, Interaction, DIe, Stop
+        Idle, Move, Jump, Interaction_Labber, Interaction_Throw, DIe, Stop, Damaged
     }
 
     PlayerState playerState;
@@ -48,13 +43,13 @@ public class Player : MonoBehaviour
             playerState = PlayerState.Jump;
 
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
-
-        // 물건 옮기기
-        if (canInteractable && interactableObject != null && isGround)
-        {
-            interactableObject.Drag(axis, speed);
-        }
     }
+
+    public void PlayerLabberMove(float axis)
+    {
+
+    }
+
     public void PlayerJump()
     {
         playerState = PlayerState.Jump;
@@ -69,7 +64,7 @@ public class Player : MonoBehaviour
 
     public bool isMovable()
     {
-        if (playerState == PlayerState.Stop)
+        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe)
             return false;
         return curretnCutNum <= playerCutNum;
     }
@@ -81,47 +76,20 @@ public class Player : MonoBehaviour
         rigidbody.velocity = Vector2.zero;
     }
 
-    public void InteractObject()
-    {
-        if (!canInteractable && holdingObject == null)
-        {
-            return;
-        }
 
-        if (!this.isHoldingObject)
-        {
-            interactableObject.Hold();
-            this.holdingObject = interactableObject.gameObject;
-        }
-        else
-        {
-            this.holdingObject.GetComponent<InteractableObject>().Release();
-        }
+    public void PlayerAttacked()
+    {
+        PlayerDie();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "InteractableObject")
-        {
-            canInteractable = true;
-            interactableObject = collision.gameObject.GetComponent<InteractableObject>();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "InteractableObject")
-        {
-            canInteractable = false;
-            // interactableObject = null;
-        }
-    }
-
-    public void PlayerDie()
+    void PlayerDie()
     {
         playerState = PlayerState.DIe;
+        GameManager.getInstance().StageRestart();
     }
 
-
-
+    public PlayerState GetPlayerState()
+    {
+        return playerState;    
+    }
 }
