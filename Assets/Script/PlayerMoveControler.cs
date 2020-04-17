@@ -14,6 +14,12 @@ public class PlayerMoveControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            // Restart State
+        }
+
+
         if (PlayerScript.isMovable())
         {
             PlayerScript.PlayerMove(Input.GetAxisRaw("Horizontal"));

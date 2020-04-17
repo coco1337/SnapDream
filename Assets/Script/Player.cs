@@ -13,20 +13,23 @@ public class Player : MonoBehaviour
     public bool isGround;
     public Vector2 holdingPosition;
     public bool isHoldingObject;
-    public bool canInteractable;
-    // public bool isHoldable;
-
+    private bool canInteractable;
+    private bool isHoldable;
     private InteractableObject interactableObject;
-    public GameObject HoldingObject;
+    Animator animator;
 
     enum PlayerState
     {
         Idle, Move, Jump, Interaction, DIe
     }
 
+    PlayerState playerState;
+
     private void Start()
     {
         curretnCutNum = 0;
+        playerState = PlayerState.Idle;
+        animator = this.GetComponent<Animator>();
     }
 
 
@@ -44,6 +47,11 @@ public class Player : MonoBehaviour
 
     public void PlayerMove(float axis)
     {
+        if (isGround)
+            playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
+        else
+            playerState = PlayerState.Jump;
+
         RB.velocity = new Vector2(speed * axis, RB.velocity.y);
 
         // 물건 옮기기
@@ -53,8 +61,10 @@ public class Player : MonoBehaviour
         }
     }
 
+
     public void PlayerJump()
     {
+        playerState = PlayerState.Jump;
         RB.velocity = Vector2.zero;
         RB.AddForce(Vector2.up * jumpPower);
     }
@@ -103,5 +113,10 @@ public class Player : MonoBehaviour
             canInteractable = false;
             interactableObject = null;
         }
+    }
+
+    public void PlayerDie()
+    {
+        playerState = PlayerState.DIe;
     }
 }
