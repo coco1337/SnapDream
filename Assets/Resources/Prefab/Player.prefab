@@ -98,13 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b80a65fe995ce4e832ea572d4db130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RB: {fileID: 3734823234040795832}
+  rigidbody: {fileID: 3734823234040795832}
   speed: 4
   jumpPower: 400
   playerCutNum: 0
   isGround: 0
   isHoldingObject: 0
   holdingPosition: {x: 0, y: 0}
+  releasePosition: {x: 2, y: 0}
+  holdingObject: {fileID: 0}
 --- !u!50 &3734823234040795832
 Rigidbody2D:
   serializedVersion: 4

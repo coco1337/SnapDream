@@ -30,7 +30,7 @@ public class PlayerMoveControler : MonoBehaviour
                 if (PlayerScript.isMovable())
                     PlayerScript.PlayerJump();
                 else
-                    PlayerScript.PlayerMove(0); //이동 정지
+                    PlayerScript.playerStop(); //이동 정지
             }
 
             // 상호작용
