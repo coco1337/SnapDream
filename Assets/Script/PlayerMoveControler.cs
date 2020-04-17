@@ -48,6 +48,9 @@ public class PlayerMoveControler : MonoBehaviour
                 {
                     interectControler.getLabber();
                 }
+
+
+
             }
             else
             {

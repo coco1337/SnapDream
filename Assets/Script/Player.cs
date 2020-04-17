@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public Vector2 holdingPosition;
     public Vector2 releasePosition;
     Animator animator;
-    
+    [SerializeField] float throwAnimationTime = 3f;
 
     public enum PlayerState
     {
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     public bool isMovable()
     {
-        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe)
+        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw)
             return false;
         return curretnCutNum <= playerCutNum;
     }
@@ -93,5 +93,17 @@ public class Player : MonoBehaviour
     public PlayerState GetPlayerState()
     {
         return playerState;    
+    }
+
+    public void ThrowObject()
+    {
+        playerState = PlayerState.Interaction_Throw;
+        StartCoroutine(EndThrowObject());
+    }
+
+    IEnumerator EndThrowObject()
+    {
+        yield return new WaitForSeconds(throwAnimationTime);
+        playerState = PlayerState.Idle;
     }
 }
