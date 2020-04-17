@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 3734823234040795836}
   - component: {fileID: 3734823234040795837}
   m_Layer: 0
-  m_Name: pl
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   RB: {fileID: 3734823234040795832}
   speed: 4
   jumpPower: 400
+  playerCutNum: 0
   isGround: 0
 --- !u!50 &3734823234040795832
 Rigidbody2D:

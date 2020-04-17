@@ -26,6 +26,12 @@ public class PlayerMoveControler : MonoBehaviour
                 else
                     PlayerScript.PlayerMove(0); //이동 정지
             }
+
+            // 상호작용
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                PlayerScript.HoldObject();
+            }
         }
     }
 }
