@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D RB; 
+    public Rigidbody2D rigidbody; 
     public float speed = 4;
     public float jumpPower = 5;
-    [SerializeField] int playerCutNum;
+    public int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
     public bool isHoldingObject;
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     enum PlayerState
     {
-        Idle, Move, Jump, Interaction, DIe
+        Idle, Move, Jump, Interaction, DIe, Stop
     }
 
     PlayerState playerState;
@@ -37,14 +37,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //if (axis != 0)
-        //{
-        //    AN.SetBool("walk", true);
-        //}
-        //else AN.SetBool("walk", false);
-
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
-        //AN.SetBool("jump", !isGround);
     }
 
     public void PlayerMove(float axis)
@@ -54,7 +47,7 @@ public class Player : MonoBehaviour
         else
             playerState = PlayerState.Jump;
 
-        RB.velocity = new Vector2(speed * axis, RB.velocity.y);
+        rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
 
         // 물건 옮기기
         if (canInteractable && interactableObject != null)
@@ -67,8 +60,8 @@ public class Player : MonoBehaviour
     public void PlayerJump()
     {
         playerState = PlayerState.Jump;
-        RB.velocity = Vector2.zero;
-        RB.AddForce(Vector2.up * jumpPower);
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(Vector2.up * jumpPower);
     }
 
     public void moveNextCut()
@@ -78,7 +71,16 @@ public class Player : MonoBehaviour
 
     public bool isMovable()
     {
+        if (playerState == PlayerState.Stop)
+            return false;
         return curretnCutNum <= playerCutNum;
+    }
+
+    public void playerStop()
+    {
+        playerState = PlayerState.Stop;
+        animator.SetTrigger("stop");
+        rigidbody.velocity = Vector2.zero;
     }
 
     public void InteractObject()
