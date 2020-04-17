@@ -30,7 +30,7 @@ public class PlayerMoveControler : MonoBehaviour
             // 상호작용
             if (Input.GetKeyDown(KeyCode.X))
             {
-                PlayerScript.HoldObject();
+                PlayerScript.InteractObject();
             }
         }
     }

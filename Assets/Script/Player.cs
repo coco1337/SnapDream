@@ -11,13 +11,13 @@ public class Player : MonoBehaviour
     [SerializeField] int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
-
+    public Vector2 holdingPosition;
     public bool isHoldingObject;
-    private bool canInteractable;
-    private bool isHoldable;
-    private GameObject interactableObject;
-    [SerializeField]
-    private Vector2 holdingPosition;
+    public bool canInteractable;
+    // public bool isHoldable;
+
+    private InteractableObject interactableObject;
+    public GameObject HoldingObject;
 
     enum PlayerState
     {
@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     {
         curretnCutNum = 0;
     }
-
 
 
     void Update()
@@ -47,9 +46,10 @@ public class Player : MonoBehaviour
     {
         RB.velocity = new Vector2(speed * axis, RB.velocity.y);
 
+        // 물건 옮기기
         if (canInteractable && interactableObject != null)
         {
-            this.DragObject(axis);
+            interactableObject.Drag(axis, speed);
         }
     }
 
@@ -69,32 +69,22 @@ public class Player : MonoBehaviour
         return curretnCutNum <= playerCutNum;
     }
 
-    // 물건 들어올리기
-    public void HoldObject()
+    public void InteractObject()
     {
-        // 물건을 들 때
-        if (!isHoldingObject)
+        if (!canInteractable && HoldingObject == null)
         {
-            if (canInteractable && interactableObject != null)
-            {
-                interactableObject.transform.parent = this.transform;
-                // 들었을때 holdingPosition으로 이동
-                interactableObject.transform.localPosition = holdingPosition;
-            }
+            return;
         }
-        // 물건을 내려 놓을 때
+
+        if (!this.isHoldingObject)
+        {
+            interactableObject.Hold(this);
+            this.HoldingObject = interactableObject.gameObject;
+        }
         else
         {
-            isHoldingObject = false;
-            // TODO : 내려놓는 동작
+            this.HoldingObject.GetComponent<InteractableObject>().Release(this);
         }
-    }
-
-    // 물건 밀기
-    private void DragObject(float axis)
-    {
-        interactableObject.transform.GetComponent<Rigidbody2D>().velocity
-            = new Vector2(speed * axis, RB.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,8 +92,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "InteractableObject")
         {
             canInteractable = true;
-            interactableObject = collision.gameObject;
-            isHoldable = collision.gameObject.GetComponent<InteractableObject>().isHoldableObject;
+            interactableObject = collision.gameObject.GetComponent<InteractableObject>();
         }
     }
 
