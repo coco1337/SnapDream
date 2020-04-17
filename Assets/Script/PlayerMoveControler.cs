@@ -14,11 +14,18 @@ public class PlayerMoveControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerScript.PlayerMove(Input.GetAxisRaw("Horizontal"));
-
-        if(Input.GetKeyDown(KeyCode.UpArrow) && PlayerScript.isGround)
+        if (PlayerScript.isMovable())
         {
-            PlayerScript.PlayerJump();
+            PlayerScript.PlayerMove(Input.GetAxisRaw("Horizontal"));
+
+            if (Input.GetKeyDown(KeyCode.Z) && PlayerScript.isGround)
+            {
+                PlayerScript.moveNextCut();
+                if (PlayerScript.isMovable())
+                    PlayerScript.PlayerJump();
+                else
+                    PlayerScript.PlayerMove(0); //이동 정지
+            }
         }
     }
 }

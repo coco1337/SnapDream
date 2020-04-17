@@ -9,11 +9,17 @@ public class Player : MonoBehaviour
     public float speed = 4;
     public float jumpPower = 5;
     [SerializeField] int playerCutNum;
+    int curretnCutNum = 0;
     public bool isGround;
 
     enum PlayerState
     {
         Idle, Move, Jump, Interaction, DIe
+    }
+
+    private void Start()
+    {
+        curretnCutNum = 0;
     }
 
 
@@ -33,12 +39,21 @@ public class Player : MonoBehaviour
     public void PlayerMove(float axis)
     {
         RB.velocity = new Vector2(speed * axis, RB.velocity.y);
-
     }
 
     public void PlayerJump()
     {
         RB.velocity = Vector2.zero;
         RB.AddForce(Vector2.up * jumpPower);
+    }
+
+    public void moveNextCut()
+    {
+        curretnCutNum++;
+    }
+
+    public bool isMovable()
+    {
+        return curretnCutNum <= playerCutNum;
     }
 }
