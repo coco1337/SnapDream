@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
 
         // 물건 옮기기
-        if (canInteractable && interactableObject != null)
+        if (canInteractable && interactableObject != null && isGround)
         {
             interactableObject.Drag(axis, speed);
         }
