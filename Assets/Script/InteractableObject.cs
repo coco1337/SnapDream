@@ -36,7 +36,6 @@ public class InteractableObject : MonoBehaviour
     {
         if (isHoldableObject)
         {
-            Debug.Log("here");
             player.isHoldingObject = false;
             this.transform.localPosition = player.releasePosition;
             this.transform.parent = player.transform.parent;
