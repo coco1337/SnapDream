@@ -18,15 +18,20 @@ public class Player : MonoBehaviour
     private GameObject interactableObject;
     [SerializeField]
     private Vector2 holdingPosition;
+    Animator animator;
 
     enum PlayerState
     {
         Idle, Move, Jump, Interaction, DIe
     }
 
+    PlayerState playerState;
+
     private void Start()
     {
         curretnCutNum = 0;
+        playerState = PlayerState.Idle;
+        animator = this.GetComponent<Animator>();
     }
 
 
@@ -45,6 +50,11 @@ public class Player : MonoBehaviour
 
     public void PlayerMove(float axis)
     {
+        if (isGround)
+            playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
+        else
+            playerState = PlayerState.Jump;
+
         RB.velocity = new Vector2(speed * axis, RB.velocity.y);
 
         if (canInteractable && interactableObject != null)
@@ -53,8 +63,10 @@ public class Player : MonoBehaviour
         }
     }
 
+
     public void PlayerJump()
     {
+        playerState = PlayerState.Jump;
         RB.velocity = Vector2.zero;
         RB.AddForce(Vector2.up * jumpPower);
     }
@@ -114,5 +126,10 @@ public class Player : MonoBehaviour
             canInteractable = false;
             interactableObject = null;
         }
+    }
+
+    public void PlayerDie()
+    {
+        playerState = PlayerState.DIe;
     }
 }
