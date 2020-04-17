@@ -40,6 +40,15 @@ public class GameManager : MonoBehaviour
     }
     public void StageClear()
     {
+        if (Application.isEditor == true)
+        {
+            ScreenCapture.CaptureScreenshot("Assets\\ScreenShot\\Clear " + sceneName + ".png");
+        }
+        else
+        {
+            ScreenCapture.CaptureScreenshot("..\\Assets\\ScreenShot\\Clear " + sceneName + ".png");
+
+        }
         SceneManager.LoadScene(LevelName[sceneNum+1]);
 
     }

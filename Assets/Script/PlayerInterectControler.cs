@@ -54,6 +54,10 @@ public class PlayerInterectControler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "InteractableObject" && collision.transform.name == "Clear")
+        {
+            GameManager.getInstance().StageClear();
+        }
         if (collision.gameObject.tag == "InteractableObject")
         {
             canInteractable = true;
