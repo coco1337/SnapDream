@@ -11,8 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
-    public Vector2 holdingPosition;
     public bool isHoldingObject;
+    public Vector2 holdingPosition;
+    public GameObject holdingObject;
     private bool canInteractable;
     private bool isHoldable;
     private InteractableObject interactableObject;
@@ -81,7 +82,7 @@ public class Player : MonoBehaviour
 
     public void InteractObject()
     {
-        if (!canInteractable && HoldingObject == null)
+        if (!canInteractable && holdingObject == null)
         {
             return;
         }
@@ -89,11 +90,11 @@ public class Player : MonoBehaviour
         if (!this.isHoldingObject)
         {
             interactableObject.Hold(this);
-            this.HoldingObject = interactableObject.gameObject;
+            this.holdingObject = interactableObject.gameObject;
         }
         else
         {
-            this.HoldingObject.GetComponent<InteractableObject>().Release(this);
+            this.holdingObject.GetComponent<InteractableObject>().Release(this);
         }
     }
 
