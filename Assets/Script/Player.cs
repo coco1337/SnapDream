@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rigidbody; 
+    public Rigidbody2D rigidbody;
     public float speed = 4;
     public float jumpPower = 5;
     public int playerCutNum;
@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private bool isHoldable;
     private InteractableObject interactableObject;
     Animator animator;
+    
 
     enum PlayerState
     {
@@ -33,7 +34,6 @@ public class Player : MonoBehaviour
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
     }
-
 
     void Update()
     {
@@ -55,8 +55,6 @@ public class Player : MonoBehaviour
             interactableObject.Drag(axis, speed);
         }
     }
-
-
     public void PlayerJump()
     {
         playerState = PlayerState.Jump;
@@ -123,4 +121,7 @@ public class Player : MonoBehaviour
     {
         playerState = PlayerState.DIe;
     }
+
+
+
 }
