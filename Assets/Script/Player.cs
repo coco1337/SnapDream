@@ -92,12 +92,12 @@ public class Player : MonoBehaviour
 
         if (!this.isHoldingObject)
         {
-            interactableObject.Hold(this);
+            interactableObject.Hold();
             this.holdingObject = interactableObject.gameObject;
         }
         else
         {
-            this.holdingObject.GetComponent<InteractableObject>().Release(this);
+            this.holdingObject.GetComponent<InteractableObject>().Release();
         }
     }
 
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "InteractableObject")
         {
             canInteractable = false;
-            interactableObject = null;
+            // interactableObject = null;
         }
     }
 
