@@ -87,7 +87,10 @@ public class Player : MonoBehaviour
     void PlayerDie()
     {
         playerState = PlayerState.DIe;
-        GameManager.getInstance().StageRestart();
+        //중복호출 방지
+        //5번 캐릭터는 최후에 죽으니
+        if(playerCutNum == 5)
+            GameManager.getInstance().StageRestart();
     }
 
     public PlayerState GetPlayerState()
