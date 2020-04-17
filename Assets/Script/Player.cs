@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rigidbody;
+    SpriteRenderer spriteRenderer;
     public float speed = 4;
     public float jumpPower = 5;
     public int playerCutNum;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
         curretnCutNum = 0;
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour
             playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
         else
             playerState = PlayerState.Jump;
-
+        spriteRenderer.flipX = (axis == -1);
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 

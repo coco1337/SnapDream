@@ -25,7 +25,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (isHoldableObject)
         {
-            this.player.isHoldingObject = true;
+            //this.player.isHoldingObject = true;
             this.transform.parent = player.transform;
             // 들었을때 holdingPosition으로 이동
             this.transform.localPosition = player.holdingPosition;
@@ -42,8 +42,8 @@ public class InteractableObject : MonoBehaviour
             this.transform.localPosition = player.releasePosition;
             this.transform.parent = player.transform.parent;
             this.rb.simulated = true;
-            player.isHoldingObject = false;
-            player.holdingObject = null;
+            //player.isHoldingObject = false;
+            //player.holdingObject = null;
             player = null;
         }
     }
@@ -65,6 +65,11 @@ public class InteractableObject : MonoBehaviour
         {
             player = collision.gameObject.GetComponent<Player>();
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)

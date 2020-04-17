@@ -29,7 +29,7 @@ public class PlayerMoveControler : MonoBehaviour
                 if (interectControler.isInteracting && playerScript.GetPlayerState() == Player.PlayerState.Move)
                     interectControler.MoveInteractObject(inputAxis);
 
-                if (Input.GetKeyDown(KeyCode.Z) && playerScript.isGround)
+                if (Input.GetKeyDown(KeyCode.Z) && playerScript.GetPlayerState() != Player.PlayerState.Jump)
                 {
                     playerScript.moveNextCut();
                     if (playerScript.isMovable())
@@ -42,6 +42,11 @@ public class PlayerMoveControler : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.X))
                 {
                     interectControler.InteractObject();
+                }
+
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    interectControler.getLabber();
                 }
             }
             else

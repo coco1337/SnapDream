@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3734823234040795836}
   - component: {fileID: 3734823234040795837}
   - component: {fileID: 1982036965}
+  - component: {fileID: 8586401418491371803}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -103,10 +104,8 @@ MonoBehaviour:
   jumpPower: 400
   playerCutNum: 0
   isGround: 0
-  isHoldingObject: 0
   holdingPosition: {x: 0, y: 0}
   releasePosition: {x: 2, y: 0}
-  holdingObject: {fileID: 0}
 --- !u!50 &3734823234040795832
 Rigidbody2D:
   serializedVersion: 4
@@ -175,3 +174,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8586401418491371803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734823234040795831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd5c001436c8f948b5f35c874fa3c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdingObject: {fileID: 0}
+  isHoldingObject: 0
+  isInteracting: 0

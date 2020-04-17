@@ -18,6 +18,8 @@ public class PlayerInterectControler : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
+    public void getLabber() { }
+
     public void InteractObject()
     {
         if (!canInteractable && holdingObject == null)
