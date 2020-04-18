@@ -41,6 +41,11 @@ public class BoundaryCollider : MonoBehaviour
             objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
             interactableObj.triggerEntered = true;
         }
+
+        if (collision.gameObject.CompareTag("Drag"))
+        {
+            var dragObj = collision.gameObject.GetComponent<InteractableObject>();
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -59,6 +64,15 @@ public class BoundaryCollider : MonoBehaviour
         {
             if (!collision.gameObject.GetComponent<InteractableObject>().IsInstantiated)
                 collision.gameObject.GetComponent<InteractableObject>().SyncNeeded(true);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Drag"))
+        {
+            var dragObj = collision.gameObject.GetComponent<InteractableObject>();
+            Debug.Log("collision enter");
         }
     }
 }
