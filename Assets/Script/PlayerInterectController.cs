@@ -41,6 +41,12 @@ public class PlayerInterectController : MonoBehaviour
         // 장난감 상자의 경우
         // 무거운 상자의 경우
     }
+    public bool CanInterectable()
+    {
+        if (throwObject != null)
+            return true;
+        else return false;
+    }
 
     // 물건 옮기기
     public void MoveInteractObject(float axis)

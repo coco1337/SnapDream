@@ -204,6 +204,4 @@ public class Player : MonoBehaviour, Damageabel
         if (playerCutNum == 5)
             GameManager.getInstance().StageRestart();
     }
-
-    
 }
