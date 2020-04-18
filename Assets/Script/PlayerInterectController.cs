@@ -51,7 +51,7 @@ public class PlayerInterectController : MonoBehaviour
     // 물건 옮기기
     public void MoveInteractObject(float axis)
     {
-        if (interactableObject != null && player.isGround)
+        if (dragObject != null && player.isGround)
         {
             if (axis > 0 && dragObject.transform.position.x > player.transform.position.x
                 || axis < 0 && dragObject.transform.position.x < player.transform.position.x)

@@ -70,9 +70,6 @@ public class InteractableObject : MonoBehaviour
 
     public void Drag(float axis, float speed)
     {
-        if (axis > 0 && this.transform.position.x > player.transform.position.x
-            || axis < 0 && this.transform.position.x < player.transform.position.x)
-        {
             rb.velocity = new Vector2(speed * axis, rb.velocity.y);
             Debug.Log("drag");
 
@@ -80,7 +77,6 @@ public class InteractableObject : MonoBehaviour
             {
                 //objectSyncController.SyncObject(rb.velocity);
             }
-        }
     }
 
     // 물건 든 상태에서 Flip
