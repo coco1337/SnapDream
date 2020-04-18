@@ -56,7 +56,7 @@ public class PlayerInterectController : MonoBehaviour
         {
             ladderTarget = collision.gameObject;
         }
-        if (collision.gameObject.CompareTag("Drag"))
+        if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
             dragObject = collision.gameObject;
         }
@@ -103,7 +103,7 @@ public class PlayerInterectController : MonoBehaviour
             ladderExit = null;
         }
 
-        if (collision.gameObject.CompareTag("Drag"))
+        if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
             dragObject = null;
         }

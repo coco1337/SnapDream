@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField]
     public float jumpPower = 5;
     [SerializeField]
-    public float throwPower = 5;
+    public float throwPower = 2;
     [SerializeField]
     int playerCutNum;
     [SerializeField]
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour, Damageabel
     {
         if (playerState == PlayerState.Interaction_Drag)
         {
+            Debug.Log("Drag");
             if (axis != 0)
             {
                 spriteRenderer.flipX = (axis == -1);
