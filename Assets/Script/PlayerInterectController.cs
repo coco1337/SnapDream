@@ -85,7 +85,6 @@ public class PlayerInterectController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Ladder"))
         {
-            Debug.Log("Enter Ladder");
         }
     }
 
