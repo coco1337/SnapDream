@@ -74,16 +74,6 @@ public class InteractableObject : MonoBehaviour
         this.needSync = flag;
     }
 
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            this.rb.velocity = Vector2.zero;
-            this.needSync = false;
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
