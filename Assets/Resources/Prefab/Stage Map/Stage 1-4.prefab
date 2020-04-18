@@ -604,6 +604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3210185523473565242}
   - component: {fileID: 3210185523473565223}
+  - component: {fileID: 7586360567405449143}
   - component: {fileID: 3210185523473565241}
   m_Layer: 8
   m_Name: Stage 1-4
@@ -689,6 +690,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!68 &7586360567405449143
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3210185523473565243}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -5}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -25, y: 0}
+  - {x: 25, y: 0}
 --- !u!50 &3210185523473565241
 Rigidbody2D:
   serializedVersion: 4

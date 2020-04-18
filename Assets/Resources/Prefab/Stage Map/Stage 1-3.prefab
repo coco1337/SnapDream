@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1120880733358897350}
   - component: {fileID: 1120880733358897371}
+  - component: {fileID: 5800052469191002270}
   - component: {fileID: 1120880733358897349}
   m_Layer: 8
   m_Name: Stage 1-3
@@ -96,6 +97,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!68 &5800052469191002270
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120880733358897351}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -5}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -25, y: 0}
+  - {x: 25, y: 0}
 --- !u!50 &1120880733358897349
 Rigidbody2D:
   serializedVersion: 4
@@ -1196,12 +1215,12 @@ PrefabInstance:
     - target: {fileID: 8053859382454307585, guid: bc399a59dcbc77e4fbb9a8e1b0cf630d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6
+      value: -13.05
       objectReference: {fileID: 0}
     - target: {fileID: 8053859382454307585, guid: bc399a59dcbc77e4fbb9a8e1b0cf630d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.7
+      value: -3.25
       objectReference: {fileID: 0}
     - target: {fileID: 8053859382454307585, guid: bc399a59dcbc77e4fbb9a8e1b0cf630d,
         type: 3}
