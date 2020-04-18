@@ -5,75 +5,65 @@ using UnityEngine;
 public class ObjectSyncController : MonoBehaviour
 {
     public GameObject[] eachCut;
-    //public InteractableObject[] spawnedObjects = new InteractableObject[6];
-    //public bool[] collisionCheck = new bool[6];
-    //public bool[] instantiated = new bool[6];
     public float padding;
     public int currentCut;
     public float spawnYPos;
 
     public int currentCutNum;
+    public InteractableObject InteractableObj;
 
     // 왼쪽 충돌이면 이전 컷부터 변화
-    // 오른쪽 충돌이면 이후 컷부터 변화
+    // 오른쪽 충돌이면 이후 컷부터 변화 - 없음
     public void InstantiateObjects(int currentCutNum, GameObject obj, Vector2 vel)
     {
-        var InteractableObject = obj.GetComponent<InteractableObject>();
+        var InteractableObj = obj.GetComponent<InteractableObject>();
         // 오른쪽 충돌시
         if (obj.transform.localPosition.x > 0)
         {
-            Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(25, 0));
-            // 다음칸 부터 스폰
-            for (int i = currentCutNum + 1; i < 6; ++i)
-            {
-                var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
-                InteractableObject.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-                spawnedObject.transform.localPosition = spawnPosition;
-            }
+            //Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(25, 0));
+            //// 다음칸 부터 스폰
+            //for (int i = currentCutNum + 1; i < 6; ++i)
+            //{
+            //    var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
+            //    InteractableObject.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+            //    spawnedObject.transform.localPosition = spawnPosition;
+            //}
         }
         // 왼쪽 충돌시
         else
         {
-            Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(-25, 0));
-            // 전칸 부터 스폰
             if (currentCutNum == 0)
             {
                 return;
             }
 
+            //Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(-25, 0));
 
+            // 카메라 가로길이 12, 6
+
+            // 현재 카메라 x좌표
+            float cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
+
+            // 생성될 컷의 카메라 x 좌표(바로 직전 컷의 카메라 좌표)
+            float targetCameraX = eachCut[currentCutNum - 1].transform.Find("Camera(Clone)").transform.localPosition.x;
+
+            // 아마도 물건 길이 + 1
+            float result = targetCameraX + 6 + 1;
+
+            InteractableObject[] childPair = new InteractableObject[6];
+
+            // 전칸부터 스폰
             for (int i = currentCutNum - 1; i < 6; ++i)
             {
                 var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
-                InteractableObject.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-                spawnedObject.transform.localPosition = spawnPosition;
+                childPair[i] = spawnedObject.GetComponent<InteractableObject>();
+                spawnedObject.transform.localPosition = new Vector2(result, obj.gameObject.transform.localPosition.y);
             }
+
+            InteractableObj.childObjectPair = childPair;
+            InteractableObj.needSync = true;
         }
     }
-
-    //public void HitCollider(InteractableObject obj, bool verticalBoundary, Vector2 colliderLocalPos)
-    //{
-    //    if (obj.IsInstantiated)
-    //    {
-    //        return;
-    //    }
-
-    //    currentCutNum = obj.CurrentCutNum;
-    //    Debug.Log("dd");
-
-    //    // 밀기
-    //    if (obj.CutNum == obj.CurrentCutNum)
-    //    {
-    //        Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
-    //        // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
-    //        for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
-    //        {
-    //            var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
-    //            obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-    //            spawnedObject.transform.localPosition = spawnPosition;
-    //        }
-    //    }
-    //}
 
     public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
     {
@@ -81,12 +71,6 @@ public class ObjectSyncController : MonoBehaviour
         {
             return;
         }
-
-        // float xPos;
-
-        // 3번씬 -> 0~5번
-        // 4번씬 -> 1~5번
-        // 5번씬 -> 2~5번
 
         // 현재 카메라 x좌표
         float cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
@@ -102,17 +86,6 @@ public class ObjectSyncController : MonoBehaviour
             var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
             spawnedObject.layer = 31;
 
-            //if (i < 3)
-            //{
-            //    // 0, 1, 2번 컷 => currentCutNum - 3번째컷 기준으로 생성
-            //    //xPos = (obj.transform.localPosition.x - cameraX) + eachCut[i].transform.Find("Camera(Clone)").transform.localPosition.x;
-            //}
-            //else
-            //{
-            //    xPos = obj.transform.localPosition.x;
-            //}
-            //xPos = (obj.transform.localPosition.x - cameraX) + eachCut[currentCutNum - 3].transform.Find("Camera(Clone)").transform.localPosition.x;
-
             spawnedObject.transform.localPosition = new Vector2(result, spawnYPos);
             spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }
@@ -127,9 +100,15 @@ public class ObjectSyncController : MonoBehaviour
     }
 
 
-    public void SyncObject(InteractableObject[] objectPair)
+    public void SyncObject(InteractableObject[] objectPair, Vector2 vel)
     {
-
+        for (int i = 0; i < 6; ++i)
+        {
+            if (objectPair[i] != null)
+            {
+                objectPair[i].GetComponent<Rigidbody2D>().velocity = vel;
+            }
+        }
     }
 
     private Vector2 GetSyncPosition(InteractableObject obj, Vector2 colliderLocalPos)

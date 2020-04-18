@@ -52,9 +52,9 @@ public class InteractableObject : MonoBehaviour
     {
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
 
-        if (this.needSync/*현재 컷인지도 같이 체크*/)
+        if (this.needSync && (this.CutNum == this.CurrentCutNum))
         {
-            //objectSyncController.SyncObject(rb.velocity);
+            objectSyncController.SyncObject(this.childObjectPair, rb.velocity);
         }
     }
 
@@ -98,7 +98,7 @@ public class InteractableObject : MonoBehaviour
             // 플레이어와 경계 트리거 동시 접촉
             if (this.needSync)
             {
-                this.objectSyncController.SyncObject(childObjectPair);
+                // this.objectSyncController.SyncObject(childObjectPair);
             }
         }
     }
