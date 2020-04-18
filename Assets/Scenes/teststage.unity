@@ -1512,7 +1512,7 @@ GameObject:
   - component: {fileID: 205488724}
   - component: {fileID: 205488723}
   - component: {fileID: 205488722}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -1527,7 +1527,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205488720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 508040882}
@@ -1576,7 +1576,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
 --- !u!212 &205488724
 SpriteRenderer:
@@ -1894,7 +1894,8 @@ GameObject:
   - component: {fileID: 231431019}
   - component: {fileID: 231431022}
   - component: {fileID: 231431020}
-  m_Layer: 0
+  - component: {fileID: 231431021}
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -1909,7 +1910,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 231431018}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1565502899}
@@ -1939,8 +1940,27 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &231431021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231431018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCut: 0
+  verticalBoundary: 0
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!212 &231431022
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2002,7 +2022,8 @@ GameObject:
   - component: {fileID: 233854752}
   - component: {fileID: 233854755}
   - component: {fileID: 233854753}
-  m_Layer: 0
+  - component: {fileID: 233854754}
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -2017,7 +2038,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233854751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1094717717}
@@ -2047,8 +2068,27 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &233854754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233854751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCut: 0
+  verticalBoundary: 0
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!212 &233854755
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2361,7 +2401,8 @@ GameObject:
   - component: {fileID: 350878292}
   - component: {fileID: 350878295}
   - component: {fileID: 350878293}
-  m_Layer: 0
+  - component: {fileID: 350878294}
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -2376,7 +2417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 350878291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1280274353}
@@ -2406,8 +2447,27 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &350878294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 350878291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCut: 0
+  verticalBoundary: 0
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!212 &350878295
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3373,7 +3433,7 @@ GameObject:
   - component: {fileID: 417572924}
   m_Layer: 0
   m_Name: prob (4)
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3418,6 +3478,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!61 &417572925
@@ -4127,7 +4188,8 @@ GameObject:
   - component: {fileID: 538277310}
   - component: {fileID: 538277313}
   - component: {fileID: 538277311}
-  m_Layer: 0
+  - component: {fileID: 538277312}
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -4142,7 +4204,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538277309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 940166083}
@@ -4172,8 +4234,27 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &538277312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538277309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCut: 0
+  verticalBoundary: 0
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!212 &538277313
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4994,7 +5075,7 @@ GameObject:
   - component: {fileID: 682848118}
   m_Layer: 0
   m_Name: prob (2)
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5039,6 +5120,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!61 &682848119
@@ -5620,7 +5702,8 @@ GameObject:
   - component: {fileID: 785460952}
   - component: {fileID: 785460955}
   - component: {fileID: 785460953}
-  m_Layer: 0
+  - component: {fileID: 785460954}
+  m_Layer: 30
   m_Name: topBoundary
   m_TagString: BoundaryCollider
   m_Icon: {fileID: 0}
@@ -5635,7 +5718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 785460951}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 221942837}
@@ -5665,8 +5748,27 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 1}
+  m_Size: {x: 50, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &785460954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785460951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCut: 0
+  verticalBoundary: 0
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!212 &785460955
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8579,7 +8681,7 @@ GameObject:
   - component: {fileID: 1289514716}
   m_Layer: 0
   m_Name: prob
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8721,6 +8823,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!1001 &1317640910
@@ -10079,16 +10182,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3734823234040795833, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
-        type: 3}
-      propertyPath: throwPower
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3734823234040795834, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3734823234040795835, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10181,7 +10274,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d174ba4eacbbe6f4db2eaf0d7bacc14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eachCut: []
+  eachCut:
+  - {fileID: 508040881}
+  - {fileID: 1094717716}
+  - {fileID: 221942836}
+  - {fileID: 1280274352}
+  - {fileID: 940166082}
+  - {fileID: 1565502898}
   spawnedObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -10385,7 +10484,7 @@ GameObject:
   - component: {fileID: 1533028929}
   m_Layer: 0
   m_Name: prob (3)
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10430,6 +10529,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!61 &1533028930
@@ -11219,6 +11319,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!1 &1606536906
@@ -12307,6 +12408,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
+  test: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!61 &1776758053

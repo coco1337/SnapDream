@@ -17,6 +17,8 @@ public class InteractableObject : MonoBehaviour
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
 
+    public GameObject test;
+
     public int CutNum => this.player.GetPlayerCutNumber();
     public int CurrentCutNum => this.player.GetCurrentCutNumber();
     public bool IsInstantiated => this.instantiated;
@@ -31,13 +33,29 @@ public class InteractableObject : MonoBehaviour
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
     }
 
+    private void Update()
+    {
+        if(rb.velocity.y > 0)
+        {
+            this.gameObject.layer = 31;
+        }
+        else
+        {
+            this.gameObject.layer = 0;
+        }
+
+        if (this.transform.localPosition.y < -7)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     // 물건 밀기
     // 여기서 sync 할 물건 찾아서 같이 이동시켜주기
 
     public void Drag(float axis, float speed)
     {
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-        Debug.Log("drag");
 
         if (this.needSync/*현재 컷인지도 같이 체크*/)
         {
@@ -66,17 +84,6 @@ public class InteractableObject : MonoBehaviour
         {
             player = collision.gameObject.GetComponent<Player>();
         }
-
-        if (collision.gameObject.CompareTag("BoundaryCollider"))
-        {
-            // 현재 벡터값 저장, 위에 스폰, 다른데 생성
-            if (player.GetCurrentCutNumber() == player.GetPlayerCutNumber()
-                && !collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
-            {
-                objectSyncController.Thrown(player.GetCurrentCutNumber(), 
-                    collision.gameObject, rb.velocity);
-            }
-        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -97,6 +104,21 @@ public class InteractableObject : MonoBehaviour
             if (this.needSync)
             {
                 this.objectSyncController.SyncObject(childObjectPair);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BoundaryCollider"))
+        {
+            test = collision.gameObject;
+            // 현재 벡터값 저장, 위에 스폰, 다른데 생성
+            if (player.GetCurrentCutNumber() == player.GetPlayerCutNumber()
+                && !collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
+            {
+                objectSyncController.Thrown(player.GetCurrentCutNumber(),
+                    this.gameObject, rb.velocity);
             }
         }
     }

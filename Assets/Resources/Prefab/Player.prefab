@@ -151,7 +151,7 @@ MonoBehaviour:
   speed: 4
   dragSpeed: 4
   jumpPower: 500
-  throwPower: 10
+  throwPower: 13
   playerCutNum: 0
   curretnCutNum: 0
   isGround: 0

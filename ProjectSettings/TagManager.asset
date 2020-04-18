@@ -43,8 +43,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - TopBoundary
+  - Throw
   m_SortingLayers:
   - name: Default
     uniqueID: 0

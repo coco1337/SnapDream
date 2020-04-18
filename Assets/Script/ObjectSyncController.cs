@@ -67,13 +67,23 @@ public class ObjectSyncController : MonoBehaviour
 
     public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
     {
+        if (currentCutNum < 3)
+        {
+            return;
+        }
+
+        float xPos = obj.transform.localPosition.x;
+        float yPos = -5;
+
         // 3번씬 -> 0~5번
         // 4번씬 -> 1~5번
         // 5번씬 -> 2~5번
 
         for(int i = currentCutNum - 3; i < 6; ++i)
         {
-
+            var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
+            spawnedObject.transform.localPosition = new Vector2(xPos, yPos);
+            spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }
     }
 
