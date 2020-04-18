@@ -9,6 +9,7 @@ public class Player : MonoBehaviour, Damageabel
     SpriteRenderer spriteRenderer;
     public float speed = 4;
     public float jumpPower = 5;
+    [SerializeField]
     int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public enum PlayerState
     {
-        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, DIe, Stop, Damaged
+        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged
     }
 
     PlayerState playerState;
@@ -55,17 +56,28 @@ public class Player : MonoBehaviour, Damageabel
 
     public void getLadder()
     {
-
+        if(playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
+        {
+            playerState = PlayerState.Interaction_Ladder;
+        }
     }
 
     public void realeaseLadder()
     {
-
+        if(playerState == PlayerState.Interaction_Ladder)
+        {
+            playerState = PlayerState.Idle;
+        }
     }
 
     public void PlayerLadderMove(float axis)
     {
-
+        if (playerState == PlayerState.Interaction_Ladder)
+        {
+            animator.SetFloat("ladderSpeed", Mathf.Abs(axis));
+            animator.speed = axis;
+            rigidbody.velocity = new Vector2(0, speed * axis);
+        }
     }
 
     public void PlayerJump()
@@ -97,6 +109,14 @@ public class Player : MonoBehaviour, Damageabel
     public PlayerState GetPlayerState()
     {
         return playerState;    
+    }
+
+    public bool IsJumpable()
+    {
+        if (playerState == PlayerState.Idle || playerState == PlayerState.Move)
+            return true;
+        else
+            return false;
     }
 
     public void ThrowObject()

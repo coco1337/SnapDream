@@ -19,9 +19,6 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
-    public void getLadder()
-    {
-    }
 
     public void InteractObject()
     {
@@ -87,6 +84,7 @@ public class PlayerInterectController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = null;
+            player.realeaseLadder();
         }
     }
 }

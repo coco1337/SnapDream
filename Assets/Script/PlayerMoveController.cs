@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMoveControler : MonoBehaviour
+public class PlayerMoveController : MonoBehaviour
 {
     Player playerScript;
     PlayerInterectController interectController;
@@ -29,7 +29,7 @@ public class PlayerMoveControler : MonoBehaviour
                 if (interectController.isInteracting && playerScript.GetPlayerState() == Player.PlayerState.Move)
                     interectController.MoveInteractObject(inputAxis);
 
-                if (Input.GetKeyDown(KeyCode.Z) && playerScript.GetPlayerState() != Player.PlayerState.Jump)
+                if (Input.GetKeyDown(KeyCode.Z) && playerScript.IsJumpable())
                 {
                     playerScript.moveNextCut();
                     if (playerScript.isMovable())
@@ -46,7 +46,7 @@ public class PlayerMoveControler : MonoBehaviour
 
                 if (interectController.ladderTarget != null && Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    interectController.getLadder();
+                    playerScript.getLadder();
                 }
 
             }
