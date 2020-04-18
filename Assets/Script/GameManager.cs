@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Transform cutField;
 
+    List<Player> playerList = new List<Player>();
+
 
 
     // Start is called before the first frame update
@@ -71,6 +73,8 @@ public class GameManager : MonoBehaviour
             tempPlayer.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
             tempCamera.transform.localPosition = Vector3.zero + new Vector3(0,0, -9);
 
+            playerList.Add(tempPlayer.GetComponent<Player>());
+
         }
     }
 
@@ -104,7 +108,23 @@ public class GameManager : MonoBehaviour
             ScreenCapture.CaptureScreenshot("..\\Assets\\ScreenShot\\Clear " + sceneName + ".png");
 
         }
-        SceneManager.LoadScene(LevelName[sceneNum+1]);
 
+        if (sceneName != "Lobby")
+        {
+            foreach (var player in playerList)
+            {
+                player.StageClear();
+            }
+        }
+
+        StartCoroutine("MoveNextStage");
+
+
+    }
+
+    IEnumerator MoveNextStage()
+    {
+        yield return new WaitForSeconds(6);
+        SceneManager.LoadScene(LevelName[sceneNum + 1]);
     }
 }

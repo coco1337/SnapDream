@@ -27,7 +27,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public enum PlayerState
     {
-        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged
+        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged, Clear
     }
     [SerializeField]
     PlayerState playerState;
@@ -109,7 +109,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public bool isMovable()
     {
-        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw)
+        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw || playerState == PlayerState.Clear)
             return false;
         return currentCutNum <= playerCutNum;
     }
@@ -221,4 +221,33 @@ public class Player : MonoBehaviour, Damageabel
         if (playerCutNum == 5)
             GameManager.getInstance().StageRestart();
     }
+
+    public void StageClear()
+    {
+        playerState = PlayerState.Clear;
+        if(currentCutNum <= playerCutNum)
+        {
+            StartCoroutine("StageClearAction");
+        }
+    }
+
+    IEnumerable StageClearAction()
+    {
+        float startTime = Time.time + 5;
+        while(startTime > Time.time)
+        {
+            ClearMove(1);
+            yield return null;
+        }
+        Destroy(this);
+    }
+
+    void ClearMove(float axis)
+    {
+        animator.SetBool("isGround", isGround);
+        animator.SetFloat("moveSpeed", Mathf.Abs(axis));
+        rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+    }
+
+
 }
