@@ -65,13 +65,16 @@ public class ObjectSyncController : MonoBehaviour
         // obj.spawnedObjectPair[obj.CutNum] = spawnedObjects[obj.CutNum];
     }
 
-    public void Thrown(int currentCutNum, GameObject obj)
+    public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
     {
-        // 4번씬 -> 1~6번
-        // 5번씬 -> 2~6번
-        // 6번씬 -> 3~6번
+        // 3번씬 -> 0~5번
+        // 4번씬 -> 1~5번
+        // 5번씬 -> 2~5번
 
-        
+        for(int i = currentCutNum - 3; i < 6; ++i)
+        {
+
+        }
     }
 
     public void ExitCollider(InteractableObject obj)

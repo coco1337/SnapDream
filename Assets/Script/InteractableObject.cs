@@ -45,9 +45,9 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    public void Throw()
+    public void Throw(float throwPower)
     {
-        
+        rb.velocity = new Vector2(0, throwPower);
     }
 
     public void Instantiated(bool flag)
@@ -73,7 +73,8 @@ public class InteractableObject : MonoBehaviour
             if (player.GetCurrentCutNumber() == player.GetPlayerCutNumber()
                 && !collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
-                objectSyncController.Thrown(player.GetCurrentCutNumber(), collision.gameObject);
+                objectSyncController.Thrown(player.GetCurrentCutNumber(), 
+                    collision.gameObject, rb.velocity);
             }
         }
     }

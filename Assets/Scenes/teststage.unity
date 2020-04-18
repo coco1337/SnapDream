@@ -10079,6 +10079,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3734823234040795833, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
+        type: 3}
+      propertyPath: throwPower
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3734823234040795834, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
         type: 3}
       propertyPath: m_SortingOrder
@@ -11072,7 +11077,7 @@ GameObject:
   - component: {fileID: 1603567177}
   m_Layer: 0
   m_Name: prob
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12257,7 +12262,7 @@ GameObject:
   - component: {fileID: 1776758052}
   m_Layer: 0
   m_Name: prob (1)
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

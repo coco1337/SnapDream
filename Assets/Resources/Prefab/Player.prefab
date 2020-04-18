@@ -151,12 +151,15 @@ MonoBehaviour:
   speed: 4
   dragSpeed: 4
   jumpPower: 500
+  throwPower: 10
   playerCutNum: 0
+  curretnCutNum: 0
   isGround: 0
   holdingPosition: {x: 0, y: 0}
   releasePosition: {x: 2, y: 0}
   PlayerHealth: 1
   throwAnimationTime: 3
+  playerState: 0
 --- !u!114 &3734823234040795837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,10 +203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd5c001436c8f948b5f35c874fa3c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holdingObject: {fileID: 0}
-  isHoldingObject: 0
-  isInteracting: 0
+  throwObject: {fileID: 0}
+  dragObject: {fileID: 0}
   ladderTarget: {fileID: 0}
+  ladderExit: {fileID: 0}
 --- !u!61 &2207995116283627464
 BoxCollider2D:
   m_ObjectHideFlags: 0
