@@ -27,7 +27,7 @@ public class PlayerInterectController : MonoBehaviour
 
     public void Interacting()
     {
-        throwObject.GetComponent<InteractableObject>().Throw();
+        throwObject.GetComponent<InteractableObject>().Throw(player.throwPower);
         player.getThrow();
     }
 
