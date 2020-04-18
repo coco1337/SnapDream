@@ -6,9 +6,10 @@ public class StageClear : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player"))
         {
             GameManager.getInstance().StageClear();
         }
+
     }
 }
