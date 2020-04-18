@@ -51,7 +51,6 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (canInteractable && interactableObject != null && player.isGround)
         {
-            Debug.Log("asdf");
 
             interactableObject.Drag(axis, player.dragSpeed);
         }
@@ -61,7 +60,6 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (collision.gameObject.tag == "InteractableObject")
         {
-            Debug.Log("sss");
             if (collision.transform.name == "Clear")
             {
                 GameManager.getInstance().StageClear();

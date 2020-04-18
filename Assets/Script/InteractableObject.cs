@@ -74,11 +74,11 @@ public class InteractableObject : MonoBehaviour
 
     public void Drag(float axis, float speed)
     {
+
         if (axis > 0 && this.transform.position.x > player.transform.position.x
             || axis < 0 && this.transform.position.x < player.transform.position.x)
         {
             rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-            Debug.Log("ddd");
             if (this.needSync/*현재 컷인지도 같이 체크*/)
             {
                 //objectSyncController.SyncObject(rb.velocity);
