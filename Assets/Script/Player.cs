@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     public enum PlayerState
     {
-        Idle, Move, Jump, Interaction_Labber, Interaction_Throw, DIe, Stop, Damaged
+        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, DIe, Stop, Damaged
     }
 
     PlayerState playerState;
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
-    public void PlayerLabberMove(float axis)
+    public void PlayerLadderMove(float axis)
     {
 
     }

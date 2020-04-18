@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInterectControler : MonoBehaviour
+public class PlayerInterectController : MonoBehaviour
 {
     private bool canInteractable;
     private bool isHoldable;
@@ -18,7 +18,7 @@ public class PlayerInterectControler : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
-    public void getLabber() { }
+    public void getLadder() { }
 
     public void InteractObject()
     {
@@ -38,7 +38,7 @@ public class PlayerInterectControler : MonoBehaviour
         }
 
 
-        // Lobber의 경우
+        // Ladder의 경우
         // 장난감 상자의 경우
         // 무거운 상자의 경우
     }

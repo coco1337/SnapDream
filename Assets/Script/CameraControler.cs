@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControler : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     public Transform basePoint;
     public Transform player;
