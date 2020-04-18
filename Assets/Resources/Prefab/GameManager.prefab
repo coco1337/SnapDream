@@ -70,7 +70,7 @@ MonoBehaviour:
   - {fileID: 8400000, guid: 7dd79f3637faf9d46a549f9ec78368b9, type: 2}
   - {fileID: 8400000, guid: 1cae77438fe3e234593735e368bd8d4c, type: 2}
   cameraBoundury: 19
-  spawnPosition: {x: -24, y: -3}
+  spawnPosition: {x: -20, y: -3}
   cutField: {fileID: 0}
   canvas: {fileID: 6142460231287012236}
   camImage: []
