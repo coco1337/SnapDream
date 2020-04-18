@@ -29,7 +29,6 @@ public class PlayerInterectController : MonoBehaviour
         {
             return;
         }
-
         if (!this.isHoldingObject)
         {
             interactableObject.Hold();
@@ -42,7 +41,6 @@ public class PlayerInterectController : MonoBehaviour
             holdingObject = null;
             isHoldingObject = false;
         }
-
 
         // Ladder의 경우
         // 장난감 상자의 경우
@@ -59,79 +57,20 @@ public class PlayerInterectController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "InteractableObject")
-        {
-            if (collision.transform.name == "Clear")
-            {
-                GameManager.getInstance().StageClear();
-            }
-
-            else
-            {
-                canInteractable = true;
-                interactableObject = collision.gameObject.GetComponent<InteractableObject>();
-            }
-        }
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Ladder"))
+        if (collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = collision.gameObject;
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        if (!collision.gameObject.CompareTag("Drag"))
+        if (collision.gameObject.CompareTag("Drag"))
         {
-            player.getDrag();
             dragObject = collision.gameObject;
         }
-        else if (!collision.gameObject.CompareTag("Throw"))
+        if (collision.gameObject.CompareTag("Throw"))
         {
-
-        }
-        else if (!collision.gameObject.CompareTag("Ladder"))
-        {
-            ladderTarget = collision.gameObject;
-        }
-        else if(!collision.gameObject.CompareTag("Ladder Exit"))
-        {
-            Debug.Log("Exit");
-            ladderTarget = null;
-            player.realeaseLadder();
+            throwObject = collision.gameObject;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (!collision.gameObject.CompareTag("Drag"))
-        {
-            player.realeaseDrag();
-            dragObject = null;
-        }
-        else if (!collision.gameObject.CompareTag("Throw"))
-        {
-        }
-        else if (!collision.gameObject.CompareTag("Ladder"))
-        {
-            ladderTarget = null;
-            player.realeaseLadder();
-        }
-
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "InteractableObject")
-        {
-            canInteractable = false;
-            // interactableObject = null;
-        }
-    }
 }
