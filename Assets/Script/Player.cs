@@ -43,7 +43,11 @@ public class Player : MonoBehaviour
             playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
         else
             playerState = PlayerState.Jump;
-        if(axis != 0) spriteRenderer.flipX = (axis == -1);
+        if (axis != 0)
+        {
+            spriteRenderer.flipX = (axis == -1);
+        }
+        animator.SetFloat("moveSpeed", Mathf.Abs(axis));
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
