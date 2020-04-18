@@ -42,7 +42,7 @@ public class PlayerMoveController : MonoBehaviour
                 }
 
                 // 상호작용
-                if (Input.GetKeyDown(KeyCode.X))
+                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable())
                 {
                     interectController.Interacting();
                 }

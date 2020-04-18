@@ -111,7 +111,7 @@ public class Player : MonoBehaviour, Damageabel
     public void playerStop()
     {
         playerState = PlayerState.Stop;
-        animator.SetTrigger("stop");
+        animator.SetBool("stop", true);
         rigidbody.velocity = Vector2.zero;
     }
 
@@ -161,6 +161,7 @@ public class Player : MonoBehaviour, Damageabel
         if (playerState == PlayerState.Interaction_Drag)
         {
             playerState = PlayerState.Idle;
+            animator.SetFloat("dragSpeed", 0);
         }
     }
 
