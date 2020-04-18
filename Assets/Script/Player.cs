@@ -94,6 +94,7 @@ public class Player : MonoBehaviour, Damageabel
         playerState = PlayerState.Jump;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(Vector2.up * jumpPower);
+        
     }
 
     public void moveNextCut()
