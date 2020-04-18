@@ -56,6 +56,21 @@ MonoBehaviour:
   - Stage8
   - Stage9
   - End
+  backGround: {fileID: 3210185523473565243, guid: e5ce78c98199d9545bc3494f5bcf27ac,
+    type: 3}
+  player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
+  cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,
+    type: 3}
+  cameraRawImage:
+  - {fileID: 8400000, guid: 8a7c913a0a018a44985a1c2a3c51cf38, type: 2}
+  - {fileID: 8400000, guid: f22fc31cdd4b05449bde68e6fe62cf79, type: 2}
+  - {fileID: 8400000, guid: 6798eca07d2f4b84a911d173da518415, type: 2}
+  - {fileID: 8400000, guid: 2eb8f206ec5dbbb48b1272e9cc138449, type: 2}
+  - {fileID: 8400000, guid: 7dd79f3637faf9d46a549f9ec78368b9, type: 2}
+  - {fileID: 8400000, guid: 1cae77438fe3e234593735e368bd8d4c, type: 2}
+  cameraBoundury: 20
+  spawnPosition: {x: -24, y: -3}
+  cutField: {fileID: 0}
 --- !u!82 &5194788657549916441
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,7 +81,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f5790bb752723fd48a0c169d149346cf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cd2ca8138b5b35f4caa84ad2c43bd357, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
