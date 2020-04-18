@@ -52,7 +52,6 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (canInteractable && dragObject != null && player.isGround)
         {
-            Debug.Log("asdf");
 
             dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed);
         }
