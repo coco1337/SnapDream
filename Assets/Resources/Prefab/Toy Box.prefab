@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8053859382454307587}
   m_Layer: 8
   m_Name: Toy Box
-  m_TagString: Drag
+  m_TagString: Throw
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   instantiated: 0
   needSync: 0
   triggerEntered: 0
+  stayUpperCollider: 0
   objectSyncController: {fileID: 0}
   childObjectPair:
   - {fileID: 0}
@@ -157,6 +158,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   parentObject: {fileID: 0}
-  test: {fileID: 0}
   stay: 0
   exit: 0
