@@ -48,7 +48,8 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (canInteractable && interactableObject != null && player.isGround)
         {
-            interactableObject.Drag(axis, player.speed);
+
+            interactableObject.Drag(axis, player.dragSpeed);
         }
     }
 
@@ -67,9 +68,28 @@ public class PlayerInterectController : MonoBehaviour
                 interactableObject = collision.gameObject.GetComponent<InteractableObject>();
             }
         }
-        else if (collision.gameObject.CompareTag("Ladder"))
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = collision.gameObject;
+        }
+        else if(!collision.gameObject.CompareTag("Ladder Exit"))
+        {
+            ladderTarget = null;
+            player.realeaseLadder();
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Ladder") && player.IsJumpable())
+        {
+            ladderTarget = null;
+            player.realeaseLadder();
         }
     }
 
@@ -79,12 +99,6 @@ public class PlayerInterectController : MonoBehaviour
         {
             canInteractable = false;
             // interactableObject = null;
-        }
-
-        else if (collision.gameObject.CompareTag("Ladder"))
-        {
-            ladderTarget = null;
-            player.realeaseLadder();
         }
     }
 }

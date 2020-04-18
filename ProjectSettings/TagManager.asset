@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - InteractableObject
   - Ladder
+  - Ladder Exit
   layers:
   - Default
   - TransparentFX

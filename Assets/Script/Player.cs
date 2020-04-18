@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, Damageabel
     public Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
     public float speed = 4;
+    public float dragSpeed = 4;
     public float jumpPower = 5;
     [SerializeField]
     int playerCutNum;
@@ -41,16 +42,28 @@ public class Player : MonoBehaviour, Damageabel
 
     public void PlayerMove(float axis)
     {
-        if (isGround)
-            playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
-        else
-            playerState = PlayerState.Jump;
-        if (axis != 0)
+        if (playerState == PlayerState.Interaction_Drag)
         {
-            spriteRenderer.flipX = (axis == -1);
+            if (axis != 0)
+            {
+                spriteRenderer.flipX = (axis == -1);
+            }
+            animator.SetFloat("dragSpeed", Mathf.Abs(axis));
+            rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
         }
-        animator.SetFloat("moveSpeed", Mathf.Abs(axis));
-        rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+        else
+        {
+            if (isGround)
+                playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
+            else
+                playerState = PlayerState.Jump;
+            if (axis != 0)
+            {
+                spriteRenderer.flipX = (axis == -1);
+            }
+            animator.SetFloat("moveSpeed", Mathf.Abs(axis));
+            rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+        }
     }
 
     public void PlayerLadderMove(float axis)
@@ -106,6 +119,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void getLadder()
     {
+        rigidbody.gravityScale = 0;
         if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
         {
             playerState = PlayerState.Interaction_Ladder;
@@ -114,6 +128,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void realeaseLadder()
     {
+        rigidbody.gravityScale = 1;
         if (playerState == PlayerState.Interaction_Ladder)
         {
             playerState = PlayerState.Idle;
@@ -142,14 +157,7 @@ public class Player : MonoBehaviour, Damageabel
         if (playerState == PlayerState.Idle)
         {
             playerState = PlayerState.Interaction_Throw;
-        }
-    }
-
-    public void realeaseThrow()
-    {
-        if (playerState == PlayerState.Interaction_Throw)
-        {
-            playerState = PlayerState.Idle;
+            ThrowObject();
         }
     }
 
@@ -162,7 +170,10 @@ public class Player : MonoBehaviour, Damageabel
     IEnumerator EndThrowObject()
     {
         yield return new WaitForSeconds(throwAnimationTime);
-        playerState = PlayerState.Idle;
+        if (playerState == PlayerState.Interaction_Throw)
+        {
+            playerState = PlayerState.Idle;
+        }
     }
 
     public int GetPlayerCutNumber()
