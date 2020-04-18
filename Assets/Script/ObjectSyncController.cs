@@ -5,11 +5,12 @@ using UnityEngine;
 public class ObjectSyncController : MonoBehaviour
 {
     public GameObject[] eachCut;
-    public InteractableObject[] spawnedObjects = new InteractableObject[6];
-    public bool[] collisionCheck = new bool[6];
-    public bool[] instantiated = new bool[6];
+    //public InteractableObject[] spawnedObjects = new InteractableObject[6];
+    //public bool[] collisionCheck = new bool[6];
+    //public bool[] instantiated = new bool[6];
     public float padding;
     public int currentCut;
+    public float spawnYPos;
 
     public int currentCutNum;
 
@@ -67,13 +68,22 @@ public class ObjectSyncController : MonoBehaviour
 
     public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
     {
+        if (currentCutNum < 3)
+        {
+            return;
+        }
+
+        float xPos = obj.transform.localPosition.x;
+
         // 3번씬 -> 0~5번
         // 4번씬 -> 1~5번
         // 5번씬 -> 2~5번
 
         for(int i = currentCutNum - 3; i < 6; ++i)
         {
-
+            var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
+            spawnedObject.transform.localPosition = new Vector2(xPos, spawnYPos);
+            spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }
     }
 
