@@ -45,6 +45,11 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
+    public void Throw()
+    {
+        
+    }
+
     public void Instantiated(bool flag)
     {
         this.instantiated = flag;
@@ -60,6 +65,16 @@ public class InteractableObject : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             player = collision.gameObject.GetComponent<Player>();
+        }
+
+        if (collision.gameObject.CompareTag("BoundaryCollider"))
+        {
+            // 현재 벡터값 저장, 위에 스폰, 다른데 생성
+            if (player.GetCurrentCutNumber() == player.GetPlayerCutNumber()
+                && !collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
+            {
+                objectSyncController.Thrown(player.GetCurrentCutNumber(), collision.gameObject);
+            }
         }
     }
 
