@@ -125,6 +125,7 @@ public class Player : MonoBehaviour, Damageabel
         playerState = PlayerState.Stop;
         animator.SetBool("stop", true);
         rigidbody.velocity = Vector2.zero;
+        rigidbody.bodyType = RigidbodyType2D.Static;
     }
 
     public PlayerState GetPlayerState()
