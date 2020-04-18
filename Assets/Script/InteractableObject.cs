@@ -70,13 +70,13 @@ public class InteractableObject : MonoBehaviour
 
     public void Drag(float axis, float speed)
     {
-        rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-        Debug.Log("drag");
+            rb.velocity = new Vector2(speed * axis, rb.velocity.y);
+            Debug.Log("drag");
 
-        if (this.needSync/*현재 컷인지도 같이 체크*/)
-        {
-            //objectSyncController.SyncObject(rb.velocity);
-        }
+            if (this.needSync/*현재 컷인지도 같이 체크*/)
+            {
+                //objectSyncController.SyncObject(rb.velocity);
+            }
     }
 
     // 물건 든 상태에서 Flip
