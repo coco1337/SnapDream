@@ -16,33 +16,30 @@ public class GameManager : MonoBehaviour
     GameObject backGround;
     [SerializeField]
     GameObject player;
-
     [SerializeField]
     GameObject cutCamera;
-
     [SerializeField]
     RenderTexture[] cameraRawImage;
-
     [SerializeField]
     float cameraBoundury = 20f;
-
     [SerializeField]
     Vector2 spawnPosition;
-
     [SerializeField]
     Transform cutField;
-
     List<Player> playerList = new List<Player>();
 
     [SerializeField]
     RectTransform canvas;
-
     [SerializeField]
     List<GameObject> camImage = new List<GameObject>();
-
     int currentCut = 0;
 
-
+    [SerializeField]
+    GameObject exitGameUI;
+    [SerializeField]
+    GameObject exitStageUI;
+    [SerializeField]
+    GameObject lobbyUI;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +50,11 @@ public class GameManager : MonoBehaviour
         sceneNum = SceneManager.GetActiveScene().buildIndex;
         if (sceneName != "Lobby")
             InitiatingCut();
+        else
+            lobbyUI.SetActive(true);
+
+        exitGameUI.SetActive(false);
+        exitStageUI.SetActive(false);
     }
 
     void InitiatingCut()
@@ -110,6 +112,18 @@ public class GameManager : MonoBehaviour
         {
             StageRestart();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(sceneName == "Lobby")
+            {
+                exitGameUI.SetActive(true);
+            }
+            else
+            {
+                exitStageUI.SetActive(true);
+            }
+        }
     }
 
     public void StageRestart()
@@ -138,8 +152,16 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine("MoveNextStage");
+    }
 
+    public void ExitStage()
+    {
+        SceneManager.LoadScene("Lobby");
+    }
 
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     public void NextCut()
