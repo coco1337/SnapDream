@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField]
     public float jumpPower = 5;
     [SerializeField]
-    public float throwPower = 5;
+    public float throwPower = 2;
     [SerializeField]
     int playerCutNum;
     [SerializeField]
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour, Damageabel
     {
         if (playerState == PlayerState.Interaction_Drag)
         {
+            Debug.Log("Drag");
             if (axis != 0)
             {
                 spriteRenderer.flipX = (axis == -1);
@@ -94,6 +95,7 @@ public class Player : MonoBehaviour, Damageabel
         playerState = PlayerState.Jump;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(Vector2.up * jumpPower);
+        
     }
 
     public void moveNextCut()
@@ -111,7 +113,7 @@ public class Player : MonoBehaviour, Damageabel
     public void playerStop()
     {
         playerState = PlayerState.Stop;
-        animator.SetTrigger("stop");
+        animator.SetBool("stop", true);
         rigidbody.velocity = Vector2.zero;
     }
 
@@ -161,6 +163,7 @@ public class Player : MonoBehaviour, Damageabel
         if (playerState == PlayerState.Interaction_Drag)
         {
             playerState = PlayerState.Idle;
+            animator.SetFloat("dragSpeed", 0);
         }
     }
 

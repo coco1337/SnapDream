@@ -42,7 +42,7 @@ public class PlayerMoveController : MonoBehaviour
                 }
 
                 // 상호작용
-                if (Input.GetKeyDown(KeyCode.X))
+                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable())
                 {
                     interectController.Interacting();
                 }
@@ -55,6 +55,7 @@ public class PlayerMoveController : MonoBehaviour
             }
             else
             {
+                playerScript.transform.position = new Vector2(interectController.ladderTarget.transform.position.x, transform.position.y);
                 inputAxis = Input.GetAxisRaw("Vertical");
                 playerScript.PlayerLadderMove(inputAxis);
                 if(inputAxis < 0 && interectController.ladderExit != null)
