@@ -2697,13 +2697,13 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -13.01526, y: 2.4989734}
+  - {x: -12.993202, y: -2.4189816}
   - {x: -12.991918, y: -2.4654284}
   - {x: -11.028331, y: -2.4707422}
   - {x: -10.958891, y: -2.4748685}
   - {x: -5.903966, y: -2.4712117}
   - {x: 12.999264, y: -2.4844596}
-  - {x: 12.939049, y: 2.503133}
+  - {x: 12.939049, y: -2.4366267}
 --- !u!50 &1429587795
 Rigidbody2D:
   serializedVersion: 4
@@ -3662,7 +3662,7 @@ GameObject:
   - component: {fileID: 2057700854}
   m_Layer: 0
   m_Name: prob
-  m_TagString: Untagged
+  m_TagString: Drag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
