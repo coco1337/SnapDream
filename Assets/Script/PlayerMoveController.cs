@@ -47,7 +47,7 @@ public class PlayerMoveController : MonoBehaviour
                     interectController.Interacting();
                 }
 
-                if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
+                if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && playerScript.IsJumpable())
                 {
                     playerScript.getLadder();
                 }
