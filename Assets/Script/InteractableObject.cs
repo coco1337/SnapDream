@@ -74,10 +74,21 @@ public class InteractableObject : MonoBehaviour
         this.needSync = flag;
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
+                rb.velocity = Vector2.zero;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
+                rb.velocity = Vector2.zero;
             player = collision.gameObject.GetComponent<Player>();
         }
 
@@ -110,6 +121,13 @@ public class InteractableObject : MonoBehaviour
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
             this.stayUpperCollider = true;
+        }
+
+
+        if (collision.transform.CompareTag("Player"))
+        {
+            if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
+                rb.velocity = Vector2.zero;
         }
     }
 

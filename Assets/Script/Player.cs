@@ -123,12 +123,12 @@ public class Player : MonoBehaviour, Damageabel
     {
         playerState = PlayerState.Stop;
         animator.SetBool("stop", true);
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.bodyType = RigidbodyType2D.Static;
-        foreach(var collider in transform.GetComponents<BoxCollider2D>())
+        foreach (var collider in transform.GetComponents<BoxCollider2D>())
         {
             collider.enabled = false;
         }
+        rigidbody.bodyType = RigidbodyType2D.Static;
+        rigidbody.velocity = Vector2.zero;
     }
 
     public PlayerState GetPlayerState()
