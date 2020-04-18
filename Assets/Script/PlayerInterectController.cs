@@ -21,7 +21,14 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (throwObject != null)
             return true;
-        else return false;
+        else 
+            return false;
+    }
+
+    public void Interacting()
+    {
+        throwObject.GetComponent<InteractableObject>().Throw();
+        player.getThrow();
     }
 
     // 물건 옮기기
