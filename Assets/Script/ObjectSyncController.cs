@@ -78,6 +78,7 @@ public class ObjectSyncController : MonoBehaviour
         for (int i = currentCutNum - 3; i < 6; ++i)
         {
             var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
+            spawnedObject.layer = 31;
             spawnedObject.transform.localPosition = new Vector2(xPos, spawnYPos);
             spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }

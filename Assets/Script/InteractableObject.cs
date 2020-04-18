@@ -13,6 +13,7 @@ public class InteractableObject : MonoBehaviour
     public bool instantiated;
     public bool needSync;
     public bool triggerEntered;
+    public bool stayUpperCollider;
     public ObjectSyncController objectSyncController;
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
@@ -33,11 +34,7 @@ public class InteractableObject : MonoBehaviour
 
     private void Update()
     {
-        if(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5)
-        {
-            this.gameObject.layer = 31;
-        }
-        else
+        if(!(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5) && !this.stayUpperCollider)
         {
             this.gameObject.layer = 8;
         }
@@ -64,6 +61,7 @@ public class InteractableObject : MonoBehaviour
     public void Throw(float throwPower)
     {
         rb.velocity = new Vector2(0, throwPower);
+        this.gameObject.layer = 31;
     }
 
     public void Instantiated(bool flag)
@@ -117,15 +115,38 @@ public class InteractableObject : MonoBehaviour
             // 현재 벡터값 저장, 위에 스폰, 다른데 생성 (던지기)
             if (!collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
+                Debug.Log("던지기");
                 objectSyncController.Thrown(player.GetCurrentCutNumber(),
                     this.gameObject, rb.velocity);
             }
             // 밀기
             else
             {
+                Debug.Log("밀기");
                 objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
                     this.gameObject, rb.velocity);
             }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("BoundaryCollider"))
+        {
+            if (!(player.GetCurrentCutNumber() == player.GetPlayerCutNumber()))
+            {
+                return;
+            }
+
+            this.stayUpperCollider = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (this.stayUpperCollider)
+        {
+            this.stayUpperCollider = false;
         }
     }
 }
