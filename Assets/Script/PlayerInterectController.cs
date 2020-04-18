@@ -27,8 +27,10 @@ public class PlayerInterectController : MonoBehaviour
 
     public void Interacting()
     {
+        player.realeaseDrag();
         throwObject.GetComponent<InteractableObject>().Throw(player.throwPower);
         player.getThrow();
+        dragObject = null;
     }
 
     // 물건 옮기기

@@ -125,6 +125,10 @@ public class Player : MonoBehaviour, Damageabel
         animator.SetBool("stop", true);
         rigidbody.velocity = Vector2.zero;
         rigidbody.bodyType = RigidbodyType2D.Static;
+        foreach(var collider in transform.GetComponents<BoxCollider2D>())
+        {
+            collider.enabled = false;
+        }
     }
 
     public PlayerState GetPlayerState()
@@ -173,8 +177,8 @@ public class Player : MonoBehaviour, Damageabel
         if (playerState == PlayerState.Interaction_Drag)
         {
             playerState = PlayerState.Idle;
-            animator.SetFloat("dragSpeed", 0);
         }
+        animator.SetFloat("dragSpeed", 0);
     }
 
     public void getThrow()
