@@ -17,8 +17,6 @@ public class InteractableObject : MonoBehaviour
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
 
-    public GameObject test;
-
     public int CutNum => this.player.GetPlayerCutNumber();
     public int CurrentCutNum => this.player.GetCurrentCutNumber();
     public bool IsInstantiated => this.instantiated;
@@ -99,7 +97,6 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            // player = collision.gameObject.GetComponent<Player>();
             // 플레이어와 경계 트리거 동시 접촉
             if (this.needSync)
             {
@@ -112,12 +109,21 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
-            test = collision.gameObject;
-            // 현재 벡터값 저장, 위에 스폰, 다른데 생성
-            if (player.GetCurrentCutNumber() == player.GetPlayerCutNumber()
-                && !collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
+            if (!(player.GetCurrentCutNumber() == player.GetPlayerCutNumber()))
+            {
+                return;
+            }
+
+            // 현재 벡터값 저장, 위에 스폰, 다른데 생성 (던지기)
+            if (!collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
                 objectSyncController.Thrown(player.GetCurrentCutNumber(),
+                    this.gameObject, rb.velocity);
+            }
+            // 밀기
+            else
+            {
+                objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
                     this.gameObject, rb.velocity);
             }
         }
