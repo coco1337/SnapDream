@@ -24,16 +24,29 @@ public class BoundaryCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("TriggerEnter");
         // 상호작용 가능한 오브젝트
         if (collision.gameObject.tag == "InteractableObject")
         {
-            objectSyncController.HitCollider(
-                collision.gameObject.GetComponent<InteractableObject>(), verticalBoundary, this.transform.localPosition);
+            var interactableObj = collision.gameObject.GetComponent<InteractableObject>();
+            if (interactableObj.triggerEntered)
+            {
+                return;
+            }
+
+            if (interactableObj.CutNum != interactableObj.CurrentCutNum)
+            {
+                return;
+            }
+
+            objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
+            interactableObj.triggerEntered = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log("TriggerExit");
         if (collision.gameObject.tag == "InteractableObject")
         {
             objectSyncController.ExitCollider(collision.gameObject.GetComponent<InteractableObject>());

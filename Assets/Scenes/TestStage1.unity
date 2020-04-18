@@ -273,10 +273,6 @@ MonoBehaviour:
   basePoint: {fileID: 508040882}
   player: {fileID: 1470484555}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &42440614
 Camera:
   m_ObjectHideFlags: 0
@@ -423,10 +419,6 @@ MonoBehaviour:
   basePoint: {fileID: 1565502899}
   player: {fileID: 651774861}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &137372293
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,10 +466,6 @@ MonoBehaviour:
   basePoint: {fileID: 940166083}
   player: {fileID: 296973135}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &137372296
 Camera:
   m_ObjectHideFlags: 0
@@ -822,10 +810,6 @@ MonoBehaviour:
   basePoint: {fileID: 1094717717}
   player: {fileID: 1317640912}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &218338398
 Camera:
   m_ObjectHideFlags: 0
@@ -1085,10 +1069,6 @@ MonoBehaviour:
   basePoint: {fileID: 221942837}
   player: {fileID: 1850963534}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &411035053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,8 +1503,9 @@ GameObject:
   - component: {fileID: 715329989}
   - component: {fileID: 715329988}
   - component: {fileID: 715329987}
+  - component: {fileID: 715329991}
   m_Layer: 0
-  m_Name: prob
+  m_Name: prob1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1604,8 +1585,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHoldableObject: 1
+  player: {fileID: 0}
   instantiated: 0
   needSync: 0
+  triggerEntered: 0
   objectSyncController: {fileID: 0}
   childObjectPair:
   - {fileID: 0}
@@ -1667,6 +1650,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &715329991
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715329985}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 10}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10}
+  m_EdgeRadius: 0
 --- !u!1 &826256311
 GameObject:
   m_ObjectHideFlags: 0
@@ -1968,10 +1977,6 @@ MonoBehaviour:
   basePoint: {fileID: 1280274353}
   player: {fileID: 1270451895}
   bounduryValue: 20
-  bounduryPointX:
-  - 0
-  - 0
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &914961634
 Camera:
   m_ObjectHideFlags: 0
@@ -2202,6 +2207,7 @@ MonoBehaviour:
   instantiated: 000000000000
   padding: 0.5
   currentCut: 0
+  currentCutNum: 0
 --- !u!1 &1163470338
 GameObject:
   m_ObjectHideFlags: 0
@@ -3653,6 +3659,7 @@ GameObject:
   - component: {fileID: 2057700852}
   - component: {fileID: 2057700851}
   - component: {fileID: 2057700850}
+  - component: {fileID: 2057700854}
   m_Layer: 0
   m_Name: prob
   m_TagString: Untagged
@@ -3734,8 +3741,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHoldableObject: 1
+  player: {fileID: 0}
   instantiated: 0
   needSync: 0
+  triggerEntered: 0
   objectSyncController: {fileID: 0}
   childObjectPair:
   - {fileID: 0}
@@ -3797,6 +3806,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2057700854
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057700848}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10, y: 10}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 10, y: 10}
+  m_EdgeRadius: 0
 --- !u!1 &2124418051
 GameObject:
   m_ObjectHideFlags: 0

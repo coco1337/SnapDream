@@ -9,9 +9,10 @@ public class InteractableObject : MonoBehaviour
     public bool isHoldableObject;
 
     private Rigidbody2D rb;
-    private Player player;
+    public Player player;
     public bool instantiated;
     public bool needSync;
+    public bool triggerEntered;
     public ObjectSyncController objectSyncController;
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
@@ -77,7 +78,7 @@ public class InteractableObject : MonoBehaviour
             || axis < 0 && this.transform.position.x < player.transform.position.x)
         {
             rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-
+            Debug.Log("ddd");
             if (this.needSync/*현재 컷인지도 같이 체크*/)
             {
                 //objectSyncController.SyncObject(rb.velocity);
@@ -122,6 +123,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            // player = collision.gameObject.GetComponent<Player>();
             // 플레이어와 경계 트리거 동시 접촉
             if (this.needSync)
             {

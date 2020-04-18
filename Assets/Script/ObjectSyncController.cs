@@ -11,6 +11,8 @@ public class ObjectSyncController : MonoBehaviour
     public float padding;
     public int currentCut;
 
+    public int currentCutNum;
+
     // 왼쪽 충돌이면 이전 컷부터 변화
     // 오른쪽 충돌이면 이후 컷부터 변화
     // 위쪽 충돌이면 위쪽 컷부터 변화
@@ -23,11 +25,27 @@ public class ObjectSyncController : MonoBehaviour
             return;
         }
 
+        currentCutNum = obj.CurrentCutNum;
+        Debug.Log("dd");
+
         // 밀기
+        if (obj.CutNum == obj.CurrentCutNum)
+        {
+            Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
+            Instantiate(obj.gameObject, eachCut[1].transform);
+            // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
+            //for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
+            //{
+            //    var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
+            //    obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+            //    spawnedObject.transform.localPosition = spawnPosition;
+            //}
+        }
+
         //if (obj.CutNum == obj.CurrentCutNum)
         //{
         //    Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
-            
+
         //    // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
         //    for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
         //    {
@@ -104,7 +122,8 @@ public class ObjectSyncController : MonoBehaviour
         // 위아래로 충돌
         else
         {
-            return new Vector2(obj.transform.position.x, -(obj.transform.position.y - eachCut[obj.CutNum].transform.position.y));
+            //return new Vector2(obj.transform.position.x, -(obj.transform.position.y - eachCut[obj.CutNum].transform.position.y));
+            return Vector2.zero;
         }
     }
 }
