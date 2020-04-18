@@ -31,31 +31,36 @@ public class ObjectSyncController : MonoBehaviour
                 spawnedObject.transform.localPosition = spawnPosition;
             }
         }
-    }
-
-    public void HitCollider(InteractableObject obj, bool verticalBoundary, Vector2 colliderLocalPos)
-    {
-        if (obj.IsInstantiated)
+        // 왼쪽 충돌시
+        else
         {
-            return;
-        }
 
-        currentCutNum = obj.CurrentCutNum;
-        Debug.Log("dd");
-
-        // 밀기
-        if (obj.CutNum == obj.CurrentCutNum)
-        {
-            Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
-            // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
-            for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
-            {
-                var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
-                obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-                spawnedObject.transform.localPosition = spawnPosition;
-            }
         }
     }
+
+    //public void HitCollider(InteractableObject obj, bool verticalBoundary, Vector2 colliderLocalPos)
+    //{
+    //    if (obj.IsInstantiated)
+    //    {
+    //        return;
+    //    }
+
+    //    currentCutNum = obj.CurrentCutNum;
+    //    Debug.Log("dd");
+
+    //    // 밀기
+    //    if (obj.CutNum == obj.CurrentCutNum)
+    //    {
+    //        Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
+    //        // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
+    //        for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
+    //        {
+    //            var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
+    //            obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+    //            spawnedObject.transform.localPosition = spawnPosition;
+    //        }
+    //    }
+    //}
 
     public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
     {
