@@ -7,9 +7,15 @@ public class Player : MonoBehaviour, Damageabel
 {
     public Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
+
+    [SerializeField]
     public float speed = 4;
+    [SerializeField]
     public float dragSpeed = 4;
+    [SerializeField]
     public float jumpPower = 5;
+    [SerializeField]
+    public float throwPower = 5;
     [SerializeField]
     int playerCutNum;
     [SerializeField]
@@ -62,6 +68,7 @@ public class Player : MonoBehaviour, Damageabel
             {
                 spriteRenderer.flipX = (axis == -1);
             }
+            animator.SetBool("isGround", isGround);
             animator.SetFloat("moveSpeed", Mathf.Abs(axis));
             rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
         }
@@ -81,6 +88,9 @@ public class Player : MonoBehaviour, Damageabel
 
     public void PlayerJump()
     {
+
+        animator.SetBool("isGround", false);
+        animator.SetTrigger("jump");
         playerState = PlayerState.Jump;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(Vector2.up * jumpPower);
