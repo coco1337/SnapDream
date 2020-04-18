@@ -74,13 +74,6 @@ public class InteractableObject : MonoBehaviour
         this.needSync = flag;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            player = collision.gameObject.GetComponent<Player>();
-        }
-    }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -91,20 +84,13 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            // 플레이어와 경계 트리거 동시 접촉
-            if (this.needSync)
-            {
-                // this.objectSyncController.SyncObject(childObjectPair);
-            }
+            player = collision.gameObject.GetComponent<Player>();
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
             if (!(player.GetCurrentCutNumber() == player.GetPlayerCutNumber()))

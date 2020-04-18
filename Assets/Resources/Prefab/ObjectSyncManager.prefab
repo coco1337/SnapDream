@@ -47,4 +47,6 @@ MonoBehaviour:
   padding: 0
   currentCut: 0
   spawnYPos: -6
+  cameraLength: 12
   currentCutNum: 0
+  InteractableObj: {fileID: 0}
