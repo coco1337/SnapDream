@@ -55,7 +55,6 @@ public class Player : MonoBehaviour, Damageabel
     {
         if (playerState == PlayerState.Interaction_Drag)
         {
-            Debug.Log("Drag");
             if (axis != 0)
             {
                 spriteRenderer.flipX = (axis == -1);
