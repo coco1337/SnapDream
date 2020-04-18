@@ -48,7 +48,7 @@ public class BoundaryCollider : MonoBehaviour
             interactableObj = collision.gameObject.GetComponent<InteractableObject>();
             if (interactableObj.CurrentCutNum == interactableObj.CutNum)
             {
-                Debug.Log("collision enter1");
+                objectSyncController.HitCollider(interactableObj, true, this.transform.localPosition);
             }
         }
     }
