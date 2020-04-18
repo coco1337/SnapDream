@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     List<Player> playerList = new List<Player>();
 
     [SerializeField]
-    Transform canvas;
+    RectTransform canvas;
 
     [SerializeField]
     List<GameObject> camImage = new List<GameObject>();
@@ -89,11 +89,11 @@ public class GameManager : MonoBehaviour
 
         }
 
-        for(int i = 1; i < canvas.childCount; i++)
+        for(int i = 0; i < canvas.childCount; i++)
         {
             camImage.Add(canvas.GetChild(i).gameObject);
-            camImage[i-1].SetActive(false);
-            camImage[i - 1].GetComponent<RawImage>().texture = cameraRawImage[i-1];
+            camImage[i].SetActive(false);
+            camImage[i].GetComponent<RawImage>().texture = cameraRawImage[i];
         }
         camImage[0].SetActive(true);
     }

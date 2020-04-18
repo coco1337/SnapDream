@@ -204,6 +204,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &212728240 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6142460231287012236, guid: e87f4630849625f4f87b2444ee298bef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1192475846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &236734681
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +657,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1335421266708210424, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: m_Name
+      value: Cut
+      objectReference: {fileID: 0}
     - target: {fileID: 3617803703561763768, guid: e87f4630849625f4f87b2444ee298bef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -711,6 +722,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: cutField
+      value: 
+      objectReference: {fileID: 212728240}
     - target: {fileID: 5194788657549916441, guid: e87f4630849625f4f87b2444ee298bef,
         type: 3}
       propertyPath: m_Volume
