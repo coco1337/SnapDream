@@ -45,6 +45,7 @@ public class BoundaryCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("Drag"))
         {
             var dragObj = collision.gameObject.GetComponent<InteractableObject>();
+            Debug.Log("collision enter1");
         }
     }
 
@@ -72,7 +73,7 @@ public class BoundaryCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("Drag"))
         {
             var dragObj = collision.gameObject.GetComponent<InteractableObject>();
-            Debug.Log("collision enter");
+            Debug.Log("collision enter2");
         }
     }
 }
