@@ -41,7 +41,7 @@ public class InteractableObject : MonoBehaviour
         }
         else
         {
-            this.gameObject.layer = 0;
+            this.gameObject.layer = 8;
         }
 
         if (this.transform.localPosition.y < -7 || this.transform.localPosition.y > 6)
