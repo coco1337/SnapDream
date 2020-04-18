@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, Damageabel
 {
     public Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
@@ -15,11 +15,12 @@ public class Player : MonoBehaviour
     public Vector2 holdingPosition;
     public Vector2 releasePosition;
     Animator animator;
+    [SerializeField] float PlayerHealth = 1f;
     [SerializeField] float throwAnimationTime = 3f;
 
     public enum PlayerState
     {
-        Idle, Move, Jump, Interaction_Labber, Interaction_Throw, DIe, Stop, Damaged
+        Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, DIe, Stop, Damaged
     }
 
     PlayerState playerState;
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
-    public void PlayerLabberMove(float axis)
+    public void PlayerLadderMove(float axis)
     {
 
     }
@@ -112,5 +113,20 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(throwAnimationTime);
         playerState = PlayerState.Idle;
+    }
+
+    public int GetPlayerCutNumber()
+    {
+        return playerCutNum;
+    }
+
+    public void Hit(float damage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void DieObject()
+    {
+        throw new System.NotImplementedException();
     }
 }

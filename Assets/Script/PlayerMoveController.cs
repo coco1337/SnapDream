@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 public class PlayerMoveControler : MonoBehaviour
 {
     Player playerScript;
-    PlayerInterectControler interectControler;
+    PlayerInterectController interectController;
 
     private void Start()
     {
         playerScript = transform.GetComponentInParent<Player>();
-        interectControler = transform.GetComponentInParent<PlayerInterectControler>();
+        interectController = transform.GetComponentInParent<PlayerInterectController>();
     }
 
     // Update is called once per frame
@@ -20,14 +20,14 @@ public class PlayerMoveControler : MonoBehaviour
         if (playerScript.isMovable())
         {
             float inputAxis;
-            if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Labber)
+            if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Ladder)
             {
                 inputAxis = Input.GetAxisRaw("Horizontal");
                 playerScript.PlayerMove(inputAxis);
 
                 //상호작용중이고 움직일때만 동작
-                if (interectControler.isInteracting && playerScript.GetPlayerState() == Player.PlayerState.Move)
-                    interectControler.MoveInteractObject(inputAxis);
+                if (interectController.isInteracting && playerScript.GetPlayerState() == Player.PlayerState.Move)
+                    interectController.MoveInteractObject(inputAxis);
 
                 if (Input.GetKeyDown(KeyCode.Z) && playerScript.GetPlayerState() != Player.PlayerState.Jump)
                 {
@@ -41,26 +41,20 @@ public class PlayerMoveControler : MonoBehaviour
                 // 상호작용
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    interectControler.InteractObject();
+                    interectController.InteractObject();
                 }
 
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    interectControler.getLabber();
+                    interectController.getLadder();
                 }
-
-
 
             }
             else
             {
                 inputAxis = Input.GetAxisRaw("Vertical");
-                playerScript.PlayerLabberMove(inputAxis);
-
+                playerScript.PlayerLadderMove(inputAxis);
             }
-
-
-
         }// end of if(Movable())
     }
 }
