@@ -9,6 +9,9 @@ public class PlayerInterectController : MonoBehaviour
     public GameObject holdingObject;
     public bool isHoldingObject;
     public bool isInteracting;
+
+    public GameObject throwObject = null;
+    public GameObject dragObject = null;
     public GameObject ladderTarget = null;
     Player player;
 
@@ -77,25 +80,52 @@ public class PlayerInterectController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ladder"))
+        if (!collision.gameObject.CompareTag("Ladder"))
+        {
+            ladderTarget = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (!collision.gameObject.CompareTag("Drag"))
+        {
+            player.getDrag();
+            dragObject = collision.gameObject;
+        }
+        else if (!collision.gameObject.CompareTag("Throw"))
+        {
+
+        }
+        else if (!collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = collision.gameObject;
         }
         else if(!collision.gameObject.CompareTag("Ladder Exit"))
         {
+            Debug.Log("Exit");
             ladderTarget = null;
             player.realeaseLadder();
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag("Ladder") && player.IsJumpable())
+        if (!collision.gameObject.CompareTag("Drag"))
+        {
+            player.realeaseDrag();
+            dragObject = null;
+        }
+        else if (!collision.gameObject.CompareTag("Throw"))
+        {
+        }
+        else if (!collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = null;
             player.realeaseLadder();
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
