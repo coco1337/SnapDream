@@ -10,6 +10,8 @@ TagManager:
   - BoundaryCollider
   - Ladder
   - Ladder Exit
+  - Drag
+  - Throw
   layers:
   - Default
   - TransparentFX

@@ -24,7 +24,6 @@ public class BoundaryCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TriggerEnter");
         // 상호작용 가능한 오브젝트
         if (collision.gameObject.tag == "InteractableObject")
         {
@@ -46,7 +45,6 @@ public class BoundaryCollider : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("TriggerExit");
         if (collision.gameObject.tag == "InteractableObject")
         {
             objectSyncController.ExitCollider(collision.gameObject.GetComponent<InteractableObject>());
