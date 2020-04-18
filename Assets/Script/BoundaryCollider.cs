@@ -12,6 +12,7 @@ public class BoundaryCollider : MonoBehaviour
     public Vector2 hitPosition;
     public Vector2 spawnPosition;
     private ObjectSyncController objectSyncController;
+    public InteractableObject interactableObj;
 
     // Start is called before the first frame update
     void Start()
@@ -24,29 +25,36 @@ public class BoundaryCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TriggerEnter");
         // 상호작용 가능한 오브젝트
-        if (collision.gameObject.tag == "InteractableObject")
+        //if (collision.gameObject.tag == "InteractableObject")
+        //{
+        //    var interactableObj = collision.gameObject.GetComponent<InteractableObject>();
+        //    if (interactableObj.triggerEntered)
+        //    {
+        //        return;
+        //    }
+
+        //    if (interactableObj.CutNum != interactableObj.CurrentCutNum)
+        //    {
+        //        return;
+        //    }
+
+        //    objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
+        //    interactableObj.triggerEntered = true;
+        //}
+
+        if (collision.gameObject.CompareTag("Drag"))
         {
-            var interactableObj = collision.gameObject.GetComponent<InteractableObject>();
-            if (interactableObj.triggerEntered)
+            interactableObj = collision.gameObject.GetComponent<InteractableObject>();
+            if (interactableObj.CurrentCutNum == interactableObj.CutNum)
             {
-                return;
+                Debug.Log("collision enter1");
             }
-
-            if (interactableObj.CutNum != interactableObj.CurrentCutNum)
-            {
-                return;
-            }
-
-            objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
-            interactableObj.triggerEntered = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("TriggerExit");
         if (collision.gameObject.tag == "InteractableObject")
         {
             objectSyncController.ExitCollider(collision.gameObject.GetComponent<InteractableObject>());

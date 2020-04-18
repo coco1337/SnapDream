@@ -29,10 +29,6 @@ public class InteractableObject : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-        if (this.gameObject.tag != "InteractableObject")
-        {
-            this.gameObject.tag = "InteractableObject";
-        }
     }
 
     // 물건 들어올리기
@@ -78,7 +74,8 @@ public class InteractableObject : MonoBehaviour
             || axis < 0 && this.transform.position.x < player.transform.position.x)
         {
             rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-            Debug.Log("ddd");
+            Debug.Log("drag");
+
             if (this.needSync/*현재 컷인지도 같이 체크*/)
             {
                 //objectSyncController.SyncObject(rb.velocity);
