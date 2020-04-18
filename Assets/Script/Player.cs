@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, Damageabel
     public float jumpPower = 5;
     [SerializeField]
     int playerCutNum;
+    [SerializeField]
     int curretnCutNum = 0;
     public bool isGround;
     public Vector2 holdingPosition;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour, Damageabel
     {
         Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged
     }
-
+    [SerializeField]
     PlayerState playerState;
 
     private void Start()
@@ -119,7 +120,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void getLadder()
     {
-        rigidbody.gravityScale = 0;
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
         if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
         {
             playerState = PlayerState.Interaction_Ladder;
@@ -128,7 +129,8 @@ public class Player : MonoBehaviour, Damageabel
 
     public void realeaseLadder()
     {
-        rigidbody.gravityScale = 1;
+        rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        animator.speed = 1;
         if (playerState == PlayerState.Interaction_Ladder)
         {
             playerState = PlayerState.Idle;

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     public void StageRestart()
     {
+        Debug.Log(sceneName);
         SceneManager.LoadScene(sceneName);
     }
     public void StageClear()

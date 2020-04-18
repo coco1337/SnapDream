@@ -57,6 +57,10 @@ public class PlayerMoveController : MonoBehaviour
             {
                 inputAxis = Input.GetAxisRaw("Vertical");
                 playerScript.PlayerLadderMove(inputAxis);
+                if(inputAxis < 0 && interectController.ladderExit != null)
+                {
+                    playerScript.realeaseLadder();
+                }
             }
         }// end of if(Movable())
     }

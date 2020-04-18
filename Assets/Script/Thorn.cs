@@ -10,6 +10,7 @@ public class Thorn : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+            Debug.Log("Enter Player");
             collision.transform.GetComponent<Damageabel>().Hit(attackPower);
         }
     }
