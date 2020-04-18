@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class PlayerInterectController : MonoBehaviour
 {
-    private bool canInteractable;
-    private bool isHoldable;
-    public GameObject holdingObject;
-    public bool isHoldingObject;
-    public bool isInteracting;
-
     public GameObject throwObject = null;
     public GameObject dragObject = null;
     public GameObject ladderTarget = null;
@@ -21,31 +15,6 @@ public class PlayerInterectController : MonoBehaviour
     private void Start()
     {
         player = transform.GetComponent<Player>();
-    }
-
-
-    public void InteractObject()
-    {
-        if (!canInteractable && holdingObject == null)
-        {
-            return;
-        }
-        if (!this.isHoldingObject)
-        {
-            interactableObject.Hold();
-            this.holdingObject = interactableObject.gameObject;
-            isHoldingObject = true;
-        }
-        else
-        {
-            this.holdingObject.GetComponent<InteractableObject>().Release();
-            holdingObject = null;
-            isHoldingObject = false;
-        }
-
-        // Ladder의 경우
-        // 장난감 상자의 경우
-        // 무거운 상자의 경우
     }
 
     // 물건 옮기기
@@ -60,6 +29,7 @@ public class PlayerInterectController : MonoBehaviour
             }
             else
             {
+                dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
                 player.realeaseDrag();
             }
         }
@@ -117,6 +87,15 @@ public class PlayerInterectController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ladder Exit"))
         {
             ladderExit = null;
+        }
+
+        if (collision.gameObject.CompareTag("Drag"))
+        {
+            dragObject = null;
+        }
+        if (collision.gameObject.CompareTag("Throw"))
+        {
+            throwObject = null;
         }
     }
 }

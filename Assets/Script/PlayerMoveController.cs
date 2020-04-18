@@ -44,7 +44,7 @@ public class PlayerMoveController : MonoBehaviour
                 // 상호작용
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    interectController.InteractObject();
+                    //interectController.InteractObject();
                 }
 
                 if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
