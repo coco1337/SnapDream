@@ -43,7 +43,7 @@ public class Player : MonoBehaviour, Damageabel
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
     }
 
     public void SetPlayerCutNumber(int i)
