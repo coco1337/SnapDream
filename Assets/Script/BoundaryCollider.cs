@@ -12,6 +12,7 @@ public class BoundaryCollider : MonoBehaviour
     public Vector2 hitPosition;
     public Vector2 spawnPosition;
     private ObjectSyncController objectSyncController;
+    public InteractableObject interactableObj;
 
     // Start is called before the first frame update
     void Start()
@@ -25,27 +26,30 @@ public class BoundaryCollider : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 상호작용 가능한 오브젝트
-        if (collision.gameObject.tag == "InteractableObject")
-        {
-            var interactableObj = collision.gameObject.GetComponent<InteractableObject>();
-            if (interactableObj.triggerEntered)
-            {
-                return;
-            }
+        //if (collision.gameObject.tag == "InteractableObject")
+        //{
+        //    var interactableObj = collision.gameObject.GetComponent<InteractableObject>();
+        //    if (interactableObj.triggerEntered)
+        //    {
+        //        return;
+        //    }
 
-            if (interactableObj.CutNum != interactableObj.CurrentCutNum)
-            {
-                return;
-            }
+        //    if (interactableObj.CutNum != interactableObj.CurrentCutNum)
+        //    {
+        //        return;
+        //    }
 
-            objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
-            interactableObj.triggerEntered = true;
-        }
+        //    objectSyncController.HitCollider(interactableObj, verticalBoundary, this.transform.localPosition);
+        //    interactableObj.triggerEntered = true;
+        //}
 
         if (collision.gameObject.CompareTag("Drag"))
         {
-            var dragObj = collision.gameObject.GetComponent<InteractableObject>();
-            Debug.Log("collision enter1");
+            interactableObj = collision.gameObject.GetComponent<InteractableObject>();
+            if (interactableObj.CurrentCutNum == interactableObj.CutNum)
+            {
+                Debug.Log("collision enter1");
+            }
         }
     }
 
@@ -65,15 +69,6 @@ public class BoundaryCollider : MonoBehaviour
         {
             if (!collision.gameObject.GetComponent<InteractableObject>().IsInstantiated)
                 collision.gameObject.GetComponent<InteractableObject>().SyncNeeded(true);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Drag"))
-        {
-            var dragObj = collision.gameObject.GetComponent<InteractableObject>();
-            Debug.Log("collision enter2");
         }
     }
 }
