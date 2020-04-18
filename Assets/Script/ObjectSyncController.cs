@@ -82,7 +82,7 @@ public class ObjectSyncController : MonoBehaviour
             return;
         }
 
-        float xPos;
+        // float xPos;
 
         // 3번씬 -> 0~5번
         // 4번씬 -> 1~5번
@@ -91,21 +91,29 @@ public class ObjectSyncController : MonoBehaviour
         // 현재 카메라 x좌표
         float cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
 
+        // 생성될 컷의 카메라 x 좌표
+        float targetCameraX = eachCut[currentCutNum - 3].transform.Find("Camera(Clone)").transform.localPosition.x;
+
+        // 생성될 오브젝트의 좌표
+        float result = (obj.transform.localPosition.x - cameraX) + targetCameraX;
+
         for (int i = currentCutNum - 3; i < 6; ++i)
         {
             var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
             spawnedObject.layer = 31;
-            if (i < 3)
-            {
-                // 0, 1, 2번 컷
-                xPos = (obj.transform.localPosition.x - cameraX) + eachCut[i].transform.Find("Camera(Clone)").transform.localPosition.x;
-            }
-            else
-            {
-                xPos = obj.transform.localPosition.x;
-            }
 
-            spawnedObject.transform.localPosition = new Vector2(xPos, spawnYPos);
+            //if (i < 3)
+            //{
+            //    // 0, 1, 2번 컷 => currentCutNum - 3번째컷 기준으로 생성
+            //    //xPos = (obj.transform.localPosition.x - cameraX) + eachCut[i].transform.Find("Camera(Clone)").transform.localPosition.x;
+            //}
+            //else
+            //{
+            //    xPos = obj.transform.localPosition.x;
+            //}
+            //xPos = (obj.transform.localPosition.x - cameraX) + eachCut[currentCutNum - 3].transform.Find("Camera(Clone)").transform.localPosition.x;
+
+            spawnedObject.transform.localPosition = new Vector2(result, spawnYPos);
             spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }
     }
