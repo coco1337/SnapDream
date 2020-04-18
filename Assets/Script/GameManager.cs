@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     float SceanChangeTime = 3f;
 
+    [SerializeField]
+    Image paidImage;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +69,8 @@ public class GameManager : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = 0.24f;
         StartCoroutine("PaidAudio", true);
+
+        StartCoroutine("PaidImage", true);
     }
 
     void InitiatingCut()
@@ -165,6 +170,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("MoveNextStage");
         StartCoroutine("PaidAudio", false);
+        StartCoroutine("PaidImage", false);
     }
 
     public void ExitStage()
@@ -204,8 +210,24 @@ public class GameManager : MonoBehaviour
                 if (audioSource.volume > 0.5f)
                     StopCoroutine("PaidAudio");
             }
-            Debug.Log(audioSource.volume);
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+
+    IEnumerator PaidImage(bool paid)
+    {
+
+        float dirTime = Time.time + (paid ? SceanChangeTime/2 : SceanChangeTime);
+        paidImage.gameObject.SetActive(true);
+        while (Time.time < dirTime)
+        {
+            paidImage.color = (paid) ? new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a - 0.04f) : new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.015f);
+
+            Debug.Log(paidImage.color.a);
+            yield return new WaitForSeconds(0.05f);
+        }
+        if(paid)
+            paidImage.gameObject.SetActive(false);
     }
 }
