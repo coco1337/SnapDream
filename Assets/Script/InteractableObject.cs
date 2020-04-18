@@ -31,58 +31,18 @@ public class InteractableObject : MonoBehaviour
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
     }
 
-    // 물건 들어올리기
-    public void Hold()
-    {
-        if (isHoldableObject)
-        {
-            //this.player.isHoldingObject = true;
-            this.transform.parent = player.transform;
-            // 들었을때 holdingPosition으로 이동
-            this.transform.localPosition = player.holdingPosition;
-            this.rb.simulated = false;
-        }
-    }
-
-    // 물건 내리기
-    public void Release()
-    {
-        if (isHoldableObject)
-        {
-            if (player.transform.GetComponent<SpriteRenderer>().flipX)
-            {
-                this.transform.localPosition = -player.releasePosition;
-            }
-            else
-            {
-                this.transform.localPosition = player.releasePosition;
-            }
-            this.rb.velocity = Vector2.zero;
-            this.transform.parent = player.transform.parent;
-            this.rb.simulated = true;
-
-            player = null;
-        }
-    }
-
     // 물건 밀기
     // 여기서 sync 할 물건 찾아서 같이 이동시켜주기
 
     public void Drag(float axis, float speed)
     {
-            rb.velocity = new Vector2(speed * axis, rb.velocity.y);
-            Debug.Log("drag");
+        rb.velocity = new Vector2(speed * axis, rb.velocity.y);
+        Debug.Log("drag");
 
-            if (this.needSync/*현재 컷인지도 같이 체크*/)
-            {
-                //objectSyncController.SyncObject(rb.velocity);
-            }
-    }
-
-    // 물건 든 상태에서 Flip
-    public void Flip(bool flip)
-    {
-        this.GetComponent<SpriteRenderer>().flipX = flip;
+        if (this.needSync/*현재 컷인지도 같이 체크*/)
+        {
+            //objectSyncController.SyncObject(rb.velocity);
+        }
     }
 
     public void Instantiated(bool flag)
