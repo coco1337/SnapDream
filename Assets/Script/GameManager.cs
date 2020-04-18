@@ -225,7 +225,6 @@ public class GameManager : MonoBehaviour
         {
             paidImage.color = (paid) ? new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a - 0.04f) : new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.022f);
 
-            Debug.Log(paidImage.color.a);
             yield return new WaitForSeconds(0.05f);
         }
         if(paid)
