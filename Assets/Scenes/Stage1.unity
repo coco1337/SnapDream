@@ -353,7 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 508040882}
   player: {fileID: 1470484555}
-  bounduryValue: 24
+  bounduryValue: 20
 --- !u!20 &42440614
 Camera:
   m_ObjectHideFlags: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 1565502899}
   player: {fileID: 651774861}
-  bounduryValue: 24
+  bounduryValue: 20
 --- !u!20 &88198011
 Camera:
   m_ObjectHideFlags: 0
@@ -1070,7 +1070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 940166083}
   player: {fileID: 296973135}
-  bounduryValue: 24
+  bounduryValue: 20
 --- !u!20 &137372296
 Camera:
   m_ObjectHideFlags: 0
@@ -4730,7 +4730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 1280274353}
   player: {fileID: 1270451895}
-  bounduryValue: 24
+  bounduryValue: 20
 --- !u!20 &914961634
 Camera:
   m_ObjectHideFlags: 0
