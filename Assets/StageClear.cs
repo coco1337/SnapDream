@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class StageClear : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(collision.transform.CompareTag("Player"))
+        {
+            GameManager.getInstance().StageClear();
+        }
     }
 }
