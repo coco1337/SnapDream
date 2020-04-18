@@ -10,10 +10,21 @@ public class InteractableObject : MonoBehaviour
 
     private Rigidbody2D rb;
     private Player player;
+    public bool instantiated;
+    public bool needSync;
+    public ObjectSyncController objectSyncController;
+
+    public int CutNum => this.player.playerCutNum;
+    public bool IsInstantiated => this.instantiated;
+    public bool NeedSync => this.needSync;
+
+    public bool stay;
+    public bool exit;
 
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
         if (this.gameObject.tag != "InteractableObject")
         {
             this.gameObject.tag = "InteractableObject";
@@ -38,25 +49,52 @@ public class InteractableObject : MonoBehaviour
     {
         if (isHoldableObject)
         {
+            if (player.transform.GetComponent<SpriteRenderer>().flipX)
+            {
+                this.transform.localPosition = -player.releasePosition;
+            }
+            else
+            {
+                this.transform.localPosition = player.releasePosition;
+            }
             this.rb.velocity = Vector2.zero;
-            this.transform.localPosition = player.releasePosition;
             this.transform.parent = player.transform.parent;
             this.rb.simulated = true;
-            //player.isHoldingObject = false;
-            //player.holdingObject = null;
+
             player = null;
         }
     }
 
     // 물건 밀기
+    // 여기서 sync 할 물건 찾아서 같이 이동시켜주기
     public void Drag(float axis, float speed)
     {
         if (axis > 0 && this.transform.position.x > player.transform.position.x
             || axis < 0 && this.transform.position.x < player.transform.position.x)
         {
             rb.velocity = new Vector2(speed * axis, rb.velocity.y);
+
+            if (this.needSync/*현재 컷인지도 같이 체크*/)
+            {
+                objectSyncController.SyncObject(rb.velocity);
+            }
         }
-        
+    }
+
+    // 물건 든 상태에서 Flip
+    public void Flip(bool flip)
+    {
+        this.GetComponent<SpriteRenderer>().flipX = flip;
+    }
+
+    public void Instantiated(bool flag)
+    {
+        this.instantiated = flag;
+    }
+
+    public void SyncNeeded(bool flag)
+    {
+        this.needSync = flag;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -67,17 +105,24 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        
-    }
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("exit");
             this.rb.velocity = Vector2.zero;
+            this.needSync = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            // 사실상 물건을 밀고있는 상태
+            if (this.needSync)
+            {
+
+            }
         }
     }
 }

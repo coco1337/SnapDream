@@ -31,10 +31,13 @@ public class PlayerInterectControler : MonoBehaviour
         {
             interactableObject.Hold();
             this.holdingObject = interactableObject.gameObject;
+            isHoldingObject = true;
         }
         else
         {
             this.holdingObject.GetComponent<InteractableObject>().Release();
+            holdingObject = null;
+            isHoldingObject = false;
         }
 
 

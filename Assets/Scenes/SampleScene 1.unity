@@ -3516,6 +3516,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1580839708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1580839710}
+  - component: {fileID: 1580839709}
+  m_Layer: 0
+  m_Name: BoundaryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1580839709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580839708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7786e1e7d91da84f84f6405390c21fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Boundary:
+  - {fileID: 1714964889}
+--- !u!4 &1580839710
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580839708}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.4266794, y: -0.32702997, z: -93.21875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1636511645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3734823234040795835, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
@@ -3962,7 +4007,7 @@ GameObject:
   - component: {fileID: 1714964892}
   - component: {fileID: 1714964891}
   m_Layer: 0
-  m_Name: New Sprite (1)
+  m_Name: BoundaryCollider
   m_TagString: InteractableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3994,14 +4039,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3801140f18981d54f9d5321aa237778f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MiddleOfEachCut:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
   currentCut: 0
+  verticalBoundary: 1
+  moveOtherCut: 0
+  middlePosition: {x: 0, y: 0}
+  hitPosition: {x: 0, y: 0}
+  spawnPosition: {x: 0, y: 0}
 --- !u!61 &1714964892
 BoxCollider2D:
   m_ObjectHideFlags: 0
