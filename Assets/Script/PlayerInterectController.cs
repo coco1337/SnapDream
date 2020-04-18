@@ -17,6 +17,13 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
+    public bool CanInterectable()
+    {
+        if (throwObject != null)
+            return true;
+        else return false;
+    }
+
     // 물건 옮기기
     public void MoveInteractObject(float axis)
     {
