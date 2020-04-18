@@ -133,11 +133,6 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
-            if (!(player.GetCurrentCutNumber() == player.GetPlayerCutNumber()))
-            {
-                return;
-            }
-
             this.stayUpperCollider = true;
         }
     }

@@ -82,16 +82,29 @@ public class ObjectSyncController : MonoBehaviour
             return;
         }
 
-        float xPos = obj.transform.localPosition.x;
+        float xPos;
 
         // 3번씬 -> 0~5번
         // 4번씬 -> 1~5번
         // 5번씬 -> 2~5번
 
+        // 현재 카메라 x좌표
+        float cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
+
         for (int i = currentCutNum - 3; i < 6; ++i)
         {
             var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
             spawnedObject.layer = 31;
+            if (i < 3)
+            {
+                // 0, 1, 2번 컷
+                xPos = (obj.transform.localPosition.x - cameraX) + eachCut[i].transform.Find("Camera(Clone)").transform.localPosition.x;
+            }
+            else
+            {
+                xPos = obj.transform.localPosition.x;
+            }
+
             spawnedObject.transform.localPosition = new Vector2(xPos, spawnYPos);
             spawnedObject.GetComponent<Rigidbody2D>().velocity = vel;
         }
