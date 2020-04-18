@@ -437,16 +437,16 @@ Transform:
   - {fileID: 3210185524071569363}
   - {fileID: 3210185523277615007}
   - {fileID: 3210185524400947020}
-  - {fileID: 3210185522816424102}
+  - {fileID: 6440910500805372767}
   - {fileID: 3210185523942117546}
   - {fileID: 3210185524691925585}
   - {fileID: 3210185524416742915}
   - {fileID: 3210185523262185443}
   - {fileID: 3210185524231227178}
   - {fileID: 3210185523225021062}
-  - {fileID: 3210185524474219062}
-  - {fileID: 3210185522853437842}
-  - {fileID: 6273481773615003953}
+  - {fileID: 4848636091437269355}
+  - {fileID: 5836769594387405831}
+  - {fileID: 1232188703664637483}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1143,7 +1143,7 @@ PrefabInstance:
     - target: {fileID: 5050364184292474700, guid: 3b697d9ba00d1264483713ef94bcf632,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.5
+      value: 20.29
       objectReference: {fileID: 0}
     - target: {fileID: 5050364184292474700, guid: 3b697d9ba00d1264483713ef94bcf632,
         type: 3}
@@ -1197,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b697d9ba00d1264483713ef94bcf632, type: 3}
---- !u!4 &6273481773615003953 stripped
+--- !u!4 &1232188703664637483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5050364184292474700, guid: 3b697d9ba00d1264483713ef94bcf632,
     type: 3}
@@ -1277,7 +1277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc399a59dcbc77e4fbb9a8e1b0cf630d, type: 3}
---- !u!4 &3210185524474219062 stripped
+--- !u!4 &4848636091437269355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8053859382454307585, guid: bc399a59dcbc77e4fbb9a8e1b0cf630d,
     type: 3}
@@ -1352,7 +1352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e8be3678997f84f8804b5ea50be471, type: 3}
---- !u!4 &3210185522853437842 stripped
+--- !u!4 &5836769594387405831 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9046748396161138122, guid: 27e8be3678997f84f8804b5ea50be471,
     type: 3}
@@ -1437,7 +1437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7409e5059cfa1142955cc6627c449e9, type: 3}
---- !u!4 &3210185522816424102 stripped
+--- !u!4 &6440910500805372767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8497847469919794087, guid: c7409e5059cfa1142955cc6627c449e9,
     type: 3}

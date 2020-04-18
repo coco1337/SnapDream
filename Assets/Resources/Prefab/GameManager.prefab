@@ -63,14 +63,16 @@ MonoBehaviour:
     type: 3}
   cameraRawImage:
   - {fileID: 8400000, guid: 8a7c913a0a018a44985a1c2a3c51cf38, type: 2}
-  - {fileID: 8400000, guid: f22fc31cdd4b05449bde68e6fe62cf79, type: 2}
+  - {fileID: 0}
   - {fileID: 8400000, guid: 6798eca07d2f4b84a911d173da518415, type: 2}
   - {fileID: 8400000, guid: 2eb8f206ec5dbbb48b1272e9cc138449, type: 2}
   - {fileID: 8400000, guid: 7dd79f3637faf9d46a549f9ec78368b9, type: 2}
   - {fileID: 8400000, guid: 1cae77438fe3e234593735e368bd8d4c, type: 2}
-  cameraBoundury: 20
+  cameraBoundury: 19
   spawnPosition: {x: -24, y: -3}
   cutField: {fileID: 0}
+  canvas: {fileID: 0}
+  camImage: []
 --- !u!82 &5194788657549916441
 AudioSource:
   m_ObjectHideFlags: 0

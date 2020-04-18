@@ -105,6 +105,12 @@ public class Player : MonoBehaviour, Damageabel
     public void moveNextCut()
     {
         currentCutNum++;
+
+        //중복호출 방지
+        if (playerCutNum == 5)
+        {
+            GameManager.getInstance().NextCut();
+        }
     }
 
     public bool isMovable()

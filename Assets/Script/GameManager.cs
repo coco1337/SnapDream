@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,11 +34,20 @@ public class GameManager : MonoBehaviour
 
     List<Player> playerList = new List<Player>();
 
+    [SerializeField]
+    Transform canvas;
+
+    [SerializeField]
+    List<GameObject> camImage = new List<GameObject>();
+
+    int currentCut = 0;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Screen.SetResolution(1920, 1080, true);
         instance = FindObjectOfType<GameManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
@@ -47,7 +57,9 @@ public class GameManager : MonoBehaviour
 
     void InitiatingCut()
     {
-        for(int i = 0; i < cutField.childCount; i++)
+        currentCut = 0;
+
+        for (int i = 0; i < cutField.childCount; i++)
         {
             Transform cut = cutField.GetChild(i);
             GameObject tempBackGround = Instantiate(backGround, Vector3.zero, Quaternion.identity);
@@ -76,6 +88,14 @@ public class GameManager : MonoBehaviour
             playerList.Add(tempPlayer.GetComponent<Player>());
 
         }
+
+        for(int i = 1; i < canvas.childCount; i++)
+        {
+            camImage.Add(canvas.GetChild(i).gameObject);
+            camImage[i-1].SetActive(false);
+            camImage[i - 1].GetComponent<RawImage>().texture = cameraRawImage[i-1];
+        }
+        camImage[0].SetActive(true);
     }
 
     static public GameManager getInstance()
@@ -120,6 +140,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine("MoveNextStage");
 
 
+    }
+
+    public void NextCut()
+    {
+        currentCut++;
+        if (currentCut > 5)
+            return;
+        camImage[currentCut].SetActive(true);
     }
 
     IEnumerator MoveNextStage()
