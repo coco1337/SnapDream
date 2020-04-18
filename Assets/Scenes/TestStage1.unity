@@ -273,6 +273,10 @@ MonoBehaviour:
   basePoint: {fileID: 508040882}
   player: {fileID: 1470484555}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &42440614
 Camera:
   m_ObjectHideFlags: 0
@@ -419,6 +423,10 @@ MonoBehaviour:
   basePoint: {fileID: 1565502899}
   player: {fileID: 651774861}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &137372293
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +474,10 @@ MonoBehaviour:
   basePoint: {fileID: 940166083}
   player: {fileID: 296973135}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &137372296
 Camera:
   m_ObjectHideFlags: 0
@@ -810,6 +822,10 @@ MonoBehaviour:
   basePoint: {fileID: 1094717717}
   player: {fileID: 1317640912}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &218338398
 Camera:
   m_ObjectHideFlags: 0
@@ -1069,6 +1085,10 @@ MonoBehaviour:
   basePoint: {fileID: 221942837}
   player: {fileID: 1850963534}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &411035053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,6 +1607,14 @@ MonoBehaviour:
   instantiated: 0
   needSync: 0
   objectSyncController: {fileID: 0}
+  childObjectPair:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  parentObject: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!212 &715329990
@@ -1940,6 +1968,10 @@ MonoBehaviour:
   basePoint: {fileID: 1280274353}
   player: {fileID: 1270451895}
   bounduryValue: 20
+  bounduryPointX:
+  - 0
+  - 0
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!20 &914961634
 Camera:
   m_ObjectHideFlags: 0
@@ -2953,6 +2985,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3734823234040795832, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3734823234040795835, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3700,6 +3737,14 @@ MonoBehaviour:
   instantiated: 0
   needSync: 0
   objectSyncController: {fileID: 0}
+  childObjectPair:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  parentObject: {fileID: 0}
   stay: 0
   exit: 0
 --- !u!212 &2057700853

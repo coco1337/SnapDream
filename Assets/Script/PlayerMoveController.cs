@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMoveControler : MonoBehaviour
+public class PlayerMoveController : MonoBehaviour
 {
     Player playerScript;
     PlayerInterectController interectController;

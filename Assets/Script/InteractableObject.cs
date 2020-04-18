@@ -13,8 +13,11 @@ public class InteractableObject : MonoBehaviour
     public bool instantiated;
     public bool needSync;
     public ObjectSyncController objectSyncController;
+    public InteractableObject[] childObjectPair = new InteractableObject[6];
+    public InteractableObject parentObject;
 
-    public int CutNum => this.player.playerCutNum;
+    public int CutNum => this.player.GetPlayerCutNumber();
+    public int CurrentCutNum => this.player.GetCurrentCutNumber();
     public bool IsInstantiated => this.instantiated;
     public bool NeedSync => this.needSync;
 
@@ -67,6 +70,7 @@ public class InteractableObject : MonoBehaviour
 
     // 물건 밀기
     // 여기서 sync 할 물건 찾아서 같이 이동시켜주기
+
     public void Drag(float axis, float speed)
     {
         if (axis > 0 && this.transform.position.x > player.transform.position.x
@@ -76,7 +80,7 @@ public class InteractableObject : MonoBehaviour
 
             if (this.needSync/*현재 컷인지도 같이 체크*/)
             {
-                objectSyncController.SyncObject(rb.velocity);
+                //objectSyncController.SyncObject(rb.velocity);
             }
         }
     }
@@ -118,10 +122,10 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            // 사실상 물건을 밀고있는 상태
+            // 플레이어와 경계 트리거 동시 접촉
             if (this.needSync)
             {
-
+                this.objectSyncController.SyncObject(childObjectPair);
             }
         }
     }

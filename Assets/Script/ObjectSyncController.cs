@@ -23,14 +23,29 @@ public class ObjectSyncController : MonoBehaviour
             return;
         }
 
-        Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
-        this.collisionCheck[obj.CutNum] = true;
+        // 밀기
+        //if (obj.CutNum == obj.CurrentCutNum)
+        //{
+        //    Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
+            
+        //    // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
+        //    for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
+        //    {
+        //        var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
+        //        obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+        //    }
+        //}
+
+        // 어디다 생성할지 포지션 정해주기
+        //Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
+        //this.collisionCheck[obj.CutNum] = true;
 
         // TODO : eachCut[obj.CutNum]을 통해 해당하는 컷에만 생성해야 함
-        var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
-        spawnedObjects[obj.CutNum] = spawnedObject.GetComponent<InteractableObject>();
-        spawnedObjects[obj.CutNum].Instantiated(true);
-        spawnedObject.transform.localPosition = spawnPosition;
+        //var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
+        //spawnedObjects[obj.CutNum] = spawnedObject.GetComponent<InteractableObject>();
+        //spawnedObjects[obj.CutNum].Instantiated(true);
+        //spawnedObject.transform.localPosition = spawnPosition;
+        // obj.spawnedObjectPair[obj.CutNum] = spawnedObjects[obj.CutNum];
     }
 
     public void ExitCollider(InteractableObject obj)
@@ -47,23 +62,27 @@ public class ObjectSyncController : MonoBehaviour
     /// <param name="obj"></param>
     /// <param name="verticalBoundary"></param>
     /// <param name="colliderPosition"></param>
-    public void SyncObject(Vector2 vel)
+    public void SyncObject(InteractableObject[] objectPair)
     {
-        for (int i = 0; i < 6; ++i)
-        {
-            if (spawnedObjects[i] != null)
-            {
-                Debug.Log("here");
-                spawnedObjects[i].GetComponent<Rigidbody2D>().velocity = vel;
-            }
-        }
+        //for (int i = 0; i < 6; ++i)
+        //{
+        //    if (objectPair[i] != null)
+        //    {
+        //        Debug.Log(i + "번째" );
+        //        // 현재 컷 확인
+        //        if (objectPair[i].CutNum == 0)
+        //        {
+                    
+        //        }
+        //    }
+        //}
     }
 
     private Vector2 GetSyncPosition(InteractableObject obj, bool verticalBoundary, Vector2 colliderLocalPos)
     {
         if (verticalBoundary)
         {
-            // 오른쪽으로 충돌
+            // 오른쪽으로 밀기
             if (obj.transform.localPosition.x > 0)
             {
                 float rightPivot = colliderLocalPos.x - padding;
@@ -72,7 +91,7 @@ public class ObjectSyncController : MonoBehaviour
                 return new Vector2(leftPivot + (obj.transform.localPosition.x - rightPivot), obj.transform.localPosition.y);
                 // return new Vector2(-(obj.transform.localPosition.x) + padding, obj.transform.localPosition.y);
             }
-            // 왼쪽 충돌
+            // 왼쪽으로 밀기
             else
             {
                 float leftPivot = colliderLocalPos.x + padding;
