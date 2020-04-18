@@ -50,7 +50,7 @@ public class PlayerInterectController : MonoBehaviour
     // 물건 옮기기
     public void MoveInteractObject(float axis)
     {
-        if (canInteractable && interactableObject != null && player.isGround)
+        if (interactableObject != null && player.isGround)
         {
 
             interactableObject.Drag(axis, player.dragSpeed);
