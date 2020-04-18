@@ -18,11 +18,11 @@ public class ObjectSyncController : MonoBehaviour
     // 오른쪽 충돌이면 이후 컷부터 변화
     public void InstantiateObjects(int currentCutNum, GameObject obj, Vector2 vel)
     {
+        var InteractableObject = obj.GetComponent<InteractableObject>();
         // 오른쪽 충돌시
         if (obj.transform.localPosition.x > 0)
         {
-            var InteractableObject = obj.GetComponent<InteractableObject>();
-            Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, true, new Vector2(25, 0));
+            Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(25, 0));
             // 다음칸 부터 스폰
             for (int i = currentCutNum + 1; i < 6; ++i)
             {
@@ -34,7 +34,20 @@ public class ObjectSyncController : MonoBehaviour
         // 왼쪽 충돌시
         else
         {
+            Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(-25, 0));
+            // 전칸 부터 스폰
+            if (currentCutNum == 0)
+            {
+                return;
+            }
 
+
+            for (int i = currentCutNum - 1; i < 6; ++i)
+            {
+                var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
+                InteractableObject.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+                spawnedObject.transform.localPosition = spawnPosition;
+            }
         }
     }
 
@@ -98,7 +111,7 @@ public class ObjectSyncController : MonoBehaviour
 
     }
 
-    private Vector2 GetSyncPosition(InteractableObject obj, bool verticalBoundary, Vector2 colliderLocalPos)
+    private Vector2 GetSyncPosition(InteractableObject obj, Vector2 colliderLocalPos)
     {
         // 오른쪽으로 밀기
         if (obj.transform.localPosition.x > 0)
