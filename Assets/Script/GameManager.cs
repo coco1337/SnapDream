@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject lobbyUI;
 
+    [SerializeField]
+    AudioSource audioSource;
+
+    [SerializeField]
+    float SceanChangeTime = 3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +61,11 @@ public class GameManager : MonoBehaviour
 
         exitGameUI.SetActive(false);
         exitStageUI.SetActive(false);
+
+
+        audioSource = this.GetComponent<AudioSource>();
+        audioSource.volume = 0.24f;
+        StartCoroutine("PaidAudio", true);
     }
 
     void InitiatingCut()
@@ -131,6 +142,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(sceneName);
         SceneManager.LoadScene(sceneName);
     }
+
     public void StageClear()
     {
         if (Application.isEditor == true)
@@ -139,7 +151,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ScreenCapture.CaptureScreenshot("..\\Assets\\ScreenShot\\Clear " + sceneName + ".png");
+            ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
 
         }
 
@@ -152,6 +164,7 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine("MoveNextStage");
+        StartCoroutine("PaidAudio", false);
     }
 
     public void ExitStage()
@@ -174,7 +187,25 @@ public class GameManager : MonoBehaviour
 
     IEnumerator MoveNextStage()
     {
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(SceanChangeTime);
         SceneManager.LoadScene(LevelName[sceneNum + 1]);
+    }
+
+    
+
+    IEnumerator PaidAudio(bool paid)
+    {
+        float dirTime = Time.time + SceanChangeTime;
+        while (Time.time < dirTime)
+        {
+            audioSource.volume += (paid) ? 0.01f : -0.018f;
+            if (paid)
+            {
+                if (audioSource.volume > 0.5f)
+                    StopCoroutine("PaidAudio");
+            }
+            Debug.Log(audioSource.volume);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
