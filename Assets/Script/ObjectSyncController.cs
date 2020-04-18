@@ -8,6 +8,7 @@ public class ObjectSyncController : MonoBehaviour
     public float padding;
     public int currentCut;
     public float spawnYPos;
+    public float cameraLength;
 
     public int currentCutNum;
     public InteractableObject InteractableObj;
@@ -20,26 +21,16 @@ public class ObjectSyncController : MonoBehaviour
         // 오른쪽 충돌시
         if (obj.transform.localPosition.x > 0)
         {
-            //Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(25, 0));
-            //// 다음칸 부터 스폰
-            //for (int i = currentCutNum + 1; i < 6; ++i)
-            //{
-            //    var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
-            //    InteractableObject.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-            //    spawnedObject.transform.localPosition = spawnPosition;
-            //}
+
         }
         // 왼쪽 충돌시
         else
         {
-            if (currentCutNum == 0)
+            // 제일 왼쪽 컷들은 물건 왼쪽으로 넘길수 없음
+            if (currentCutNum == 0 || currentCutNum == 3)
             {
                 return;
             }
-
-            //Vector2 spawnPosition = this.GetSyncPosition(InteractableObject, new Vector2(-25, 0));
-
-            // 카메라 가로길이 12, 6
 
             // 현재 카메라 x좌표
             float cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
@@ -48,11 +39,11 @@ public class ObjectSyncController : MonoBehaviour
             float targetCameraX = eachCut[currentCutNum - 1].transform.Find("Camera(Clone)").transform.localPosition.x;
 
             // 아마도 물건 길이 + 1
-            float result = targetCameraX + 6 + 1;
+            float result = targetCameraX + (cameraLength / 2) + 1;
 
             InteractableObject[] childPair = new InteractableObject[6];
 
-            // 전칸부터 스폰
+            // currentNum 전 칸 부터 스폰
             for (int i = currentCutNum - 1; i < 6; ++i)
             {
                 var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
@@ -108,28 +99,6 @@ public class ObjectSyncController : MonoBehaviour
             {
                 objectPair[i].GetComponent<Rigidbody2D>().velocity = vel;
             }
-        }
-    }
-
-    private Vector2 GetSyncPosition(InteractableObject obj, Vector2 colliderLocalPos)
-    {
-        // 오른쪽으로 밀기
-        if (obj.transform.localPosition.x > 0)
-        {
-            float rightPivot = colliderLocalPos.x - padding;
-            float leftPivot = -colliderLocalPos.x + padding;
-
-            return new Vector2(leftPivot + (obj.transform.localPosition.x - rightPivot), obj.transform.localPosition.y);
-            // return new Vector2(-(obj.transform.localPosition.x) + padding, obj.transform.localPosition.y);
-        }
-        // 왼쪽으로 밀기
-        else
-        {
-            float leftPivot = colliderLocalPos.x + padding;
-            float rightPivot = -colliderLocalPos.x - padding;
-
-            return new Vector2(rightPivot + (obj.transform.localPosition.x - leftPivot), obj.transform.localPosition.y);
-            //return new Vector2(-(obj.transform.localPosition.x) - padding, obj.transform.localPosition.y);
         }
     }
 }
