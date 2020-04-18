@@ -50,11 +50,22 @@ public class PlayerInterectController : MonoBehaviour
     // 물건 옮기기
     public void MoveInteractObject(float axis)
     {
-        if (canInteractable && interactableObject != null && player.isGround)
+        if (canInteractable && dragObject != null && player.isGround)
         {
             Debug.Log("asdf");
 
-            interactableObject.Drag(axis, player.dragSpeed);
+            dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(player.GetPlayerState() == Player.PlayerState.Interaction_Ladder)
+        {
+            if(collision.gameObject.CompareTag("Ladder Exit"))
+            {
+                player.realeaseLadder();
+            }
         }
     }
 
