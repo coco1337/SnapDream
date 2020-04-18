@@ -29,10 +29,6 @@ public class InteractableObject : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-        if (this.gameObject.tag != "InteractableObject")
-        {
-            this.gameObject.tag = "InteractableObject";
-        }
     }
 
     // 물건 들어올리기

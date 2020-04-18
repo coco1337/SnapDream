@@ -1622,6 +1622,7 @@ MonoBehaviour:
   middlePosition: {x: 0, y: 0}
   hitPosition: {x: 0, y: 0}
   spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!1 &243733093
 GameObject:
   m_ObjectHideFlags: 0
@@ -6775,6 +6776,7 @@ MonoBehaviour:
   middlePosition: {x: 0, y: 0}
   hitPosition: {x: 0, y: 0}
   spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!1 &1266555282
 GameObject:
   m_ObjectHideFlags: 0
@@ -7063,6 +7065,7 @@ GameObject:
   - component: {fileID: 1289514713}
   - component: {fileID: 1289514712}
   - component: {fileID: 1289514715}
+  - component: {fileID: 1289514716}
   m_Layer: 0
   m_Name: prob
   m_TagString: Drag
@@ -7207,6 +7210,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &1289514716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289514710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7272554817054054a84334f0cb3edaae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHoldableObject: 0
+  player: {fileID: 0}
+  instantiated: 0
+  needSync: 0
+  triggerEntered: 0
+  objectSyncController: {fileID: 0}
+  childObjectPair:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  parentObject: {fileID: 0}
+  stay: 0
+  exit: 0
 --- !u!1001 &1317640910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8905,6 +8936,7 @@ MonoBehaviour:
   middlePosition: {x: 0, y: 0}
   hitPosition: {x: 0, y: 0}
   spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!1 &1582182236
 GameObject:
   m_ObjectHideFlags: 0
@@ -9134,6 +9166,7 @@ GameObject:
   - component: {fileID: 1603567175}
   - component: {fileID: 1603567174}
   - component: {fileID: 1603567176}
+  - component: {fileID: 1603567177}
   m_Layer: 0
   m_Name: prob
   m_TagString: Drag
@@ -9278,6 +9311,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &1603567177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603567171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7272554817054054a84334f0cb3edaae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHoldableObject: 0
+  player: {fileID: 0}
+  instantiated: 0
+  needSync: 0
+  triggerEntered: 0
+  objectSyncController: {fileID: 0}
+  childObjectPair:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  parentObject: {fileID: 0}
+  stay: 0
+  exit: 0
 --- !u!1 &1606536906
 GameObject:
   m_ObjectHideFlags: 0
@@ -10013,6 +10074,7 @@ MonoBehaviour:
   middlePosition: {x: 0, y: 0}
   hitPosition: {x: 0, y: 0}
   spawnPosition: {x: 0, y: 0}
+  interactableObj: {fileID: 0}
 --- !u!1 &1758088334
 GameObject:
   m_ObjectHideFlags: 0
