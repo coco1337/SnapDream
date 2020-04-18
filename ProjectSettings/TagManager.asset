@@ -58,6 +58,9 @@ TagManager:
   - name: Ladder
     uniqueID: 1413470803
     locked: 0
+  - name: Interactable
+    uniqueID: 128266361
+    locked: 0
   - name: Player
     uniqueID: 3751486187
     locked: 0
