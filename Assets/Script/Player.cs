@@ -175,11 +175,11 @@ public class Player : MonoBehaviour, Damageabel
 
     public void realeaseDrag()
     {
+        animator.SetFloat("dragSpeed", 0);
         if (playerState == PlayerState.Interaction_Drag)
         {
             playerState = PlayerState.Idle;
         }
-        animator.SetFloat("dragSpeed", 0);
     }
 
     public void getThrow()
