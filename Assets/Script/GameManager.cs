@@ -11,6 +11,11 @@ public class GameManager : MonoBehaviour
     string sceneName;
     int sceneNum;
 
+    [SerializeField]
+    GameObject Background;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +24,8 @@ public class GameManager : MonoBehaviour
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
     }
+
+    i
 
     static public GameManager getInstance()
     {
