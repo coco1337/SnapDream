@@ -53,23 +53,6 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
-
-    public void getLadder()
-    {
-        if(playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
-        {
-            playerState = PlayerState.Interaction_Ladder;
-        }
-    }
-
-    public void realeaseLadder()
-    {
-        if(playerState == PlayerState.Interaction_Ladder)
-        {
-            playerState = PlayerState.Idle;
-        }
-    }
-
     public void PlayerLadderMove(float axis)
     {
         if (playerState == PlayerState.Interaction_Ladder)
@@ -79,6 +62,8 @@ public class Player : MonoBehaviour, Damageabel
             rigidbody.velocity = new Vector2(0, speed * axis);
         }
     }
+
+
 
     public void PlayerJump()
     {
@@ -117,6 +102,55 @@ public class Player : MonoBehaviour, Damageabel
             return true;
         else
             return false;
+    }
+
+    public void getLadder()
+    {
+        if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
+        {
+            playerState = PlayerState.Interaction_Ladder;
+        }
+    }
+
+    public void realeaseLadder()
+    {
+        if (playerState == PlayerState.Interaction_Ladder)
+        {
+            playerState = PlayerState.Idle;
+        }
+    }
+
+
+    public void getDrag()
+    {
+        if (playerState == PlayerState.Move)
+        {
+            playerState = PlayerState.Interaction_Drag;
+        }
+    }
+
+    public void realeaseDrag()
+    {
+        if (playerState == PlayerState.Interaction_Drag)
+        {
+            playerState = PlayerState.Idle;
+        }
+    }
+
+    public void getThrow()
+    {
+        if (playerState == PlayerState.Idle)
+        {
+            playerState = PlayerState.Interaction_Throw;
+        }
+    }
+
+    public void realeaseThrow()
+    {
+        if (playerState == PlayerState.Interaction_Throw)
+        {
+            playerState = PlayerState.Idle;
+        }
     }
 
     public void ThrowObject()
