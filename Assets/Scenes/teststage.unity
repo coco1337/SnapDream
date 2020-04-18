@@ -10187,6 +10187,11 @@ PrefabInstance:
       propertyPath: throwPower
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3734823234040795833, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
+        type: 3}
+      propertyPath: playerCutNum
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3734823234040795834, guid: a12a50e8164adc64fbfb3f2cd3659d9b,
         type: 3}
       propertyPath: m_SortingOrder
@@ -10255,68 +10260,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1470484553}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1476298120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1476298122}
-  - component: {fileID: 1476298121}
-  m_Layer: 0
-  m_Name: ObjectSyncManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1476298121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476298120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d174ba4eacbbe6f4db2eaf0d7bacc14e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eachCut:
-  - {fileID: 508040881}
-  - {fileID: 1094717716}
-  - {fileID: 221942836}
-  - {fileID: 1280274352}
-  - {fileID: 940166082}
-  - {fileID: 1565502898}
-  spawnedObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  collisionCheck: 000000000000
-  instantiated: 000000000000
-  padding: 0
-  currentCut: 0
-  currentCutNum: 0
---- !u!4 &1476298122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476298120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -89.26586, y: -1.0339777, z: -11.34349}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1494046317
 GameObject:
   m_ObjectHideFlags: 0
@@ -13794,5 +13737,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjectSyncManager
       objectReference: {fileID: 0}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[0]
+      value: 
+      objectReference: {fileID: 508040881}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[1]
+      value: 
+      objectReference: {fileID: 1094717716}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[2]
+      value: 
+      objectReference: {fileID: 221942836}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[3]
+      value: 
+      objectReference: {fileID: 1280274352}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[4]
+      value: 
+      objectReference: {fileID: 940166082}
+    - target: {fileID: 409920521484565919, guid: f51cf826886833046a54f39922743efb,
+        type: 3}
+      propertyPath: eachCut.Array.data[5]
+      value: 
+      objectReference: {fileID: 1565502898}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f51cf826886833046a54f39922743efb, type: 3}

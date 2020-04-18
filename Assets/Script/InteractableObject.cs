@@ -35,7 +35,7 @@ public class InteractableObject : MonoBehaviour
 
     private void Update()
     {
-        if(rb.velocity.y > 0)
+        if(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5)
         {
             this.gameObject.layer = 31;
         }
@@ -44,7 +44,7 @@ public class InteractableObject : MonoBehaviour
             this.gameObject.layer = 0;
         }
 
-        if (this.transform.localPosition.y < -7)
+        if (this.transform.localPosition.y < -7 || this.transform.localPosition.y > 6)
         {
             Destroy(this.gameObject);
         }
