@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, Damageabel
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
-    [SerializeField] float throwAnimationTime = 2f;
+    [SerializeField] float throwAnimationTime = 1f;
 
     public enum PlayerState
     {
@@ -193,7 +193,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void ThrowObject()
     {
-        playerState = PlayerState.Interaction_Throw;
+        animator.SetTrigger("throwObject");
         StartCoroutine(EndThrowObject());
     }
 
