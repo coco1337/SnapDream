@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 508040882}
   player: {fileID: 1470484555}
-  bounduryValue: 20
+  bounduryValue: 24
 --- !u!20 &42440614
 Camera:
   m_ObjectHideFlags: 0
@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 88198009}
   - component: {fileID: 88198011}
   - component: {fileID: 88198010}
-  - component: {fileID: 88198012}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -358,9 +357,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 88198008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cb315ee4be5a1468cec93d134e9f81, type: 3}
+  m_Script: {fileID: 11500000, guid: 78ef0c1d7ce2ff3429b45ab03f88fa18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  basePoint: {fileID: 1565502899}
+  player: {fileID: 651774861}
+  bounduryValue: 24
 --- !u!20 &88198011
 Camera:
   m_ObjectHideFlags: 0
@@ -404,21 +406,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &88198012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88198008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78ef0c1d7ce2ff3429b45ab03f88fa18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  basePoint: {fileID: 1565502899}
-  player: {fileID: 651774861}
-  bounduryValue: 20
 --- !u!1 &137372293
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 940166083}
   player: {fileID: 296973135}
-  bounduryValue: 20
+  bounduryValue: 24
 --- !u!20 &137372296
 Camera:
   m_ObjectHideFlags: 0
@@ -848,7 +835,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 338517876}
-  - component: {fileID: 338517877}
   - component: {fileID: 338517878}
   - component: {fileID: 338517879}
   m_Layer: 0
@@ -872,18 +858,6 @@ Transform:
   m_Father: {fileID: 221942837}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 180, y: 180, z: 180}
---- !u!114 &338517877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 338517875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cb315ee4be5a1468cec93d134e9f81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &338517878
 Camera:
   m_ObjectHideFlags: 0
@@ -1533,7 +1507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 1280274353}
   player: {fileID: 1270451895}
-  bounduryValue: 20
+  bounduryValue: 24
 --- !u!20 &914961634
 Camera:
   m_ObjectHideFlags: 0
