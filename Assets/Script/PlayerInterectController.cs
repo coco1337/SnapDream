@@ -53,7 +53,15 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (interactableObject != null && player.isGround)
         {
-            dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed);
+            if (axis > 0 && dragObject.transform.position.x > player.transform.position.x
+                || axis < 0 && dragObject.transform.position.x < player.transform.position.x)
+            {
+                dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed);
+            }
+            else
+            {
+                player.realeaseDrag();
+            }
         }
     }
 
