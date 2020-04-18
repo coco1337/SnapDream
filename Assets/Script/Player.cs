@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, Damageabel
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
-    [SerializeField] float throwAnimationTime = 3f;
+    [SerializeField] float throwAnimationTime = 2f;
 
     public enum PlayerState
     {
@@ -82,8 +82,8 @@ public class Player : MonoBehaviour, Damageabel
     {
         if (playerState == PlayerState.Interaction_Ladder)
         {
-            animator.SetFloat("ladderSpeed", Mathf.Abs(axis));
-            animator.speed = axis;
+            animator.SetFloat("ladderSpeed", Mathf.Abs(axis)+0.2f);
+            animator.speed = Mathf.Abs(axis);
             rigidbody.velocity = new Vector2(0, speed * axis);
         }
     }
@@ -159,6 +159,7 @@ public class Player : MonoBehaviour, Damageabel
         animator.speed = 1;
         if (playerState == PlayerState.Interaction_Ladder)
         {
+            animator.SetFloat("ladderSpeed", 0);
             playerState = PlayerState.Idle;
         }
     }

@@ -17,6 +17,19 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
+    private void FixedUpdate()
+    {
+        if(player.GetPlayerState() == Player.PlayerState.Interaction_Drag && dragObject == null)
+        {
+            player.realeaseDrag();
+        }
+
+        if(player.GetPlayerState() == Player.PlayerState.Interaction_Ladder && ladderTarget == null)
+        {
+            player.realeaseLadder();
+        }
+    }
+
     public bool CanInterectable()
     {
         if (throwObject != null)
