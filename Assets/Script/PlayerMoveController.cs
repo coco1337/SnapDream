@@ -26,7 +26,7 @@ public class PlayerMoveController : MonoBehaviour
                 playerScript.PlayerMove(inputAxis);
 
                 //상호작용중이고 움직일때만 동작
-                if (interectController.isInteracting && playerScript.GetPlayerState() == Player.PlayerState.Move)
+                if (playerScript.GetPlayerState() == Player.PlayerState.Interaction_Drag)
                     interectController.MoveInteractObject(inputAxis);
 
                 if (Input.GetKeyDown(KeyCode.Z) && playerScript.IsJumpable())

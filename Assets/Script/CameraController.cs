@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
     public Transform basePoint;
     public Transform player;
 
-    public float bounduryValue = 24f;
+    public float bounduryValue = 20f;
     float[] bounduryPointX = new float[2];
 
     Vector3 targetPosition;

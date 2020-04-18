@@ -9,6 +9,7 @@ TagManager:
   - InteractableObject
   - BoundaryCollider
   - Ladder
+  - Ladder Exit
   layers:
   - Default
   - TransparentFX
