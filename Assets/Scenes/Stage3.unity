@@ -199,6 +199,12 @@ PrefabInstance:
       propertyPath: cutField
       value: 
       objectReference: {fileID: 485221138}
+    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: backGround
+      value: 
+      objectReference: {fileID: 1120880733358897351, guid: 12563aeda0d5bd84c965e21100973e6a,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4630849625f4f87b2444ee298bef, type: 3}
 --- !u!4 &485221138 stripped

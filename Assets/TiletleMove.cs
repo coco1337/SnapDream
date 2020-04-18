@@ -25,8 +25,8 @@ public class TiletleMove : MonoBehaviour
     {
         if(Time.time < directionTime)
         {
-            float dirPositionY = transform.position.y + ((moveDirection) ? maxMovePosition : -maxMovePosition);
-            rectTransform.position = new Vector3(960, Mathf.Lerp(transform.position.y, dirPositionY, (moveTime - (directionTime - Time.time)) / moveTime), 0);
+            Vector3 movePosition = new Vector3(960, transform.position.y + ((moveDirection) ? maxMovePosition : -maxMovePosition) * Time.deltaTime/moveTime, 0);
+            rectTransform.position = movePosition;
         }
         else
         {
