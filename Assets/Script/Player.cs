@@ -9,7 +9,7 @@ public class Player : MonoBehaviour, Damageabel
     SpriteRenderer spriteRenderer;
     public float speed = 4;
     public float jumpPower = 5;
-    public int playerCutNum;
+    int playerCutNum;
     int curretnCutNum = 0;
     public bool isGround;
     public Vector2 holdingPosition;
@@ -52,6 +52,17 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
+
+    public void getLadder()
+    {
+
+    }
+
+    public void realeaseLadder()
+    {
+
+    }
+
     public void PlayerLadderMove(float axis)
     {
 
@@ -83,21 +94,6 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = Vector2.zero;
     }
 
-
-    public void PlayerAttacked()
-    {
-        PlayerDie();
-    }
-
-    void PlayerDie()
-    {
-        playerState = PlayerState.DIe;
-        //중복호출 방지
-        //5번 캐릭터는 최후에 죽으니
-        if(playerCutNum == 5)
-            GameManager.getInstance().StageRestart();
-    }
-
     public PlayerState GetPlayerState()
     {
         return playerState;    
@@ -120,13 +116,27 @@ public class Player : MonoBehaviour, Damageabel
         return playerCutNum;
     }
 
+    public int GetCurrentCutNumber()
+    {
+        return curretnCutNum;
+    }
+
+
     public void Hit(float damage)
     {
-        throw new System.NotImplementedException();
+        PlayerHealth -= damage;
+        if(PlayerHealth <= 0)
+            DieObject();
     }
 
     public void DieObject()
     {
-        throw new System.NotImplementedException();
+        playerState = PlayerState.DIe;
+        //중복호출 방지
+        //5번 캐릭터는 최후에 죽으니
+        if (playerCutNum == 5)
+            GameManager.getInstance().StageRestart();
     }
+
+    
 }
