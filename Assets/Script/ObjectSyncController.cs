@@ -34,12 +34,12 @@ public class ObjectSyncController : MonoBehaviour
             Vector2 spawnPosition = this.GetSyncPosition(obj, verticalBoundary, colliderLocalPos);
             Instantiate(obj.gameObject, eachCut[1].transform);
             // 특정 컷에 생성하게 예외 추가해야 함, 현재 컷에서 오른쪽으로 밀었을때
-            //for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
-            //{
-            //    var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
-            //    obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
-            //    spawnedObject.transform.localPosition = spawnPosition;
-            //}
+            for (int i = obj.CurrentCutNum + 1; i < 6; ++i)
+            {
+                var spawnedObject = Instantiate(obj.gameObject, eachCut[obj.CutNum].transform);
+                obj.childObjectPair[i] = spawnedObject.GetComponent<InteractableObject>();
+                spawnedObject.transform.localPosition = spawnPosition;
+            }
         }
 
         //if (obj.CutNum == obj.CurrentCutNum)
