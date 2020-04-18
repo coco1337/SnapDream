@@ -217,7 +217,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator PaidImage(bool paid)
     {
-
+        if(!paid && sceneName != "Lobby")
+            yield return new WaitForSeconds(1);
         float dirTime = Time.time + (paid ? SceanChangeTime/2 : SceanChangeTime);
         paidImage.gameObject.SetActive(true);
         while (Time.time < dirTime)

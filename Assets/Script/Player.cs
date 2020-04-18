@@ -122,7 +122,7 @@ public class Player : MonoBehaviour, Damageabel
     public void playerStop()
     {
         playerState = PlayerState.Stop;
-        animator.SetBool("stop", true);
+        animator.speed = 0f;
         foreach (var collider in transform.GetComponents<BoxCollider2D>())
         {
             collider.enabled = false;
