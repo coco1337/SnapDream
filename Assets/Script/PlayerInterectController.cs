@@ -9,6 +9,7 @@ public class PlayerInterectController : MonoBehaviour
     public GameObject holdingObject;
     public bool isHoldingObject;
     public bool isInteracting;
+    public GameObject ladderTarget = null;
     Player player;
 
     private InteractableObject interactableObject;
@@ -18,7 +19,9 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
-    public void getLadder() { }
+    public void getLadder()
+    {
+    }
 
     public void InteractObject()
     {
@@ -54,14 +57,22 @@ public class PlayerInterectController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "InteractableObject" && collision.transform.name == "Clear")
-        {
-            GameManager.getInstance().StageClear();
-        }
         if (collision.gameObject.tag == "InteractableObject")
         {
-            canInteractable = true;
-            interactableObject = collision.gameObject.GetComponent<InteractableObject>();
+            if (collision.transform.name == "Clear")
+            {
+                GameManager.getInstance().StageClear();
+            }
+
+            else
+            {
+                canInteractable = true;
+                interactableObject = collision.gameObject.GetComponent<InteractableObject>();
+            }
+        }
+        else if (collision.gameObject.CompareTag("Ladder"))
+        {
+            ladderTarget = collision.gameObject;
         }
     }
 
@@ -71,6 +82,11 @@ public class PlayerInterectController : MonoBehaviour
         {
             canInteractable = false;
             // interactableObject = null;
+        }
+
+        else if (collision.gameObject.CompareTag("Ladder"))
+        {
+            ladderTarget = null;
         }
     }
 }
