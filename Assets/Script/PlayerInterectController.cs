@@ -72,14 +72,15 @@ public class PlayerInterectController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (player.GetPlayerState() == Player.PlayerState.Interaction_Ladder)
-        {
-            if (collision.gameObject.CompareTag("Ladder Exit"))
-            {
-                player.realeaseLadder();
-            }
-        }
+    { 
+    //{
+    //    if (player.GetPlayerState() == Player.PlayerState.Interaction_Ladder)
+    //    {
+    //        if (collision.gameObject.CompareTag("Ladder Exit"))
+    //        {
+    //            player.realeaseLadder();
+    //        }
+    //    }
 
 
         if (collision.gameObject.CompareTag("Ladder"))

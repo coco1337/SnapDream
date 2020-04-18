@@ -19,10 +19,8 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField]
     int playerCutNum;
     [SerializeField]
-    int curretnCutNum = 0;
+    int currentCutNum = 0;
     public bool isGround;
-    public Vector2 holdingPosition;
-    public Vector2 releasePosition;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
     [SerializeField] float throwAnimationTime = 3f;
@@ -34,9 +32,10 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField]
     PlayerState playerState;
 
+
     private void Start()
     {
-        curretnCutNum = 0;
+        currentCutNum = 0;
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -45,6 +44,11 @@ public class Player : MonoBehaviour, Damageabel
     void Update()
     {
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+    }
+
+    public void SetPlayerCutNumber(int i)
+    {
+        playerCutNum = i;
     }
 
     public void PlayerMove(float axis)
@@ -100,14 +104,14 @@ public class Player : MonoBehaviour, Damageabel
 
     public void moveNextCut()
     {
-        curretnCutNum++;
+        currentCutNum++;
     }
 
     public bool isMovable()
     {
         if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw)
             return false;
-        return curretnCutNum <= playerCutNum;
+        return currentCutNum <= playerCutNum;
     }
 
     public void playerStop()
@@ -198,7 +202,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public int GetCurrentCutNumber()
     {
-        return curretnCutNum;
+        return currentCutNum;
     }
 
 
