@@ -44,15 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eachCut: []
-  spawnedObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  collisionCheck: 000000000000
-  instantiated: 000000000000
   padding: 0
   currentCut: 0
+  spawnYPos: -6
   currentCutNum: 0
