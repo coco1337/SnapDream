@@ -17,30 +17,6 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
-
-    public void InteractObject()
-    {
-        if (!canInteractable && holdingObject == null)
-        {
-            return;
-        }
-        if (!this.isHoldingObject)
-        {
-            //interactableObject.Hold();
-            this.holdingObject = interactableObject.gameObject;
-            isHoldingObject = true;
-        }
-        else
-        {
-            //this.holdingObject.GetComponent<InteractableObject>().Release();
-            holdingObject = null;
-            isHoldingObject = false;
-        }
-
-        // Ladder의 경우
-        // 장난감 상자의 경우
-        // 무거운 상자의 경우
-    }
     public bool CanInterectable()
     {
         if (throwObject != null)
