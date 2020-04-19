@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     AudioSource audioBGMSource;
     [SerializeField]
     AudioSource audioCutChangeSource;
+    [SerializeField]
+    AudioSource audioStageClearSource;
 
     [SerializeField]
     float SceanChangeTime = 3f;
@@ -69,9 +71,10 @@ public class GameManager : MonoBehaviour
 
 
         audioBGMSource = this.GetComponent<AudioSource>();
-        audioBGMSource.volume = 0.24f;
-        StartCoroutine("fadeAudio", true);
+        audioBGMSource.volume = 0.1f;
+        audioStageClearSource.volume = 0.3f;
 
+        StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
     }
 
@@ -153,16 +156,8 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        if (Application.isEditor == true)
-        {
-            ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
-        }
-        else
-        {
-            ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
-
-        }
-
+        ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
+        audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {
             foreach (var player in playerList)
@@ -211,7 +206,7 @@ public class GameManager : MonoBehaviour
             audioBGMSource.volume += (fade) ? 0.01f : -0.018f;
             if (fade)
             {
-                if (audioBGMSource.volume > 0.5f)
+                if (audioBGMSource.volume > 0.3f)
                     StopCoroutine("fadeAudio");
             }
             yield return new WaitForSeconds(0.1f);
