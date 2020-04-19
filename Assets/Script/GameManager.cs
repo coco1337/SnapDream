@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
     {
         if (Application.isEditor == true)
         {
-            ScreenCapture.CaptureScreenshot("Assets\\ScreenShot\\Clear " + sceneName + ".png");
+            ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
         }
         else
         {
