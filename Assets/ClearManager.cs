@@ -8,8 +8,6 @@ public class ClearManager : MonoBehaviour
 {
 
     [SerializeField]
-    string[] stageName;
-    [SerializeField]
     int ChapterNum = 0;
     [SerializeField]
     int curretnStageNum = 0;
@@ -21,8 +19,6 @@ public class ClearManager : MonoBehaviour
 
     AudioSource audioSource;
     bool canInteratable = true;
-    [SerializeField]
-    Text text;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +28,6 @@ public class ClearManager : MonoBehaviour
         StartCoroutine("PaidImage", true);
         StartCoroutine("PaidAudio", true);
         canInteratable = true;
-        text.text = Application.dataPath.ToString();
     }
 
     // Update is called once per frame
@@ -42,43 +37,10 @@ public class ClearManager : MonoBehaviour
         {
             if (Input.anyKeyDown || Input.GetMouseButtonDown(1))
             {
-                if(curretnStageNum < stageName.Length - 1)
-                {
-                    canInteratable = false;
-                    StartCoroutine("ChangeImage");
-
-                }
-                else
-                {
-                    StartCoroutine("PaidAudio", false);
-                    StartCoroutine("PaidImage", false);
-                }
+                StartCoroutine("PaidAudio", false);
+                StartCoroutine("PaidImage", false);
             }
         }
-    }
-
-    IEnumerator ChangeImage()
-    {
-        float dirTime = Time.time + SceanChangeTime / 2;
-        paidImage.gameObject.SetActive(true);
-        while (Time.time < dirTime)
-        {
-            paidImage.color = new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.01f);
-            yield return new WaitForSeconds(0.01f);
-        }
-        
-        image.sprite = Resources.Load<Sprite>(Application.dataPath + @"\Resources\Clear" + stageName[curretnStageNum]+".jpg");
-        curretnStageNum++;
-        dirTime = Time.time + SceanChangeTime / 2;
-        while (Time.time < dirTime)
-        {
-            paidImage.color = new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a - 0.01f);
-            yield return new WaitForSeconds(0.01f);
-        }
-        
-
-        paidImage.gameObject.SetActive(false);
-        canInteratable = true;
     }
 
 
@@ -109,6 +71,6 @@ public class ClearManager : MonoBehaviour
         if (paid)
             paidImage.gameObject.SetActive(false);
         else
-            SceneManager.LoadScene(stageName[curretnStageNum]);
+            SceneManager.LoadScene("End");
     }
 }
