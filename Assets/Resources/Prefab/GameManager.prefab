@@ -55,7 +55,7 @@ MonoBehaviour:
   - Chapter1 Clear
   - Stage5
   - Stage6
-  - Lobby
+  - Chapter2 Clear
   - End
   backGround: {fileID: 3210185523473565243, guid: e5ce78c98199d9545bc3494f5bcf27ac,
     type: 3}
