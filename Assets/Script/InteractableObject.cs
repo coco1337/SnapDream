@@ -9,14 +9,15 @@ public class InteractableObject : MonoBehaviour
     public bool isHoldableObject;
 
     private Rigidbody2D rb;
+    private ObjectSoundController sfx;
     public Player player;
     public bool instantiatedForDrag;
     public bool needSync;
-    public bool triggerEntered;
     public bool stayUpperCollider;
     public ObjectSyncController objectSyncController;
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
+
 
     public int CutNum => this.player.GetPlayerCutNumber();
     public int CurrentCutNum => this.player.GetCurrentCutNumber();
@@ -29,6 +30,7 @@ public class InteractableObject : MonoBehaviour
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        sfx = this.GetComponent<ObjectSoundController>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
     }
 
@@ -45,16 +47,21 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    // 물건 밀기
-    // 여기서 sync 할 물건 찾아서 같이 이동시켜주기
-
     public void Drag(float axis, float speed)
     {
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
 
-        if (this.needSync && (this.CutNum == this.CurrentCutNum))
+        if (this.CutNum == this.CurrentCutNum)
         {
-            objectSyncController.SyncObject(this.childObjectPair, rb.velocity);
+            if (axis != 0)
+                sfx.TurnOnSound();
+            else
+                sfx.TurnOffSound();
+
+            if (this.needSync)
+            {
+                objectSyncController.SyncObject(this.childObjectPair, rb.velocity);
+            }
         }
     }
 
@@ -87,8 +94,8 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
-                rb.velocity = Vector2.zero;
+            //if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
+            //    rb.velocity = Vector2.zero;
             player = collision.gameObject.GetComponent<Player>();
         }
 
@@ -141,5 +148,7 @@ public class InteractableObject : MonoBehaviour
         {
             this.stayUpperCollider = false;
         }
+
+        this.sfx.TurnOffSound();
     }
 }
