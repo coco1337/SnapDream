@@ -79,7 +79,7 @@ MonoBehaviour:
   lobbyUI: {fileID: 2831608082925456667}
   audioSource: {fileID: 0}
   SceanChangeTime: 4
-  paidImage: {fileID: 7335480135191684901}
+  fadingImage: {fileID: 7335480135191684901}
 --- !u!82 &5194788657549916441
 AudioSource:
   m_ObjectHideFlags: 0
