@@ -58,7 +58,7 @@ MonoBehaviour:
   - Stage6
   - Chapter2 Clear
   - End
-  backGround: {fileID: 3210185523473565243, guid: e5ce78c98199d9545bc3494f5bcf27ac,
+  backGround: {fileID: 3210185523473565243, guid: aa1c09554b224e24d924a5560c771aac,
     type: 3}
   player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
   cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,
@@ -93,7 +93,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f5790bb752723fd48a0c169d149346cf, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 159749295c00eb0429d164b347e89eb3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.3
   m_Pitch: 1
@@ -504,7 +504,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 71e982b322b92384a84fcc370aa43fbf,
+      objectReference: {fileID: 21300000, guid: 426887104f9679f44acfd42f74f58930,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95ce64af2794ce7469851de577e67d82, type: 3}
