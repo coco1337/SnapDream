@@ -10,7 +10,7 @@ public class InteractableObject : MonoBehaviour
 
     private Rigidbody2D rb;
     public Player player;
-    public bool instantiated;
+    public bool instantiatedForDrag;
     public bool needSync;
     public bool triggerEntered;
     public bool stayUpperCollider;
@@ -20,7 +20,7 @@ public class InteractableObject : MonoBehaviour
 
     public int CutNum => this.player.GetPlayerCutNumber();
     public int CurrentCutNum => this.player.GetCurrentCutNumber();
-    public bool IsInstantiated => this.instantiated;
+    public bool IsInstantiated => this.instantiatedForDrag;
     public bool NeedSync => this.needSync;
 
     public bool stay;
@@ -66,7 +66,7 @@ public class InteractableObject : MonoBehaviour
 
     public void Instantiated(bool flag)
     {
-        this.instantiated = flag;
+        this.instantiatedForDrag = flag;
     }
 
     public void SyncNeeded(bool flag)
@@ -110,8 +110,12 @@ public class InteractableObject : MonoBehaviour
             else
             {
                 Debug.Log("밀기");
-                objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
-                    this.gameObject, rb.velocity);
+                if (!this.instantiatedForDrag)
+                {
+                    objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
+                        this.gameObject, rb.velocity);
+                    this.instantiatedForDrag = true;
+                }
             }
         }
     }
