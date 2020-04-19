@@ -144,8 +144,9 @@ public class GameManager : MonoBehaviour
 
     public void StageRestart()
     {
-        Debug.Log(sceneName);
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine("MoveStage", sceneName);
+        StartCoroutine("PaidAudio", false);
+        StartCoroutine("PaidImage", false);
     }
 
     public void StageClear()
@@ -168,7 +169,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        StartCoroutine("MoveNextStage");
+        StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
         StartCoroutine("PaidAudio", false);
         StartCoroutine("PaidImage", false);
     }
@@ -191,10 +192,10 @@ public class GameManager : MonoBehaviour
         camImage[currentCut].SetActive(true);
     }
 
-    IEnumerator MoveNextStage()
+    IEnumerator MoveStage(string sceneName)
     {
         yield return new WaitForSeconds(SceanChangeTime);
-        SceneManager.LoadScene(LevelName[sceneNum + 1]);
+        SceneManager.LoadScene(sceneName);
     }
 
     

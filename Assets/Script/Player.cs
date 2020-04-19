@@ -226,6 +226,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void DieObject()
     {
+        playerStop();
         playerState = PlayerState.DIe;
         //중복호출 방지
         //5번 캐릭터는 최후에 죽으니
