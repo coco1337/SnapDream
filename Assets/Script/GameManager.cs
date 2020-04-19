@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            StageRestart();
+            SceneManager.LoadScene(sceneName);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
