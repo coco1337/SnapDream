@@ -66,7 +66,8 @@ public class ClearManager : MonoBehaviour
             paidImage.color = new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.01f);
             yield return new WaitForSeconds(0.01f);
         }
-        image.sprite = Resources.Load<Sprite>(@"\\Resources\\Clear" + stageName[curretnStageNum]+ ".jpge");
+        
+        image.sprite = Resources.Load<Sprite>(Application.dataPath + @"\Resources\Clear" + stageName[curretnStageNum]+".jpg");
         curretnStageNum++;
         dirTime = Time.time + SceanChangeTime / 2;
         while (Time.time < dirTime)
