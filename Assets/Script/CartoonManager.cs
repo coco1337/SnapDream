@@ -103,5 +103,6 @@ public class CartoonManager : MonoBehaviour
             paidImage.gameObject.SetActive(false);
         else
             SceneManager.LoadScene("Stage1");
+        
     }
 }
