@@ -42,7 +42,9 @@ public class GameManager : MonoBehaviour
     GameObject lobbyUI;
 
     [SerializeField]
-    AudioSource audioSource;
+    AudioSource audioBGMSource;
+    [SerializeField]
+    AudioSource audioCutChangeSource;
 
     [SerializeField]
     float SceanChangeTime = 3f;
@@ -66,8 +68,8 @@ public class GameManager : MonoBehaviour
         exitStageUI.SetActive(false);
 
 
-        audioSource = this.GetComponent<AudioSource>();
-        audioSource.volume = 0.24f;
+        audioBGMSource = this.GetComponent<AudioSource>();
+        audioBGMSource.volume = 0.24f;
         StartCoroutine("fadeAudio", true);
 
         StartCoroutine("fadeImage", true);
@@ -189,6 +191,7 @@ public class GameManager : MonoBehaviour
         currentCut++;
         if (currentCut > 5)
             return;
+        audioCutChangeSource.Play();
         camImage[currentCut].SetActive(true);
     }
 
@@ -205,10 +208,10 @@ public class GameManager : MonoBehaviour
         float dirTime = Time.time + SceanChangeTime;
         while (Time.time < dirTime)
         {
-            audioSource.volume += (fade) ? 0.01f : -0.018f;
+            audioBGMSource.volume += (fade) ? 0.01f : -0.018f;
             if (fade)
             {
-                if (audioSource.volume > 0.5f)
+                if (audioBGMSource.volume > 0.5f)
                     StopCoroutine("fadeAudio");
             }
             yield return new WaitForSeconds(0.1f);
