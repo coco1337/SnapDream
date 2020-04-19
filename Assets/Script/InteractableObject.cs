@@ -87,8 +87,8 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
-                rb.velocity = Vector2.zero;
+            //if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
+            //    rb.velocity = Vector2.zero;
             player = collision.gameObject.GetComponent<Player>();
         }
 
