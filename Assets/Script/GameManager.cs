@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     float SceanChangeTime = 3f;
 
     [SerializeField]
-    Image paidImage;
+    Image fadingImage;
 
     // Start is called before the first frame update
     void Start()
@@ -68,9 +68,9 @@ public class GameManager : MonoBehaviour
 
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = 0.24f;
-        StartCoroutine("PaidAudio", true);
+        StartCoroutine("fadeAudio", true);
 
-        StartCoroutine("PaidImage", true);
+        StartCoroutine("fadeImage", true);
     }
 
     void InitiatingCut()
@@ -145,8 +145,8 @@ public class GameManager : MonoBehaviour
     public void StageRestart()
     {
         StartCoroutine("MoveStage", sceneName);
-        StartCoroutine("PaidAudio", false);
-        StartCoroutine("PaidImage", false);
+        StartCoroutine("fadeAudio", false);
+        StartCoroutine("fadeImage", false);
     }
 
     public void StageClear()
@@ -170,8 +170,8 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
-        StartCoroutine("PaidAudio", false);
-        StartCoroutine("PaidImage", false);
+        StartCoroutine("fadeAudio", false);
+        StartCoroutine("stageCLearfadeImage", false);
     }
 
     public void ExitStage()
@@ -200,35 +200,49 @@ public class GameManager : MonoBehaviour
 
     
 
-    IEnumerator PaidAudio(bool paid)
+    IEnumerator fadeAudio(bool fade)
     {
         float dirTime = Time.time + SceanChangeTime;
         while (Time.time < dirTime)
         {
-            audioSource.volume += (paid) ? 0.01f : -0.018f;
-            if (paid)
+            audioSource.volume += (fade) ? 0.01f : -0.018f;
+            if (fade)
             {
                 if (audioSource.volume > 0.5f)
-                    StopCoroutine("PaidAudio");
+                    StopCoroutine("fadeAudio");
             }
             yield return new WaitForSeconds(0.1f);
         }
     }
 
 
-    IEnumerator PaidImage(bool paid)
+    IEnumerator fadeImage(bool fade)
     {
-        if(!paid && sceneName != "Lobby")
-            yield return new WaitForSeconds(1);
-        float dirTime = Time.time + (paid ? SceanChangeTime/2 : SceanChangeTime);
-        paidImage.gameObject.SetActive(true);
+        float dirTime = Time.time + (fade ? SceanChangeTime/2 : SceanChangeTime);
+        fadingImage.gameObject.SetActive(true);
         while (Time.time < dirTime)
         {
-            paidImage.color = (paid) ? new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a - 0.04f) : new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.022f);
+            fadingImage.color = (fade) ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a - 0.04f) : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a + 0.022f);
 
             yield return new WaitForSeconds(0.05f);
         }
-        if(paid)
-            paidImage.gameObject.SetActive(false);
+        if(fade)
+            fadingImage.gameObject.SetActive(false);
+    }
+
+    IEnumerator stageCLearfadeImage(bool fade)
+    {
+        if (!fade && sceneName != "Lobby")
+            yield return new WaitForSeconds(1);
+        float dirTime = Time.time + (fade ? SceanChangeTime / 2 : SceanChangeTime);
+        fadingImage.gameObject.SetActive(true);
+        while (Time.time < dirTime)
+        {
+            fadingImage.color = (fade) ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a - 0.04f) : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a + 0.022f);
+
+            yield return new WaitForSeconds(0.05f);
+        }
+        if (fade)
+            fadingImage.gameObject.SetActive(false);
     }
 }
