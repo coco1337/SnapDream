@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         audioBGMSource = this.GetComponent<AudioSource>();
         audioBGMSource.volume = 0.1f;
-        audioStageClearSource.volume = 0.3f;
+        audioStageClearSource.volume = 0.1f;
 
         StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        ScreenCapture.CaptureScreenshot("Clear " + sceneName + ".png");
+        ScreenCapture.CaptureScreenshot(@"\Resources\Clear" + sceneName+ ".jpge");
         audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {

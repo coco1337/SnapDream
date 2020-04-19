@@ -21,6 +21,8 @@ public class ClearManager : MonoBehaviour
 
     AudioSource audioSource;
     bool canInteratable = true;
+    [SerializeField]
+    Text text;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,7 @@ public class ClearManager : MonoBehaviour
         StartCoroutine("PaidImage", true);
         StartCoroutine("PaidAudio", true);
         canInteratable = true;
+        text.text = Application.dataPath.ToString();
     }
 
     // Update is called once per frame
@@ -63,7 +66,7 @@ public class ClearManager : MonoBehaviour
             paidImage.color = new Color(paidImage.color.r, paidImage.color.g, paidImage.color.b, paidImage.color.a + 0.01f);
             yield return new WaitForSeconds(0.01f);
         }
-        image.sprite = Resources.Load<Sprite>("Clear " + stageName[curretnStageNum]);
+        image.sprite = Resources.Load<Sprite>(@"\\Resources\\Clear" + stageName[curretnStageNum]+ ".jpge");
         curretnStageNum++;
         dirTime = Time.time + SceanChangeTime / 2;
         while (Time.time < dirTime)
