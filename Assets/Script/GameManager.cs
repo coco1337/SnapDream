@@ -156,7 +156,8 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
+        if(!Application.isEditor)
+            ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
         audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {
