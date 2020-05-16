@@ -6,8 +6,8 @@ public class InteractableObject : MonoBehaviour
 {
     // 기본적으로 밀기는 가능, 들수 있는지만 확인
     // InteractableObject 태그 달기
-    public bool isHoldableObject;
-
+    [SerializeField]
+    private bool isHoldableObject;
     private Rigidbody2D rb;
     private ObjectSoundController sfx;
     public Player player;
@@ -81,6 +81,11 @@ public class InteractableObject : MonoBehaviour
         this.needSync = flag;
     }
 
+    public void ChangeVelocity(Vector2 vel)
+    {
+        this.rb.velocity = vel;
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("Player"))
@@ -92,7 +97,7 @@ public class InteractableObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             //if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
             //    rb.velocity = Vector2.zero;
@@ -101,7 +106,7 @@ public class InteractableObject : MonoBehaviour
 
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
-            if (!(player.GetCurrentCutNumber() == player.GetPlayerCutNumber()))
+            if (player.GetCurrentCutNumber() != player.GetPlayerCutNumber())
             {
                 return;
             }
@@ -109,14 +114,12 @@ public class InteractableObject : MonoBehaviour
             // 현재 벡터값 저장, 위에 스폰, 다른데 생성 (던지기)
             if (!collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
-                Debug.Log("던지기");
                 objectSyncController.Thrown(player.GetCurrentCutNumber(),
                     this.gameObject, rb.velocity);
             }
             // 밀기
             else
             {
-                Debug.Log("밀기");
                 if (!this.instantiatedForDrag)
                 {
                     objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
