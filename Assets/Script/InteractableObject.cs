@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +7,12 @@ public class InteractableObject : MonoBehaviour
 {
     // 기본적으로 밀기는 가능, 들수 있는지만 확인
     // InteractableObject 태그 달기
-    [SerializeField]
-    private bool isHoldableObject;
+    [SerializeField] private bool isHoldableObject;
+    [SerializeField] private bool isGround;
+    [SerializeField] private float overlapOffset;
     private Rigidbody2D rb;
     private ObjectSoundController sfx;
+    private Vector2 overlapSize;
     public Player player;
     public bool instantiatedForDrag;
     public bool needSync;
@@ -32,10 +35,18 @@ public class InteractableObject : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         sfx = this.GetComponent<ObjectSoundController>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
+        overlapSize = new Vector2(2.253715f, 0.01f);
     }
 
     private void Update()
     {
+        isGround = Physics2D.OverlapBox(
+            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
+            overlapSize, 0, 1 << LayerMask.NameToLayer("Ground"));
+        Debug.Log(Physics2D.OverlapBox(
+            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
+            overlapSize, 0, 1 << LayerMask.NameToLayer("Ground")));
+
         if(!(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5) && !this.stayUpperCollider)
         {
             this.gameObject.layer = 8;
@@ -47,8 +58,20 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + new Vector3(0, overlapOffset * transform.localScale.y, 0), 
+            new Vector3(overlapSize.x, overlapSize.y, 0));
+    }
+
     public void Drag(float axis, float speed)
     {
+        if (!isGround)
+        {
+            return;
+        }
+
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
 
         if (this.CutNum == this.CurrentCutNum)
@@ -65,10 +88,16 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    public void Throw(float throwPower)
+    public bool Throw(float throwPower)
     {
+        if (!isGround)
+        {
+            return false;
+        }
+        
         rb.velocity = new Vector2(0, throwPower);
         this.gameObject.layer = 31;
+        return true;
     }
 
     public void Instantiated(bool flag)

@@ -13,11 +13,14 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/InteractableObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/PlayerInterectController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Player.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/PlayerInterectController.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
       </list>
     </option>
@@ -61,7 +64,9 @@
       <option name="presentableId" value="Default" />
       <updated>1587957113103</updated>
       <workItem from="1587957120206" duration="2214000" />
-      <workItem from="1589610193190" duration="1354000" />
+      <workItem from="1589610193190" duration="1561000" />
+      <workItem from="1590367957441" duration="8713000" />
+      <workItem from="1590455239341" duration="616000" />
     </task>
     <servers />
   </component>
