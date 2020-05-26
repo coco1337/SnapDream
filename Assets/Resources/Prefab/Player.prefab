@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 3734823234040795832}
-  speed: 4
+  speed: 5.2
   dragSpeed: 2.5
   jumpPower: 500
   throwPower: 14

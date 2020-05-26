@@ -127,8 +127,8 @@ public class Player : MonoBehaviour, Damageabel
         {
             collider.enabled = false;
         }
-        rigidbody.bodyType = RigidbodyType2D.Static;
         rigidbody.velocity = Vector2.zero;
+        rigidbody.bodyType = RigidbodyType2D.Static;
     }
 
     public PlayerState GetPlayerState()
@@ -139,6 +139,14 @@ public class Player : MonoBehaviour, Damageabel
     public bool IsJumpable()
     {
         if (playerState == PlayerState.Idle || playerState == PlayerState.Move)
+            return true;
+        else
+            return false;
+    }
+
+    public bool IsThrowable()
+    {
+        if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Interaction_Drag)
             return true;
         else
             return false;
@@ -184,17 +192,15 @@ public class Player : MonoBehaviour, Damageabel
 
     public void getThrow()
     {
-        if (playerState == PlayerState.Idle)
+        if (IsThrowable())
         {
+            PlayerMove(0);
+            animator.SetTrigger("throwObject");
+            animator.SetFloat("moveSpeed", 0);
+            animator.SetFloat("dragSpeed", 0);
             playerState = PlayerState.Interaction_Throw;
-            ThrowObject();
+            StartCoroutine(EndThrowObject());
         }
-    }
-
-    public void ThrowObject()
-    {
-        animator.SetTrigger("throwObject");
-        StartCoroutine(EndThrowObject());
     }
 
     IEnumerator EndThrowObject()

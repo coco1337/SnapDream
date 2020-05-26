@@ -82,6 +82,7 @@ MonoBehaviour:
   audioCutChangeSource: {fileID: 681688448}
   audioStageClearSource: {fileID: 490299749}
   SceanChangeTime: 4
+  SceanReStartTime: 0.2
   fadingImage: {fileID: 7335480135191684901}
 --- !u!82 &5194788657549916441
 AudioSource:

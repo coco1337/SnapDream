@@ -15,6 +15,9 @@ public class ClearManager : MonoBehaviour
     float SceanChangeTime = 3f;
     [SerializeField]
     Image paidImage;
+
+    [SerializeField]
+    Image clearImage;
     public Image image;
 
     AudioSource audioSource;
@@ -23,6 +26,16 @@ public class ClearManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(Application.dataPath);
+        byte[] byteTexture;
+        if (Application.isEditor)
+            byteTexture = System.IO.File.ReadAllBytes(Application.dataPath+ @"\Resources\ClearLobby.jpg");
+        else
+            byteTexture = System.IO.File.ReadAllBytes(Application.dataPath + @"\Resources\ClearLobby.jpg");
+        Texture2D texture = new Texture2D(0, 0);
+        texture.LoadImage(byteTexture);
+        clearImage.sprite = Sprite.Create(texture, new Rect(0,0,texture.width, texture.height), new Vector2(0.5f, 0.5f));
+
         audioSource = transform.GetComponent<AudioSource>();
         audioSource.volume = 0.1f;
         StartCoroutine("PaidImage", true);

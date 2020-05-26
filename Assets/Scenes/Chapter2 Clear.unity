@@ -251,6 +251,7 @@ MonoBehaviour:
   curretnStageNum: 0
   SceanChangeTime: 3
   paidImage: {fileID: 1404411899}
+  clearImage: {fileID: 1835140244}
   image: {fileID: 1835140244}
 --- !u!4 &633120828
 Transform:

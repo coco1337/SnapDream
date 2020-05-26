@@ -281,6 +281,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: LevelName.Array.data[2]
+      value: Stage1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: LevelName.Array.data[1]
+      value: Cartoon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194788657549916441, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f5790bb752723fd48a0c169d149346cf, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4630849625f4f87b2444ee298bef, type: 3}
 --- !u!1 &1697965015

@@ -19,6 +19,7 @@ public class PlayerMoveController : MonoBehaviour
     {
         if (playerScript.isMovable())
         {
+            Debug.Log("Test");
             float inputAxis;
             if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Ladder)
             {
@@ -42,11 +43,12 @@ public class PlayerMoveController : MonoBehaviour
                 }
 
                 // 상호작용
-                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable() && playerScript.GetPlayerState() == Player.PlayerState.Idle)
+                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable() && playerScript.IsThrowable())
                 {
                     interectController.Interacting();
                 }
 
+                //사다리
                 if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && playerScript.IsJumpable())
                 {
                     playerScript.getLadder();
