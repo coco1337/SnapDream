@@ -23,7 +23,7 @@ public class InteractableObject : MonoBehaviour
     private GameManager gameManager;
     private int whichCutNum;
     
-    public Player player;
+    // public Player player;
     public bool instantiatedForDrag;
     public bool needSync;
     public bool stayUpperCollider;
@@ -31,9 +31,6 @@ public class InteractableObject : MonoBehaviour
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
 
-
-    public int CutNum => this.player.GetPlayerCutNumber();
-    public int CurrentCutNum => this.player.GetCurrentCutNumber();
     public bool IsInstantiated => this.instantiatedForDrag;
 
     public bool stay;
@@ -41,6 +38,12 @@ public class InteractableObject : MonoBehaviour
     
     private void SetRigidbodyFreezePositionX() => 
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+    
+    
+    public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
+    public void SyncNeeded(bool flag) => this.needSync = flag;
+    public void ChangeVelocity(Vector2 vel) => this.rb.velocity = vel;
+    public int WhichCutNum => whichCutNum;
 
     public void Init(int cutNum)
     {
@@ -85,16 +88,15 @@ public class InteractableObject : MonoBehaviour
         calRayLeft = new Vector2(transform.position.x - rayPosition.x, transform.position.y + rayPosition.y);
         calRayMiddle = new Vector2(transform.position.x, transform.position.y + rayPosition.y);
 
-        RaycastHit2D hitRight = Physics2D.Raycast(calRayRight, Vector2.down, 0.1f);
-        RaycastHit2D hitLeft = Physics2D.Raycast(calRayLeft, Vector2.down, 0.1f);
-        RaycastHit2D hitMiddle = Physics2D.Raycast(calRayMiddle, Vector2.down, 0.1f);
+        var hitRight = Physics2D.Raycast(calRayRight, Vector2.down, 0.1f);
+        var hitLeft = Physics2D.Raycast(calRayLeft, Vector2.down, 0.1f);
+        var hitMiddle = Physics2D.Raycast(calRayMiddle, Vector2.down, 0.1f);
 
-        bool isHitRight;
-        bool isHitLeft = false;
-        bool isHitMiddle = false;
+        var isHitLeft = false;
+        var isHitMiddle = false;
 
         
-        if (GroundColliderCheck(hitRight, out isHitRight) || GroundColliderCheck(hitLeft, out isHitLeft) ||
+        if (GroundColliderCheck(hitRight, out var isHitRight) || GroundColliderCheck(hitLeft, out isHitLeft) ||
             GroundColliderCheck(hitMiddle, out isHitMiddle))
         {
             if (isHitRight || isHitLeft || isHitMiddle)
@@ -143,7 +145,7 @@ public class InteractableObject : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
 
-        if (this.CutNum == this.CurrentCutNum)
+        if (whichCutNum == gameManager.GetCurrentCutNum())
         {
             if (axis != 0)
                 sfx.TurnOnSound();
@@ -171,20 +173,6 @@ public class InteractableObject : MonoBehaviour
         return true;
     }
 
-    public void Instantiated(bool flag)
-    {
-        this.instantiatedForDrag = flag;
-    }
-
-    public void SyncNeeded(bool flag)
-    {
-        this.needSync = flag;
-    }
-
-    public void ChangeVelocity(Vector2 vel)
-    {
-        this.rb.velocity = vel;
-    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -197,16 +185,18 @@ public class InteractableObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        /*
         if (collision.gameObject.CompareTag("Player"))
         {
             //if (collision.transform.GetComponent<Player>().GetPlayerState() == Player.PlayerState.Jump)
             //    rb.velocity = Vector2.zero;
             player = collision.gameObject.GetComponent<Player>();
         }
+        */
 
         if (collision.gameObject.CompareTag("BoundaryCollider"))
         {
-            if (player.GetCurrentCutNumber() != player.GetPlayerCutNumber())
+            if (whichCutNum != gameManager.GetCurrentCutNum())
             {
                 return;
             }
@@ -214,16 +204,15 @@ public class InteractableObject : MonoBehaviour
             // 현재 벡터값 저장, 위에 스폰, 다른데 생성 (던지기)
             if (!collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
-                objectSyncController.Thrown(player.GetCurrentCutNumber(),
-                    this.gameObject, rb.velocity);
+                Debug.Log("던져짐");
+                objectSyncController.Thrown(this.gameObject, rb.velocity);
             }
             // 밀기
             else
             {
                 if (!this.instantiatedForDrag)
                 {
-                    objectSyncController.InstantiateObjects(player.GetCurrentCutNumber(),
-                        this.gameObject, rb.velocity);
+                    objectSyncController.InstantiateObjects(this.gameObject, rb.velocity);
                     this.instantiatedForDrag = true;
                 }
             }

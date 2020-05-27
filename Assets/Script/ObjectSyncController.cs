@@ -1,18 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectSyncController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject[] eachCut;
+    [SerializeField] private GameObject[] eachCut;
+    private GameManager gameManager;
     
     public float spawnYPos;
     public float cameraLength;
 
+    private void Start()
+    {
+        gameManager = GameManager.getInstance();
+    }
+
     // 왼쪽 충돌이면 이전 컷부터 변화
     // 오른쪽 충돌이면 이후 컷부터 변화 - 없음
-    public void InstantiateObjects(int currentCutNum, GameObject obj, Vector2 vel)
+    public void InstantiateObjects(GameObject obj, Vector2 vel)
     {
         var interactableObj = obj.GetComponent<InteractableObject>();
         // 오른쪽 충돌시
@@ -24,16 +30,16 @@ public class ObjectSyncController : MonoBehaviour
         else
         {
             // 제일 왼쪽 컷들은 물건 왼쪽으로 넘길수 없음
-            if (currentCutNum == 0 || currentCutNum == 3)
+            if (gameManager.GetCurrentCutNum() == 0 || gameManager.GetCurrentCutNum() == 3)
             {
                 return;
             }
 
             // 현재 카메라 x좌표
-            var cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
+            var cameraX = eachCut[gameManager.GetCurrentCutNum()].transform.Find("Camera(Clone)").transform.localPosition.x;
 
             // 생성될 컷의 카메라 x 좌표(바로 직전 컷의 카메라 좌표)
-            var targetCameraX = eachCut[currentCutNum - 1].transform.Find("Camera(Clone)").transform.localPosition.x;
+            var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 1].transform.Find("Camera(Clone)").transform.localPosition.x;
 
             // 아마도 물건 길이 + 1
             var result = targetCameraX + (cameraLength / 2) + 1;
@@ -41,7 +47,7 @@ public class ObjectSyncController : MonoBehaviour
             InteractableObject[] childPair = new InteractableObject[6];
 
             // currentNum 전 칸 부터 스폰
-            for (var i = currentCutNum - 1; i < 6; ++i)
+            for (var i = gameManager.GetCurrentCutNum() - 1; i < 6; ++i)
             {
                 var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
                 childPair[i] = spawnedObject.GetComponent<InteractableObject>();
@@ -53,23 +59,24 @@ public class ObjectSyncController : MonoBehaviour
         }
     }
 
-    public void Thrown(int currentCutNum, GameObject obj, Vector2 vel)
+    public void Thrown(GameObject obj, Vector2 vel)
     {
-        if (currentCutNum < 3)
+        Debug.Log("in thrown");
+        if (gameManager.GetCurrentCutNum() < 3)
         {
             return;
         }
 
         // 현재 카메라 x좌표
-        var cameraX = eachCut[currentCutNum].transform.Find("Camera(Clone)").transform.localPosition.x;
+        var cameraX = eachCut[gameManager.GetCurrentCutNum()].transform.Find("Camera(Clone)").transform.localPosition.x;
 
         // 생성될 컷의 카메라 x 좌표
-        var targetCameraX = eachCut[currentCutNum - 3].transform.Find("Camera(Clone)").transform.localPosition.x;
+        var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 3].transform.Find("Camera(Clone)").transform.localPosition.x;
 
         // 생성될 오브젝트의 좌표
         var result = (obj.transform.localPosition.x - cameraX) + targetCameraX;
 
-        for (var i = currentCutNum - 3; i < 6; ++i)
+        for (var i = gameManager.GetCurrentCutNum() - 3; i < 6; ++i)
         {
             var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
             spawnedObject.layer = 31;
