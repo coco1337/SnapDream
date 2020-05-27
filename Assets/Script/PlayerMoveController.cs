@@ -25,13 +25,13 @@ public class PlayerMoveController : MonoBehaviour
                 inputAxis = Input.GetAxisRaw("Horizontal");
                 playerScript.PlayerMove(inputAxis);
 
-                //상호작용중이고 움직일때만 동작
+                //Drag
                 if (interectController.dragObject != null)
                 {
-                    playerScript.getDrag();
                     interectController.MoveInteractObject(inputAxis);
                 }
 
+                //점프
                 if (Input.GetKeyDown(KeyCode.Z) && playerScript.IsJumpable())
                 {
                     playerScript.moveNextCut();

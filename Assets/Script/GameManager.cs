@@ -198,6 +198,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public int GetCurrentCutNum()
+    {
+        return currentCut;
+    }
+
     IEnumerator StageRestart_Coroutin()
     {
         yield return new WaitForSeconds(SceanReStartTime);
