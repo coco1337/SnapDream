@@ -44,10 +44,10 @@ public class InteractableObject : MonoBehaviour
             (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
             overlapSize, 0, 1 << LayerMask.NameToLayer("Ground"));
         Debug.Log(Physics2D.OverlapBox(
-            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
+            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y),
             overlapSize, 0, 1 << LayerMask.NameToLayer("Ground")));
 
-        if(!(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5) && !this.stayUpperCollider)
+        if (!(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5) && !this.stayUpperCollider)
         {
             this.gameObject.layer = 8;
         }

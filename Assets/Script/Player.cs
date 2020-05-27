@@ -88,23 +88,18 @@ public class Player : MonoBehaviour, Damageabel
         }
     }
 
-
-
     public void PlayerJump()
     {
-
         animator.SetBool("isGround", false);
         animator.SetTrigger("jump");
         playerState = PlayerState.Jump;
         rigidbody.velocity = Vector2.zero;
         rigidbody.AddForce(Vector2.up * jumpPower);
-        
     }
 
     public void moveNextCut()
     {
         currentCutNum++;
-
         //중복호출 방지
         if (playerCutNum == 5)
         {
