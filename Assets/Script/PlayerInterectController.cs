@@ -40,9 +40,9 @@ public class PlayerInterectController : MonoBehaviour
 
     public void Interacting()
     {
-        player.realeaseDrag();
-        var test = throwObject.GetComponent<InteractableObject>().Throw(player.throwPower);
+        throwObject.GetComponent<InteractableObject>().Throw(player.throwPower);
         player.getThrow();
+        player.realeaseDrag();
         dragObject = null;
     }
 

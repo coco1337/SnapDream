@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     float SceanChangeTime = 3f;
+    [SerializeField]
+    float SceanReStartTime = 1f;
 
     [SerializeField]
     Image fadingImage;
@@ -131,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(sceneName);
+            StageRestart();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -149,7 +151,7 @@ public class GameManager : MonoBehaviour
 
     public void StageRestart()
     {
-        StartCoroutine("MoveStage", sceneName);
+        StartCoroutine("StageRestart_Coroutin", sceneName);
         StartCoroutine("fadeAudio", false);
         StartCoroutine("fadeImage", false);
     }
@@ -158,6 +160,8 @@ public class GameManager : MonoBehaviour
     {
         if(!Application.isEditor)
             ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
+        else
+            ScreenCapture.CaptureScreenshot(@".\Assets\Resources\Clear" + sceneName+ @".jpg");
         audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {
@@ -186,15 +190,24 @@ public class GameManager : MonoBehaviour
     {
         currentCut++;
         if (currentCut > 5)
-            return;
-        audioCutChangeSource.Play();
-        camImage[currentCut].SetActive(true);
+            StageRestart();
+        else
+        {
+            audioCutChangeSource.Play();
+            camImage[currentCut].SetActive(true);
+        }
     }
 
-    IEnumerator MoveStage(string sceneName)
+    IEnumerator StageRestart_Coroutin()
+    {
+        yield return new WaitForSeconds(SceanReStartTime);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator MoveStage(string _sceneName)
     {
         yield return new WaitForSeconds(SceanChangeTime);
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(_sceneName);
     }
 
     
