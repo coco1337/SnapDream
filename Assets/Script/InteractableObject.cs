@@ -122,11 +122,11 @@ public class InteractableObject : MonoBehaviour
         return true;
     }
 
-    public void Drag(float axis, float speed)
+    public bool Drag(float axis, float speed)
     {
         if (!isGround)
         {
-            return;
+            return false;
         }
 
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
@@ -143,6 +143,8 @@ public class InteractableObject : MonoBehaviour
                 objectSyncController.SyncObject(this.childObjectPair, rb.velocity);
             }
         }
+
+        return true;
     }
 
     public bool Throw(float throwPower)
