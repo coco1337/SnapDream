@@ -262,5 +262,9 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
+    public bool IsPlyerFlip()
+    {
+        return spriteRenderer.flipX;
+    }
 
 }

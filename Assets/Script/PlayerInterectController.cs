@@ -30,11 +30,24 @@ public class PlayerInterectController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position + new Vector3(0f, -0.5f, 0), new Vector3(1.7f, 0, 0));
+
+    }
+
     public bool CanInterectable()
     {
-        if (throwObject != null)
+        int playerDirection = player.IsPlyerFlip() ? -1 : 1;
+        Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(playerDirection * 1.7f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        if (collider != null && collider.CompareTag("Throw"))
+        {
+            Debug.Log(collider.name);
+            throwObject = collider.gameObject;
             return true;
-        else 
+        }
+        else
             return false;
     }
 

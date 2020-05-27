@@ -79,11 +79,11 @@ public class CartoonManager : MonoBehaviour
 
     IEnumerator PaidingWhiteImage(GameObject imageObject)
     {
-        float dirTime = Time.time + 1.5f;
+        float dirTime = Time.time + 0.8f;
         Image image = imageObject.GetComponent<Image>();
         while (Time.time < dirTime)
         {
-            image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.04f);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, image.color.a - 0.06f);
             yield return new WaitForSeconds(0.05f);
         }
         imageObject.SetActive(false);
