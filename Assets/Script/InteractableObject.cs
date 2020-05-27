@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -9,7 +12,12 @@ public class InteractableObject : MonoBehaviour
     // InteractableObject 태그 달기
     [SerializeField] private bool isHoldableObject;
     [SerializeField] private bool isGround;
-    [SerializeField] private float overlapOffset;
+    [SerializeField] private Vector3 rayPosition;
+    private Vector3 calculatedRayPosRight;
+    private Vector3 calculatedRayPosLeft;
+    private Vector2 calRayRight;
+    private Vector2 calRayLeft;
+    private Vector2 calRayMiddle;
     private Rigidbody2D rb;
     private ObjectSoundController sfx;
     private Vector2 overlapSize;
@@ -40,13 +48,8 @@ public class InteractableObject : MonoBehaviour
 
     private void Update()
     {
-        isGround = Physics2D.OverlapBox(
-            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
-            overlapSize, 0, 1 << LayerMask.NameToLayer("Ground"));
-        Debug.Log(Physics2D.OverlapBox(
-            (Vector2)transform.position + new Vector2(0, overlapOffset * transform.localScale.y), 
-            overlapSize, 0, 1 << LayerMask.NameToLayer("Ground")));
-
+        isGround = GroundCheck();
+        
         if(!(rb.velocity.y > 0 || rb.transform.localPosition.y < -4.5) && !this.stayUpperCollider)
         {
             this.gameObject.layer = 8;
@@ -58,11 +61,65 @@ public class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private bool GroundCheck()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + new Vector3(0, overlapOffset * transform.localScale.y, 0), 
-            new Vector3(overlapSize.x, overlapSize.y, 0));
+        /* // debug
+        calculatedRayPosRight = new Vector3(transform.position.x + rayPosition.x, 
+            transform.position.y + rayPosition.y, transform.position.z + rayPosition.z);
+        calculatedRayPosLeft = new Vector3(transform.position.x - rayPosition.x, 
+            transform.position.y + rayPosition.y, transform.position.z + rayPosition.z);
+        Debug.DrawRay(calculatedRayPosRight, Vector3.down * 0.1f, Color.cyan, 1);
+        Debug.DrawRay(calculatedRayPosLeft, Vector3.down * 0.1f, Color.cyan, 1);
+        */
+        
+        calRayRight = new Vector2(transform.position.x + rayPosition.x, transform.position.y + rayPosition.y);
+        calRayLeft = new Vector2(transform.position.x - rayPosition.x, transform.position.y + rayPosition.y);
+        calRayMiddle = new Vector2(transform.position.x, transform.position.y + rayPosition.y);
+
+        RaycastHit2D hitRight = Physics2D.Raycast(calRayRight, Vector2.down, 0.1f);
+        RaycastHit2D hitLeft = Physics2D.Raycast(calRayLeft, Vector2.down, 0.1f);
+        RaycastHit2D hitMiddle = Physics2D.Raycast(calRayMiddle, Vector2.down, 0.1f);
+
+        bool isHitRight;
+        bool isHitLeft = false;
+        bool isHitMiddle = false;
+
+        
+        if (GroundColliderCheck(hitRight, out isHitRight) || GroundColliderCheck(hitLeft, out isHitLeft) ||
+            GroundColliderCheck(hitMiddle, out isHitMiddle))
+        {
+            if (isHitRight || isHitLeft || isHitMiddle)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool GroundColliderCheck(RaycastHit2D hit, out bool isHitGround)
+    {
+        if (hit.collider == null)
+        {
+            isHitGround = false;
+            return false;
+        }
+
+        if (hit.collider.CompareTag("Throw") || hit.collider.CompareTag("Player"))
+        {
+            isHitGround = false;
+            return false;
+        }
+        
+        isHitGround = hit.collider.IsTouchingLayers(1 << LayerMask.NameToLayer("Ground"));
+        return true;
     }
 
     public void Drag(float axis, float speed)

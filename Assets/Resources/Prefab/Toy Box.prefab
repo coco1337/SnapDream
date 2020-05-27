@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.2537146, y: 1.9608345}
+  m_Size: {x: 2.3, y: 1.9608345}
   m_EdgeRadius: 0
 --- !u!114 &8053859382454307587
 MonoBehaviour:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHoldableObject: 0
   isGround: 0
-  overlapOffset: -1.28
+  rayPosition: {x: 1.15, y: -1.26, z: 0}
   player: {fileID: 0}
   instantiatedForDrag: 0
   needSync: 0
