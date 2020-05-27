@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
         audioBGMSource = this.GetComponent<AudioSource>();
         audioBGMSource.volume = 0.1f;
-        audioStageClearSource.volume = 0.1f;
+        audioStageClearSource.volume = 0.05f;
 
         StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
