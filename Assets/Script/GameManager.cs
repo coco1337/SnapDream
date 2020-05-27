@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
         audioBGMSource = this.GetComponent<AudioSource>();
         audioBGMSource.volume = 0.1f;
-        audioStageClearSource.volume = 0.1f;
+        audioStageClearSource.volume = 0.05f;
 
         StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
@@ -109,6 +109,10 @@ public class GameManager : MonoBehaviour
             tempBackGround.transform.localPosition = Vector3.zero;
             tempPlayer.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
             tempCamera.transform.localPosition = Vector3.zero + new Vector3(0,0, -9);
+
+            foreach(InteractableObject obj in tempBackGround.GetComponentsInChildren<InteractableObject>()){
+                obj.Init(i);
+            }
 
             playerList.Add(tempPlayer.GetComponent<Player>());
 
@@ -146,6 +150,10 @@ public class GameManager : MonoBehaviour
             {
                 exitStageUI.SetActive(true);
             }
+        }
+        if (Application.isEditor && Input.GetKeyDown(KeyCode.N))
+        {
+            StageClear();
         }
     }
 
