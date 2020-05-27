@@ -19,7 +19,6 @@ public class PlayerMoveController : MonoBehaviour
     {
         if (playerScript.isMovable())
         {
-            Debug.Log("Test");
             float inputAxis;
             if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Ladder)
             {
