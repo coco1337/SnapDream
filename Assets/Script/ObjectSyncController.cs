@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObjectSyncController : MonoBehaviour
 {
     [SerializeField] private GameObject[] eachCut;
-    private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
     
     public float spawnYPos;
     public float cameraLength;
@@ -14,6 +14,18 @@ public class ObjectSyncController : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.getInstance();
+        
+        // TODO : Init 함수에서 받아오는게 나음. 일단 임시
+        StartCoroutine(GetGameManager());
+    }
+
+    IEnumerator GetGameManager()
+    {
+        yield return new WaitForFixedUpdate();
+        if (gameManager == null)
+        {
+            gameManager = GameManager.getInstance();
+        }
     }
 
     // 왼쪽 충돌이면 이전 컷부터 변화
@@ -61,7 +73,6 @@ public class ObjectSyncController : MonoBehaviour
 
     public void Thrown(GameObject obj, Vector2 vel)
     {
-        Debug.Log("in thrown");
         if (gameManager.GetCurrentCutNum() < 3)
         {
             return;

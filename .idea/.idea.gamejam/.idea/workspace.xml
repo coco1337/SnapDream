@@ -24,6 +24,7 @@
       <list>
         <option value="$PROJECT_DIR$/Assets/Script/PlayerInterectController.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
       </list>

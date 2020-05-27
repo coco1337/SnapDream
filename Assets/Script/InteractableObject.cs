@@ -204,7 +204,6 @@ public class InteractableObject : MonoBehaviour
             // 현재 벡터값 저장, 위에 스폰, 다른데 생성 (던지기)
             if (!collision.gameObject.GetComponent<BoundaryCollider>().verticalBoundary)
             {
-                Debug.Log("던져짐");
                 objectSyncController.Thrown(this.gameObject, rb.velocity);
             }
             // 밀기
