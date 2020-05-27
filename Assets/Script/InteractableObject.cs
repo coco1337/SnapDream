@@ -20,7 +20,9 @@ public class InteractableObject : MonoBehaviour
     private Vector2 calRayMiddle;
     private Rigidbody2D rb;
     private ObjectSoundController sfx;
-    private Vector2 overlapSize;
+    private GameManager gameManager;
+    private int whichCutNum;
+    
     public Player player;
     public bool instantiatedForDrag;
     public bool needSync;
@@ -33,17 +35,24 @@ public class InteractableObject : MonoBehaviour
     public int CutNum => this.player.GetPlayerCutNumber();
     public int CurrentCutNum => this.player.GetCurrentCutNumber();
     public bool IsInstantiated => this.instantiatedForDrag;
-    public bool NeedSync => this.needSync;
 
     public bool stay;
     public bool exit;
+    
+    private void SetRigidbodyFreezePositionX() => 
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
+    public void Init(int cutNum)
+    {
+        whichCutNum = cutNum;
+    }
+    
     private void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         sfx = this.GetComponent<ObjectSoundController>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-        overlapSize = new Vector2(2.253715f, 0.01f);
+        gameManager = GameManager.getInstance();
     }
 
     private void Update()
@@ -94,12 +103,14 @@ public class InteractableObject : MonoBehaviour
             }
             else
             {
+                SetRigidbodyFreezePositionX();
                 return false;
             }
             
         }
         else
         {
+            SetRigidbodyFreezePositionX();
             return false;
         }
     }
@@ -129,6 +140,7 @@ public class InteractableObject : MonoBehaviour
             return false;
         }
 
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.velocity = new Vector2(speed * axis, rb.velocity.y);
 
         if (this.CutNum == this.CurrentCutNum)
