@@ -30,13 +30,6 @@ public class PlayerInterectController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + new Vector3(0f, -0.5f, 0), new Vector3(1.7f, 0, 0));
-
-    }
-
     public bool CanInterectable()
     {
         int playerDirection = player.IsPlyerFlip() ? -1 : 1;
@@ -69,7 +62,8 @@ public class PlayerInterectController : MonoBehaviour
             if (axis > 0 && dragObject.transform.position.x > player.transform.position.x
                 || axis < 0 && dragObject.transform.position.x < player.transform.position.x)
             {
-                dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed);
+                if(dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed))
+                    player.getDrag();
             }
             else
             {
