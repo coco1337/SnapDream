@@ -63,11 +63,12 @@ public class ObjectSyncController : MonoBehaviour
             {
                 var spawnedObject = Instantiate(obj.gameObject, eachCut[i].transform);
                 childPair[i] = spawnedObject.GetComponent<InteractableObject>();
+                childPair[i].Init(i);
                 spawnedObject.transform.localPosition = new Vector2(result, obj.gameObject.transform.localPosition.y);
             }
 
             interactableObj.childObjectPair = childPair;
-            interactableObj.needSync = true;
+            interactableObj.SyncNeeded(true);
         }
     }
 

@@ -22,6 +22,7 @@ public class InteractableObject : MonoBehaviour
     private ObjectSoundController sfx;
     private GameManager gameManager;
     private int whichCutNum;
+    private bool movingXMidAir;
     
     // public Player player;
     public bool instantiatedForDrag;
@@ -42,7 +43,6 @@ public class InteractableObject : MonoBehaviour
     
     public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
     public void SyncNeeded(bool flag) => this.needSync = flag;
-    public void ChangeVelocity(Vector2 vel) => this.rb.velocity = vel;
     public int WhichCutNum => whichCutNum;
 
     public void Init(int cutNum)
@@ -101,18 +101,20 @@ public class InteractableObject : MonoBehaviour
         {
             if (isHitRight || isHitLeft || isHitMiddle)
             {
+                movingXMidAir = false;
                 return true;
             }
             else
             {
-                SetRigidbodyFreezePositionX();
+                if (!movingXMidAir)
+                    SetRigidbodyFreezePositionX();
                 return false;
             }
-            
         }
         else
         {
-            SetRigidbodyFreezePositionX();
+            if (!movingXMidAir)
+                SetRigidbodyFreezePositionX();
             return false;
         }
     }
@@ -173,6 +175,12 @@ public class InteractableObject : MonoBehaviour
         return true;
     }
 
+    public void ChangeVelocity(Vector2 vel)
+    {
+        movingXMidAir = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        this.rb.velocity = vel;
+    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {

@@ -25,8 +25,8 @@
         <option value="$PROJECT_DIR$/Assets/Script/PlayerInterectController.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
       </list>
     </option>
   </component>
@@ -72,6 +72,7 @@
       <workItem from="1589610193190" duration="1561000" />
       <workItem from="1590367957441" duration="8713000" />
       <workItem from="1590455239341" duration="616000" />
+      <workItem from="1590652367974" duration="3640000" />
     </task>
     <servers />
   </component>
