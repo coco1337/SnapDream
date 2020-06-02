@@ -43,7 +43,13 @@ public class Player : MonoBehaviour, Damageabel
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground")) && rigidbody.velocity.y == 0;
+    }
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position + new Vector3(0, -1.28f * transform.localScale.y, 0), 0.07f);
     }
 
     public void SetPlayerCutNumber(int i)
