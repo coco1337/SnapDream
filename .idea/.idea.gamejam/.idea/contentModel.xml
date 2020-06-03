@@ -8,6 +8,12 @@
       <e p="Assets" t="Include">
         <e p="ClearManager.cs" t="Include" />
         <e p="EndManager.cs" t="Include" />
+        <e p="Resources" t="Include">
+          <e p="Sound" t="Include">
+            <e p="Snap Dream Sound 정보.txt" t="Include" />
+            <e p="Snap Dream Sound 출처.txt" t="Include" />
+          </e>
+        </e>
         <e p="Script" t="Include">
           <e p="BoundaryCollider.cs" t="Include" />
           <e p="ButtonBlink.cs" t="Include" />
@@ -21,6 +27,7 @@
           <e p="Player.cs" t="Include" />
           <e p="PlayerInterectController.cs" t="Include" />
           <e p="PlayerMoveController.cs" t="Include" />
+          <e p="SendMailToDev.cs" t="Include" />
           <e p="Thorn.cs" t="Include" />
           <e p="TiletleMove.cs" t="Include" />
         </e>
