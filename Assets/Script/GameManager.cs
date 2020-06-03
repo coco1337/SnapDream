@@ -55,10 +55,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     Image fadingImage;
+    [SerializeField]
+    bool isOption = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        isOption = false;
         Screen.SetResolution(1920, 1080, true);
         instance = FindObjectOfType<GameManager>();
         sceneName = SceneManager.GetActiveScene().name;
@@ -135,14 +138,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && !isOption)
         {
             StageRestart();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(sceneName == "Lobby")
+            isOption = true;
+            if (sceneName == "Lobby")
             {
                 exitGameUI.SetActive(true);
             }
@@ -270,4 +274,16 @@ public class GameManager : MonoBehaviour
         if (fade)
             fadingImage.gameObject.SetActive(false);
     }
+
+    public bool isOptioning()
+    {
+        return isOption;
+    }
+
+    public void SetIsOption(bool opt)
+    {
+        Debug.Log(opt);
+        isOption = opt;
+    }
+
 }
