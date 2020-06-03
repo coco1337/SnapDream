@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 3734823234040795832}
   speed: 5.2
-  dragSpeed: 2.5
+  dragSpeed: 4
   jumpPower: 500
   throwPower: 14
   playerCutNum: 5
