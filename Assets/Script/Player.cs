@@ -43,7 +43,9 @@ public class Player : MonoBehaviour, Damageabel
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground")) && rigidbody.velocity.y == 0;
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"))
+            && (rigidbody.velocity.y <= 0);
+
     }
     void OnDrawGizmosSelected()
     {
@@ -96,7 +98,8 @@ public class Player : MonoBehaviour, Damageabel
 
     public void PlayerJump()
     {
-        animator.SetBool("isGround", false);
+        isGround = false;
+        animator.SetBool("isGround", isGround);
         animator.SetTrigger("jump");
         playerState = PlayerState.Jump;
         rigidbody.velocity = Vector2.zero;
@@ -123,7 +126,7 @@ public class Player : MonoBehaviour, Damageabel
     public void playerStop()
     {
         playerState = PlayerState.Stop;
-        animator.speed = 0f;
+        animator.enabled = false;
         foreach (var collider in transform.GetComponents<BoxCollider2D>())
         {
             collider.enabled = false;

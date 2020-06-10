@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3734823234040795835}
+  - component: {fileID: 3734823234040795833}
+  - component: {fileID: 3734823234040795837}
+  - component: {fileID: 8586401418491371803}
   - component: {fileID: 3734823234040795834}
   - component: {fileID: 1232941799937994549}
   - component: {fileID: 3734823234040795832}
-  - component: {fileID: 3734823234040795833}
-  - component: {fileID: 3734823234040795837}
   - component: {fileID: 1982036965}
-  - component: {fileID: 8586401418491371803}
   - component: {fileID: 2207995116283627464}
   m_Layer: 0
   m_Name: Player
@@ -38,6 +38,57 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3734823234040795833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734823234040795831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b80a65fe995ce4e832ea572d4db130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 3734823234040795832}
+  speed: 5.2
+  dragSpeed: 4
+  jumpPower: 500
+  throwPower: 14
+  playerCutNum: 5
+  currentCutNum: 0
+  isGround: 0
+  PlayerHealth: 1
+  throwAnimationTime: 0.6
+  playerState: 0
+--- !u!114 &3734823234040795837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734823234040795831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaf9905c5925ac469af3ac390ad944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8586401418491371803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734823234040795831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd5c001436c8f948b5f35c874fa3c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throwObject: {fileID: 0}
+  dragObject: {fileID: 0}
+  ladderTarget: {fileID: 0}
+  ladderExit: {fileID: 0}
 --- !u!212 &3734823234040795834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -135,41 +186,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3734823234040795833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734823234040795831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50b80a65fe995ce4e832ea572d4db130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 3734823234040795832}
-  speed: 5.2
-  dragSpeed: 4
-  jumpPower: 500
-  throwPower: 14
-  playerCutNum: 5
-  currentCutNum: 0
-  isGround: 0
-  PlayerHealth: 1
-  throwAnimationTime: 0.6
-  playerState: 0
---- !u!114 &3734823234040795837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734823234040795831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baaf9905c5925ac469af3ac390ad944d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1982036965
 Animator:
   serializedVersion: 3
@@ -189,22 +205,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8586401418491371803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734823234040795831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dd5c001436c8f948b5f35c874fa3c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwObject: {fileID: 0}
-  dragObject: {fileID: 0}
-  ladderTarget: {fileID: 0}
-  ladderExit: {fileID: 0}
 --- !u!61 &2207995116283627464
 BoxCollider2D:
   m_ObjectHideFlags: 0
