@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     RectTransform canvas;
     [SerializeField]
     List<GameObject> camImage = new List<GameObject>();
+    [SerializeField]
     int currentCut = 0;
 
     [SerializeField]
@@ -200,12 +201,16 @@ public class GameManager : MonoBehaviour
 
     public void NextCut()
     {
-        currentCut++;
+        currentCut += 1;
         if (currentCut > 5)
+        {
             StageRestart();
+
+        }
         else
         {
             audioCutChangeSource.Play();
+            Debug.Log(currentCut);
             camImage[currentCut].SetActive(true);
         }
     }

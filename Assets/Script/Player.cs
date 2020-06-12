@@ -44,7 +44,7 @@ public class Player : MonoBehaviour, Damageabel
     void Update()
     {
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"))
-            && (rigidbody.velocity.y <= 0);
+            && (rigidbody.velocity.y <= 0.3f);
 
     }
     void OnDrawGizmosSelected()
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour, Damageabel
 
     public void moveNextCut()
     {
-        currentCutNum++;
+        currentCutNum += 1;
         //중복호출 방지
         if (playerCutNum == 5)
         {
@@ -133,6 +133,8 @@ public class Player : MonoBehaviour, Damageabel
         }
         rigidbody.velocity = Vector2.zero;
         rigidbody.bodyType = RigidbodyType2D.Static;
+        gameObject.GetComponent<Player>().enabled = false;
+        gameObject.GetComponent<PlayerMoveController>().enabled = false;
     }
 
     public PlayerState GetPlayerState()
