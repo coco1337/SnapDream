@@ -171,10 +171,10 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        if(!Application.isEditor)
-            ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
-        else
-            ScreenCapture.CaptureScreenshot(@".\Assets\Resources\Clear" + sceneName+ @".jpg");
+        //if(!Application.isEditor)
+        //    ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
+        //else
+        //    ScreenCapture.CaptureScreenshot(@".\Assets\Resources\Clear" + sceneName+ @".jpg");
         audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {

@@ -207,7 +207,7 @@ public class Player : MonoBehaviour, Damageabel
             playerState = PlayerState.Interaction_Throw;
             StartCoroutine(EndThrowObject());
         }
-    }
+    } 
 
     IEnumerator EndThrowObject()
     {
@@ -249,6 +249,7 @@ public class Player : MonoBehaviour, Damageabel
     public void StageClear()
     {
         playerState = PlayerState.Clear;
+        animator.SetBool("isGround", true);
         if(currentCutNum <= playerCutNum)
         {
             StartCoroutine("StageClearAction");
