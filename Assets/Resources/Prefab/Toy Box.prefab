@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8053859382454307585}
   - component: {fileID: 8053859382454307586}
-  - component: {fileID: 8053859382454307589}
   - component: {fileID: 8053859382454307588}
   - component: {fileID: 8053859382454307587}
   - component: {fileID: 6319328804796472846}
@@ -86,27 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &8053859382454307589
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8053859382454307584}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 2
-  m_Material: {fileID: 6200000, guid: faa8488532958904a9f591242258f88b, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 5
 --- !u!61 &8053859382454307588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -145,10 +123,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7272554817054054a84334f0cb3edaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHoldableObject: 0
   isGround: 0
-  rayPosition: {x: 1.15, y: -1.26, z: 0}
-  player: {fileID: 0}
+  moveDirection: {x: 0, y: 0}
+  gravityScale: 0.03
+  boxCastThickness: 0.1
+  hitColliders: []
+  padding: 0.03
+  rayMaxDistance: 1
+  groundOffset: 1
+  sideOffset: 1
+  isHoldableObject: 0
   instantiatedForDrag: 0
   needSync: 0
   stayUpperCollider: 0
@@ -163,6 +147,8 @@ MonoBehaviour:
   parentObject: {fileID: 0}
   stay: 0
   exit: 0
+  dragWeight: 70
+  throwWeight: 55
 --- !u!82 &6319328804796472846
 AudioSource:
   m_ObjectHideFlags: 0

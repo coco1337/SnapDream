@@ -19,6 +19,7 @@
           <e p="ButtonBlink.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
           <e p="CartoonManager.cs" t="Include" />
+          <e p="CInteractableObject.cs" t="Include" />
           <e p="Damageabel.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="InteractableObject.cs" t="Include" />
