@@ -43,8 +43,8 @@ public class Player : MonoBehaviour, Damageabel
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"))
-            && (rigidbody.velocity.y <= 0.3f);
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        //    && (rigidbody.velocity.y <= 0.3f);
 
     }
     void OnDrawGizmosSelected()
@@ -83,6 +83,8 @@ public class Player : MonoBehaviour, Damageabel
             animator.SetBool("isGround", isGround);
             animator.SetFloat("moveSpeed", Mathf.Abs(axis));
             rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+            animator.SetFloat("palyerVerticalSpeed", rigidbody.velocity.y);
+            Debug.Log("Vertical Spped : " + rigidbody.velocity.y);
         }
     }
 
