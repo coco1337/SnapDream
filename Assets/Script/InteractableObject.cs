@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableObject : CInteractableObject
+public sealed class InteractableObject : CInteractableObject
 {
     [Header("Toybox")]
     // 기본적으로 밀기는 가능, 들수 있는지만 확인
@@ -65,7 +65,11 @@ public class InteractableObject : CInteractableObject
 
             if (gameManager.GetCurrentCutNum() < 3)
             {
-                // TODO : 나중에 CutManager 추가한 뒤 수정하기 (전체 컷의 반)
+                // TODO : 나중에 CutManager 추가한 뒤 수정하기 (전체 컷의 반), 일단 하드코딩으로 구현
+                if (transform.localPosition.y > 5.5)
+                {
+                    moveDirection = new Vector2(moveDirection.x, 0);
+                }
             }
         }
         else
@@ -89,24 +93,6 @@ public class InteractableObject : CInteractableObject
             if (this.transform.localPosition.y < -7)
             {
                 Destroy(this.gameObject);
-            }
-
-            // 콜라이더 충돌 체크 등 다른 방법 필요
-            if (gameManager.GetCurrentCutNum() < 3)
-            {
-                if (this.transform.localPosition.y > 5.5)
-                {
-                    this.transform.localPosition =
-                        new Vector3(this.transform.localPosition.x, 5.5f, this.transform.localPosition.z);
-                    // rb.velocity = Vector2.zero;
-                }
-            }
-            else
-            {
-                if (this.transform.localPosition.y > 6)
-                {
-                    Destroy(this.gameObject);
-                }
             }
         }
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectSyncController : MonoBehaviour
+public sealed class ObjectSyncController : MonoBehaviour
 {
     [SerializeField] private GameObject[] eachCut;
     [SerializeField] private GameManager gameManager;

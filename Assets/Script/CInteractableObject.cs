@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class CInteractableObject : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class CInteractableObject : MonoBehaviour
     [SerializeField] protected float rayMaxDistance;
     [SerializeField] protected float groundOffset;
     [SerializeField] protected float sideOffset;
-    protected BoxCollider2D colliderSelf;
+    [SerializeField] protected float upOffset;
+    [SerializeField] protected BoxCollider2D colliderSelf;
     private RaycastHit2D[] groundColliders;
 
     private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
@@ -29,14 +31,13 @@ public class CInteractableObject : MonoBehaviour
             transform.position.y + colliderSelf.offset.y);
     private Vector2 boxCastUpOrigin =>
         new Vector2(transform.position.x, 
-            transform.position.y + (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y + padding);
+            transform.position.y + (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y + padding - upOffset);
     private Vector2 boxCastDownOrigin =>
         new Vector2(transform.position.x, 
             transform.position.y - (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y - padding + groundOffset);
     
     protected virtual void Init()
     {
-        colliderSelf = this.transform.GetComponent<BoxCollider2D>();
         hitColliders = new List<Collider2D>();
     }
 
@@ -55,7 +56,7 @@ public class CInteractableObject : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         
-        var temp = Physics2D.BoxCastAll(boxCastDownOrigin, TopBottomBoundSize, 
+        /*var temp = Physics2D.BoxCastAll(boxCastDownOrigin, TopBottomBoundSize, 
             0, Vector2.down, rayMaxDistance,1 << LayerMask.NameToLayer("Ground"));
         if (temp.Length > 0)
         {
@@ -71,11 +72,27 @@ public class CInteractableObject : MonoBehaviour
         else
         {
             Gizmos.DrawRay(boxCastDownOrigin, Vector3.down * rayMaxDistance);
+        }*/
+
+        var temp2 = Physics2D.BoxCastAll(boxCastUpOrigin, TopBottomBoundSize, 0, Vector2.up, rayMaxDistance);
+        if (temp2.Length > 0)
+        {
+            foreach (var t in temp2)
+            {
+                Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * t.distance);
+                Gizmos.DrawWireCube(boxCastUpOrigin + Vector2.up * t.distance, TopBottomBoundSize);
+            }
         }
-        Gizmos.DrawWireCube(boxCastUpOrigin, TopBottomBoundSize);
+        else
+        {
+            Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * rayMaxDistance);
+        }
+        
+        Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * rayMaxDistance);
+        // Gizmos.DrawWireCube(boxCastUpOrigin, TopBottomBoundSize);
         // Gizmos.DrawWireCube(boxCastDownOrigin, TopBottomBoundSize);
-        Gizmos.DrawWireCube(boxCastLeftOrigin, LeftRightBoundSize);
-        Gizmos.DrawWireCube(boxCastRightOrigin, LeftRightBoundSize);
+        /*Gizmos.DrawWireCube(boxCastLeftOrigin, LeftRightBoundSize);
+        Gizmos.DrawWireCube(boxCastRightOrigin, LeftRightBoundSize);*/
     }
 
     /// <summary>
@@ -133,8 +150,8 @@ public class CInteractableObject : MonoBehaviour
     protected bool IsHitUp(out RaycastHit2D[] colliders)
     {
         colliders = Physics2D.BoxCastAll(boxCastUpOrigin, TopBottomBoundSize, 0,
-            Vector2.up, rayMaxDistance);
-        return colliders.Length > 0 ? true : false;
+            Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
+        return colliders.Length > 1 ? true : false;
     }
 
     /// <summary>

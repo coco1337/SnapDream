@@ -131,7 +131,9 @@ MonoBehaviour:
   padding: 0.03
   rayMaxDistance: 1
   groundOffset: 1
-  sideOffset: 1
+  sideOffset: 1.1
+  upOffset: 0.4
+  colliderSelf: {fileID: 8053859382454307588}
   isHoldableObject: 0
   instantiatedForDrag: 0
   needSync: 0
@@ -148,6 +150,7 @@ MonoBehaviour:
   stay: 0
   exit: 0
   dragWeight: 70
+  hitSideWall: 0
   throwWeight: 55
 --- !u!82 &6319328804796472846
 AudioSource:
