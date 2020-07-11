@@ -11,36 +11,14 @@ public class GameManager : MonoBehaviour
     string[] LevelName;
     string sceneName;
     int sceneNum;
-
-    [SerializeField]
-    GameObject backGround;
-    [SerializeField]
-    GameObject player;
-    [SerializeField]
-    GameObject cutCamera;
-    [SerializeField]
-    RenderTexture[] cameraRawImage;
-    [SerializeField]
-    float cameraBoundury = 20f;
-    [SerializeField]
-    Vector2 spawnPosition;
-    [SerializeField]
-    Transform cutField;
-    List<Player> playerList = new List<Player>();
-
-    [SerializeField]
-    RectTransform canvas;
-    [SerializeField]
-    List<GameObject> camImage = new List<GameObject>();
-    [SerializeField]
-    int currentCut = 0;
-
     [SerializeField]
     GameObject exitGameUI;
     [SerializeField]
     GameObject exitStageUI;
     [SerializeField]
     GameObject lobbyUI;
+
+    CutManager cutManager;
 
     [SerializeField]
     AudioSource audioBGMSource;
@@ -65,10 +43,11 @@ public class GameManager : MonoBehaviour
         isOption = false;
         Screen.SetResolution(1920, 1080, true);
         instance = FindObjectOfType<GameManager>();
+        cutManager = FindObjectOfType<CutManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
         if (sceneName != "Lobby")
-            InitiatingCut();
+            cutManager.CutInitiation();
         else
             lobbyUI.SetActive(true);
 
@@ -82,53 +61,6 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
-    }
-
-    void InitiatingCut()
-    {
-        currentCut = 0;
-
-        for (int i = 0; i < cutField.childCount; i++)
-        {
-            Transform cut = cutField.GetChild(i);
-            GameObject tempBackGround = Instantiate(backGround, Vector3.zero, Quaternion.identity);
-            GameObject tempPlayer = Instantiate(player, Vector3.zero, Quaternion.identity);
-            GameObject tempCamera = Instantiate(cutCamera, Vector3.zero, Quaternion.identity);
-            
-            tempCamera.GetComponent<Camera>().targetTexture = cameraRawImage[i];
-
-            //Player Setting
-            tempPlayer.GetComponent<Player>().SetPlayerCutNumber(i);
-
-            //Camera Setting
-            CameraController tempCameraController = tempCamera.GetComponent<CameraController>();
-            tempCameraController.basePoint = tempBackGround.transform;
-            tempCameraController.player = tempPlayer.transform;
-            tempCameraController.bounduryValue = cameraBoundury;
-
-            tempBackGround.transform.parent = cut;
-            tempPlayer.transform.parent = cut;
-            tempCamera.transform.parent = cut;
-
-            tempBackGround.transform.localPosition = Vector3.zero;
-            tempPlayer.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
-            tempCamera.transform.localPosition = Vector3.zero + new Vector3(0,0, -9);
-
-            foreach(InteractableObject obj in tempBackGround.GetComponentsInChildren<InteractableObject>()){
-                obj.Init(i);
-            }
-
-            playerList.Add(tempPlayer.GetComponent<Player>());
-
-        }
-
-        for(int i = 0; i < canvas.childCount; i++)
-        {
-            camImage.Add(canvas.GetChild(i).gameObject);
-            camImage[i].SetActive(false);
-            camImage[i].GetComponent<RawImage>().texture = cameraRawImage[i];
-        }
-        camImage[0].SetActive(true);
     }
 
     static public GameManager getInstance()
@@ -178,10 +110,7 @@ public class GameManager : MonoBehaviour
         audioStageClearSource.Play();
         if (sceneName != "Lobby")
         {
-            foreach (var player in playerList)
-            {
-                player.StageClear();
-            }
+            cutManager.StageClear();
         }
 
         StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
@@ -201,8 +130,8 @@ public class GameManager : MonoBehaviour
 
     public void NextCut()
     {
-        currentCut += 1;
-        if (currentCut > 5)
+        cutManager.MoveToNextCut();
+        if (cutManager.GetCurrentCutNum() > 5)
         {
             StageRestart();
 
@@ -210,14 +139,7 @@ public class GameManager : MonoBehaviour
         else
         {
             audioCutChangeSource.Play();
-            Debug.Log(currentCut);
-            camImage[currentCut].SetActive(true);
         }
-    }
-
-    public int GetCurrentCutNum()
-    {
-        return currentCut;
     }
 
     IEnumerator StageRestart_Coroutin()
@@ -232,7 +154,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(_sceneName);
     }
 
-    
+
 
     IEnumerator fadeAudio(bool fade)
     {
@@ -252,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator fadeImage(bool fade)
     {
-        float dirTime = Time.time + (fade ? SceanChangeTime/2 : SceanChangeTime);
+        float dirTime = Time.time + (fade ? SceanChangeTime / 2 : SceanChangeTime);
         fadingImage.gameObject.SetActive(true);
         while (Time.time < dirTime)
         {
@@ -260,7 +182,7 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.05f);
         }
-        if(fade)
+        if (fade)
             fadingImage.gameObject.SetActive(false);
     }
 
@@ -289,6 +211,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log(opt);
         isOption = opt;
+    }
+
+    public int GetCurrentCutNum()
+    {
+        return cutManager.GetCurrentCutNum();
     }
 
 }
