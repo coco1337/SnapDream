@@ -18,14 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject lobbyUI;
 
-    CutManager cutManager;
-
-    [SerializeField]
-    AudioSource audioBGMSource;
-    [SerializeField]
-    AudioSource audioCutChangeSource;
-    [SerializeField]
-    AudioSource audioStageClearSource;
+    private CutManager cutManager;
+    private AudioManager audioManager;
 
     [SerializeField]
     float SceanChangeTime = 3f;
@@ -44,6 +38,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(1920, 1080, true);
         instance = FindObjectOfType<GameManager>();
         cutManager = FindObjectOfType<CutManager>();
+        audioManager = FindObjectOfType<AudioManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
         if (sceneName != "Lobby")
@@ -54,12 +49,8 @@ public class GameManager : MonoBehaviour
         exitGameUI.SetActive(false);
         exitStageUI.SetActive(false);
 
+        audioManager.AudioInit();
 
-        audioBGMSource = this.GetComponent<AudioSource>();
-        audioBGMSource.volume = 0.1f;
-        audioStageClearSource.volume = 0.05f;
-
-        StartCoroutine("fadeAudio", true);
         StartCoroutine("fadeImage", true);
     }
 
@@ -97,7 +88,7 @@ public class GameManager : MonoBehaviour
     public void StageRestart()
     {
         StartCoroutine("StageRestart_Coroutin", sceneName);
-        StartCoroutine("fadeAudio", false);
+        audioManager.FadingAudio(false);
         StartCoroutine("fadeImage", false);
     }
 
@@ -107,14 +98,14 @@ public class GameManager : MonoBehaviour
         //    ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
         //else
         //    ScreenCapture.CaptureScreenshot(@".\Assets\Resources\Clear" + sceneName+ @".jpg");
-        audioStageClearSource.Play();
+        audioManager.PlayStageClaerAudio();
         if (sceneName != "Lobby")
         {
             cutManager.StageClear();
         }
 
         StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
-        StartCoroutine("fadeAudio", false);
+        audioManager.FadingAudio(false);
         StartCoroutine("stageCLearfadeImage", false);
     }
 
@@ -138,7 +129,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            audioCutChangeSource.Play();
+            audioManager.PlayCutChangeAudio();
         }
     }
 
@@ -156,20 +147,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    IEnumerator fadeAudio(bool fade)
-    {
-        float dirTime = Time.time + SceanChangeTime;
-        while (Time.time < dirTime)
-        {
-            audioBGMSource.volume += (fade) ? 0.01f : -0.018f;
-            if (fade)
-            {
-                if (audioBGMSource.volume > 0.3f)
-                    StopCoroutine("fadeAudio");
-            }
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
+    
 
 
     IEnumerator fadeImage(bool fade)
