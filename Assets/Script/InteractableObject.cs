@@ -10,13 +10,12 @@ public sealed class InteractableObject : CInteractableObject
     // InteractableObject 태그 달기
     [SerializeField] private bool isHoldableObject;
     // private Rigidbody2D rb;
-    private ObjectSoundController sfx;
     private GameManager gameManager;
     private int whichCutNum;
     private bool movingXMidAir;
     
-    
     // public Player player;
+    [Header("Checking - will be private")]
     public bool instantiatedForDrag;
     public bool needSync;
     public bool stayUpperCollider;
@@ -24,11 +23,6 @@ public sealed class InteractableObject : CInteractableObject
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
 
-    public bool IsInstantiated => this.instantiatedForDrag;
-
-    public bool stay;
-    public bool exit;
-    
     // private void SetRigidbodyFreezePositionX() => 
     //    rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
@@ -38,7 +32,8 @@ public sealed class InteractableObject : CInteractableObject
 
     [Header("Throw")] 
     [SerializeField] private float throwWeight;
-
+    
+    public bool IsInstantiated => this.instantiatedForDrag;
     public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
     public void SyncNeeded(bool flag) => this.needSync = flag;
     public int WhichCutNum => whichCutNum;
@@ -52,7 +47,6 @@ public sealed class InteractableObject : CInteractableObject
     private void Start()
     {
         // rb = this.GetComponent<Rigidbody2D>();
-        sfx = this.GetComponent<ObjectSoundController>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
         gameManager = GameManager.GetInstance();
     }
@@ -129,9 +123,9 @@ public sealed class InteractableObject : CInteractableObject
         if (whichCutNum == gameManager.GetCurrentCutNum())
         {
             if (axis != 0)
-                sfx.TurnOnSound();
+                gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EDRAG);
             else
-                sfx.TurnOffSound();
+                gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EEND_DRAG);
 
             if (this.needSync)
             {
@@ -226,6 +220,6 @@ public sealed class InteractableObject : CInteractableObject
             this.stayUpperCollider = false;
         }
 
-        this.sfx.TurnOffSound();
+        gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EEND_DRAG);
     }
 }
