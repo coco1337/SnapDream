@@ -50,7 +50,7 @@ public sealed class InteractableObject : CInteractableObject
         // rb = this.GetComponent<Rigidbody2D>();
         sfx = this.GetComponent<ObjectSoundController>();
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-        gameManager = GameManager.getInstance();
+        gameManager = GameManager.GetInstance();
     }
 
     private void FixedUpdate()

@@ -22,7 +22,7 @@ public class BoundaryCollider : MonoBehaviour
         middlePosition = this.transform.parent.position;
         // 추후 수정
         objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-        gameManager = GameManager.getInstance();
+        gameManager = GameManager.GetInstance();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

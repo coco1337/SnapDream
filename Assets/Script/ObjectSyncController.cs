@@ -13,7 +13,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.getInstance();
+        gameManager = GameManager.GetInstance();
         
         // TODO : Init 함수에서 받아오는게 나음. 일단 임시
         StartCoroutine(GetGameManager());
@@ -24,7 +24,7 @@ public sealed class ObjectSyncController : MonoBehaviour
         yield return new WaitForFixedUpdate();
         if (gameManager == null)
         {
-            gameManager = GameManager.getInstance();
+            gameManager = GameManager.GetInstance();
         }
     }
 

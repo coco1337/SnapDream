@@ -8,7 +8,7 @@ public class StageClear : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
-            GameManager.getInstance().StageClear();
+            GameManager.GetInstance().StageClear();
         }
 
     }
