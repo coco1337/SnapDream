@@ -17,7 +17,7 @@ public class PlayerMoveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerScript.isMovable() && !GameManager.getInstance().isOptioning())
+        if (playerScript.isMovable() && !GameManager.GetInstance().isOptioning())
         {
             float inputAxis;
             if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Ladder)

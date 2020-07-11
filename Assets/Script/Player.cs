@@ -104,7 +104,7 @@ public class Player : MonoBehaviour, Damageabel
         //중복호출 방지
         if (playerCutNum == 5)
         {
-            GameManager.getInstance().NextCut();
+            GameManager.GetInstance().NextCut();
         }
     }
 
@@ -235,7 +235,7 @@ public class Player : MonoBehaviour, Damageabel
         //중복호출 방지
         //5번 캐릭터는 최후에 죽으니
         if (playerCutNum == 5)
-            GameManager.getInstance().StageRestart();
+            GameManager.GetInstance().StageRestart();
     }
 
     public void StageClear()

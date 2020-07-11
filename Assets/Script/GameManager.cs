@@ -23,12 +23,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image fadingImage;
     [SerializeField] bool isOption = false;
 
+    public AudioManager GetAudioManager => audioManager;
+    public CutManager GetCutManager => cutManager;
+    static public GameManager GetInstance() => instance;
+
     // Start is called before the first frame update
     void Start()
     {
         isOption = false;
         Screen.SetResolution(1920, 1080, true);
         instance = FindObjectOfType<GameManager>();
+        if (Application.isEditor) {
+            if (FindObjectOfType<CutManager>() == null)
+                Debug.LogError("No CutManager");
+            if (FindObjectOfType<AudioManager>() == null)
+                Debug.LogError("No AudioManager");
+        }
         cutManager = FindObjectOfType<CutManager>();
         audioManager = FindObjectOfType<AudioManager>();
         sceneName = SceneManager.GetActiveScene().name;
@@ -47,7 +57,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine("fadeImage", true);
     }
 
-    static public GameManager getInstance() => instance;
     
 
     // Update is called once per frame
