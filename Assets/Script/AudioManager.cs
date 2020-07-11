@@ -5,6 +5,14 @@ using UnityEngine;
 
 public sealed class AudioManager : MonoBehaviour
 {
+    public enum SfxType
+    {
+        ECUT_CHANGE = 0,
+        ESTAGE_CLEAR = 1,
+        EDRAG = 2,
+        EEND_DRAG = 3,
+    }
+    
     [SerializeField] private float sceneChangeTime = 3f;
     [SerializeField] private AudioSource bgmAudioSource;
     
@@ -68,6 +76,32 @@ public sealed class AudioManager : MonoBehaviour
     {
         stageClearAudioSource.Play();
         StartCoroutine(FadeAudio(false));
+    }
+
+    public void PlaySfx(SfxType type)
+    {
+        switch (type)
+        {
+            case SfxType.ESTAGE_CLEAR:
+                stageClearAudioSource.Play();
+                break;
+            
+            case SfxType.ECUT_CHANGE:
+                cutChangeAudioSource.Play();
+                break;
+            
+            case SfxType.EDRAG:
+                dragAudioSource.Play();
+                dragAudioSource.loop = true;
+                break;
+            
+            case SfxType.EEND_DRAG:
+                dragAudioSource.Stop();
+                break;
+            
+            default:
+                break;
+        }
     }
 
     private IEnumerator FadeAudio(bool fade)
