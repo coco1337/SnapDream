@@ -15,8 +15,8 @@ public sealed class InteractableObject : CInteractableObject
     private int whichCutNum;
     private bool movingXMidAir;
     
-    
     // public Player player;
+    [Header("Checking - will be private")]
     public bool instantiatedForDrag;
     public bool needSync;
     public bool stayUpperCollider;
@@ -24,11 +24,6 @@ public sealed class InteractableObject : CInteractableObject
     public InteractableObject[] childObjectPair = new InteractableObject[6];
     public InteractableObject parentObject;
 
-    public bool IsInstantiated => this.instantiatedForDrag;
-
-    public bool stay;
-    public bool exit;
-    
     // private void SetRigidbodyFreezePositionX() => 
     //    rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
@@ -38,7 +33,8 @@ public sealed class InteractableObject : CInteractableObject
 
     [Header("Throw")] 
     [SerializeField] private float throwWeight;
-
+    
+    public bool IsInstantiated => this.instantiatedForDrag;
     public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
     public void SyncNeeded(bool flag) => this.needSync = flag;
     public int WhichCutNum => whichCutNum;

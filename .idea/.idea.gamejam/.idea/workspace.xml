@@ -27,9 +27,11 @@
     <setting file="file://$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/PlayerMoveController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/SendMailToDev.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/CutManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4BEC26B5-CBC7-4715-8442-F1499E984732/5c/6a444032/IEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/ObjectSoundController.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -43,9 +45,10 @@
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/CInteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/Player.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/CutManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
       </list>
     </option>
   </component>
@@ -97,7 +100,7 @@
       <workItem from="1592806706864" duration="1750000" />
       <workItem from="1592809311478" duration="4697000" />
       <workItem from="1594444981718" duration="1906000" />
-      <workItem from="1594447690640" duration="5285000" />
+      <workItem from="1594447690640" duration="9253000" />
     </task>
     <servers />
   </component>
@@ -212,9 +215,10 @@
     <state x="1982" y="-8" width="954" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594447688317" />
     <state x="896" y="-14" width="954" height="1027" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1594445071099" />
     <state x="-7" y="0" width="1934" height="1047" key="dock-window-1/0.0.3840.1080@0.0.3840.1080" timestamp="1592809677586" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1590557125622">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1594454733164">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1080.0.1080.1880/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590557125622" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1594454733164" />
   </component>
 </project>

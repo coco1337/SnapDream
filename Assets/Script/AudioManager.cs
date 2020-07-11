@@ -1,58 +1,85 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour
+public sealed class AudioManager : MonoBehaviour
 {
-    [SerializeField] float SceanChangeTime = 3f;
-    [SerializeField] private AudioSource audioBGMSource;
-    [SerializeField] private AudioSource audioCutChangeSource;
-    [SerializeField] private AudioSource audioStageClearSource;
-    // Start is called before the first frame update
+    [SerializeField] private float sceneChangeTime = 3f;
+    [SerializeField] private AudioSource bgmAudioSource;
+    
+    [Header("SFX Audio Sources")]
+    [SerializeField] private AudioSource cutChangeAudioSource;
+    [SerializeField] private AudioSource stageClearAudioSource;
+    [SerializeField] private AudioSource dragAudioSource;
+
+    [Header("Volume")]
+    [SerializeField] [Range(0.0f, 1.0f)] private float sfxVolume = .1f;
+    [SerializeField] [Range(0.0f, 1.0f)] private float bgmVolume = .3f;
+
+    private List<AudioSource> sfxAudioSources = new List<AudioSource>();
+    
+    public void PlayCutChangeAudio() => cutChangeAudioSource.Play();
+    public void FadingAudio(bool fade) => StartCoroutine(FadeAudio(fade));
+
+    private void Start()
+    {
+        sfxAudioSources.AddRange(transform.GetComponentsInChildren<AudioSource>());
+        if (!bgmAudioSource)
+        {
+            bgmAudioSource = this.GetComponent<AudioSource>();
+        }
+    }
 
     public void AudioInit()
     {
-        audioBGMSource.volume = 0.1f;
-        audioCutChangeSource.volume = 0.05f;
-        audioStageClearSource.volume = 0.05f;
-        StartCoroutine(fadeAudio(true));
+        bgmAudioSource.volume = 0.1f;
+        cutChangeAudioSource.volume = 0.05f;
+        stageClearAudioSource.volume = 0.05f;
+        StartCoroutine(FadeAudio(true));
+    }
+    
+    /// <summary>
+    /// Set BGM Volume, vol is float, between 0 to 1 
+    /// </summary>
+    /// <param name="vol"></param>
+    public void SetBgmVolume(float vol)
+    {
+        bgmVolume = vol;
+
+        bgmAudioSource.volume = vol;
     }
 
-
+    /// <summary>
+    /// Set SFX Volume, vol is float, between 0 to 1
+    /// </summary>
+    /// <param name="vol"></param>
+    public void SetSfxVolume(float vol)
+    {
+        sfxVolume = vol;
+        
+        foreach (var source in sfxAudioSources)
+        {
+            source.volume = vol;
+        }
+    }
+    
     public void PlayStageClaerAudio()
     {
-        audioStageClearSource.Play();
-        StartCoroutine("fadeAudio", false);
+        stageClearAudioSource.Play();
+        StartCoroutine(FadeAudio(false));
     }
 
-    public void PlayCutChangeAudio()
+    private IEnumerator FadeAudio(bool fade)
     {
-        audioCutChangeSource.Play();
-
-    }
-
-    public void PlayStageClearAudio()
-    {
-        audioStageClearSource.Play();
-    }
-
-
-    public void FadingAudio(bool fade)
-    {
-        StartCoroutine("fadeAudio", fade);
-    }
-
-
-    IEnumerator fadeAudio(bool fade)
-    {
-        float dirTime = Time.time + SceanChangeTime;
+        float dirTime = Time.time + sceneChangeTime;
         while (Time.time < dirTime)
         {
-            audioBGMSource.volume += (fade) ? 0.01f : -0.018f;
+            bgmAudioSource.volume += (fade) ? 0.01f : -0.018f;
             if (fade)
             {
-                if (audioBGMSource.volume > 0.3f)
-                    StopCoroutine("fadeAudio");
+                if (bgmAudioSource.volume > bgmVolume)
+                    StopCoroutine(nameof(FadeAudio));
             }
             yield return new WaitForSeconds(0.1f);
         }
