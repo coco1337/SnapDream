@@ -7,29 +7,21 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
-    [SerializeField]
-    string[] LevelName;
+    [SerializeField] string[] levelName;
     string sceneName;
     int sceneNum;
-    [SerializeField]
-    GameObject exitGameUI;
-    [SerializeField]
-    GameObject exitStageUI;
-    [SerializeField]
-    GameObject lobbyUI;
+    [SerializeField] private GameObject exitGameUI;
+    [SerializeField] private GameObject exitStageUI;
+    [SerializeField] private GameObject lobbyUI;
 
     private CutManager cutManager;
     private AudioManager audioManager;
 
-    [SerializeField]
-    float SceanChangeTime = 3f;
-    [SerializeField]
-    float SceanReStartTime = 1f;
+    [SerializeField] private float SceanChangeTime = 3f;
+    [SerializeField] private float SceanReStartTime = 1f;
 
-    [SerializeField]
-    Image fadingImage;
-    [SerializeField]
-    bool isOption = false;
+    [SerializeField] private Image fadingImage;
+    [SerializeField] bool isOption = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +33,7 @@ public class GameManager : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
+
         if (sceneName != "Lobby")
             cutManager.CutInit();
         else
@@ -54,10 +47,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine("fadeImage", true);
     }
 
-    static public GameManager getInstance()
-    {
-        return instance;
-    }
+    static public GameManager getInstance() => instance;
+    
 
     // Update is called once per frame
     void Update()
@@ -94,17 +85,13 @@ public class GameManager : MonoBehaviour
 
     public void StageClear()
     {
-        //if(!Application.isEditor)
-        //    ScreenCapture.CaptureScreenshot(@".\Resources\Clear" + sceneName+ @".jpg");
-        //else
-        //    ScreenCapture.CaptureScreenshot(@".\Assets\Resources\Clear" + sceneName+ @".jpg");
         audioManager.PlayStageClaerAudio();
         if (sceneName != "Lobby")
         {
             cutManager.StageClear();
         }
 
-        StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
+        StartCoroutine("MoveStage", levelName[sceneNum + 1]);
         audioManager.FadingAudio(false);
         StartCoroutine("stageCLearfadeImage", false);
     }
@@ -125,7 +112,6 @@ public class GameManager : MonoBehaviour
         if (cutManager.GetCurrentCutNum() > 5)
         {
             StageRestart();
-
         }
         else
         {
@@ -144,11 +130,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(SceanChangeTime);
         SceneManager.LoadScene(_sceneName);
     }
-
-
-
-    
-
 
     IEnumerator fadeImage(bool fade)
     {

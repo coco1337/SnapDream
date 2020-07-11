@@ -97,9 +97,18 @@ public class PlayerInterectController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     { 
-        if (collision.gameObject.CompareTag("Ladder"))
+        if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
+            //Player의 Rigidbody의 충돌판정을 잠시 없앤 뒤(무적상태), 뒤로가는 애니메이션 진행
+            if (collision.transform.position.y > player.transform.position.y + 1)
+            {
+                if(collision.transform.position.x > player.transform.position.x)
+                    player.transform.position =  new Vector3(collision.transform.position.x - 2f, player.transform.position.y);
+                else
+                    player.transform.position = new Vector3(collision.transform.position.x + 2f, player.transform.position.y);
+            }
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)

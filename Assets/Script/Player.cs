@@ -8,18 +8,12 @@ public class Player : MonoBehaviour, Damageabel
     public Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
 
-    [SerializeField]
-    public float speed = 4;
-    [SerializeField]
-    public float dragSpeed = 4;
-    [SerializeField]
-    public float jumpPower = 5;
-    [SerializeField]
-    public float throwPower = 2;
-    [SerializeField]
-    int playerCutNum;
-    [SerializeField]
-    int currentCutNum = 0;
+    [SerializeField] public float speed = 4;
+    [SerializeField] public float dragSpeed = 4;
+    [SerializeField] public float jumpPower = 5;
+    [SerializeField] public float throwPower = 2;
+    [SerializeField] int playerCutNum;
+    [SerializeField] int currentCutNum = 0;
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
@@ -29,8 +23,7 @@ public class Player : MonoBehaviour, Damageabel
     {
         Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged, Clear
     }
-    [SerializeField]
-    PlayerState playerState;
+    [SerializeField] PlayerState playerState;
 
 
     private void Start()
@@ -44,12 +37,10 @@ public class Player : MonoBehaviour, Damageabel
     void Update()
     {
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
-        //    && (rigidbody.velocity.y <= 0.3f);
-
     }
+
     void OnDrawGizmosSelected()
     {
-        // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position + new Vector3(0, -1.28f * transform.localScale.y, 0), 0.07f);
     }

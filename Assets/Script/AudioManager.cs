@@ -28,14 +28,7 @@ public class AudioManager : MonoBehaviour
     public void PlayCutChangeAudio()
     {
         audioCutChangeSource.Play();
-
     }
-
-    public void PlayStageClearAudio()
-    {
-        audioStageClearSource.Play();
-    }
-
 
     public void FadingAudio(bool fade)
     {
