@@ -5,27 +5,17 @@ using UnityEngine.UI;
 
 public class CutManager : MonoBehaviour
 {
-    [SerializeField]
-    Transform cutField;
-    [SerializeField]
-    GameObject backGround;
-    [SerializeField]
-    GameObject player;
-    [SerializeField]
-    GameObject cutCamera;
-    [SerializeField]
-    RenderTexture[] cameraRawImage;
-    [SerializeField]
-    float cameraBoundury = 20f;
-    [SerializeField]
-    RectTransform canvas;
-    [SerializeField]
-    List<GameObject> camImage = new List<GameObject>();
-    [SerializeField]
-    int currentCut = 0;
+    [SerializeField] private Transform cutField;
+    [SerializeField] private GameObject backGround;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject cutCamera;
+    [SerializeField] private RenderTexture[] cameraRawImage;
+    [SerializeField] private float cameraBoundury = 20f;
+    [SerializeField] private RectTransform canvas;
+    [SerializeField] private List<GameObject> camImage = new List<GameObject>();
+    [SerializeField] private int currentCut = 0;
 
-    [SerializeField]
-    Vector2 spawnPosition;
+    [SerializeField] Vector2 spawnPosition;
     List<Player> playerList = new List<Player>();
 
     // Start is called before the first frame update
@@ -40,7 +30,7 @@ public class CutManager : MonoBehaviour
 
     }
 
-    public void CutInitiation()
+    public void CutInit()
     {
         currentCut = 0;
 

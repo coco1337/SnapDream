@@ -84,7 +84,6 @@ public class Player : MonoBehaviour, Damageabel
             animator.SetFloat("moveSpeed", Mathf.Abs(axis));
             rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
             animator.SetFloat("palyerVerticalSpeed", rigidbody.velocity.y);
-            Debug.Log("Vertical Spped : " + rigidbody.velocity.y);
         }
     }
 
