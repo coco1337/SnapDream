@@ -53,7 +53,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TWShift.3" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -62,10 +62,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="14620">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="14620" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>
@@ -88,6 +88,7 @@
       <workItem from="1591167740690" duration="5812000" />
       <workItem from="1592806706864" duration="1750000" />
       <workItem from="1592809311478" duration="4697000" />
+      <workItem from="1594444981718" duration="1906000" />
     </task>
     <servers />
   </component>
@@ -96,6 +97,17 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state width="1867" height="168" key="GridCell.Tab.0.bottom" timestamp="1592815099661">
       <screen x="0" y="0" width="3840" height="1080" />
@@ -177,15 +189,17 @@
     </state>
     <state width="1877" height="286" key="GridCell.Tab.3.right/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1592752464884" />
     <state width="1867" height="168" key="GridCell.Tab.3.right/0.0.3840.1080@0.0.3840.1080" timestamp="1592815099661" />
-    <state x="2381" y="162" key="SettingsEditor" timestamp="1592717978866">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1594446886851">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040/-1080.0.1080.1880@0.0.1920.1040" timestamp="1587958118217" />
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594446886851" />
     <state x="2381" y="162" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1592717978866" />
-    <state x="-7" y="0" width="1934" height="1047" key="dock-window-1" timestamp="1592809677586">
-      <screen x="0" y="0" width="3840" height="1080" />
+    <state x="1982" y="-8" width="954" height="1027" maximized="true" key="dock-window-1" timestamp="1594445782915">
+      <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="896" y="-14" width="954" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1592808415122" />
+    <state x="1982" y="-8" width="954" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594445782915" />
+    <state x="896" y="-14" width="954" height="1027" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1594445071099" />
     <state x="-7" y="0" width="1934" height="1047" key="dock-window-1/0.0.3840.1080@0.0.3840.1080" timestamp="1592809677586" />
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1590557125622">
       <screen x="1920" y="0" width="1920" height="1040" />
