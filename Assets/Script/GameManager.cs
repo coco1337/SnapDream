@@ -26,8 +26,17 @@ public class GameManager : MonoBehaviour
     public AudioManager GetAudioManager => audioManager;
     public CutManager GetCutManager => cutManager;
     static public GameManager GetInstance() => instance;
+<<<<<<< Updated upstream
 
     // Start is called before the first frame update
+=======
+    public void ExitStage() => SceneManager.LoadScene("Lobby");
+    public void ExitGame() => Application.Quit();
+    public bool isOptioning => isOption;
+    public void SetIsOption(bool opt) => isOption = opt;
+    public int GetCurrentCutNum() => cutManager.GetCurrentCutNum();
+
+>>>>>>> Stashed changes
     void Start()
     {
         isOption = false;
@@ -54,10 +63,15 @@ public class GameManager : MonoBehaviour
 
         audioManager.AudioInit();
 
+<<<<<<< Updated upstream
         StartCoroutine("fadeImage", true);
     }
 
     
+=======
+        StartCoroutine(FadeImage(true));
+    }    
+>>>>>>> Stashed changes
 
     // Update is called once per frame
     void Update()
@@ -87,14 +101,14 @@ public class GameManager : MonoBehaviour
 
     public void StageRestart()
     {
-        StartCoroutine("StageRestart_Coroutin", sceneName);
+        StartCoroutine(StageRestartCoroutin(sceneName));
         audioManager.FadingAudio(false);
-        StartCoroutine("fadeImage", false);
+        StartCoroutine(FadeImage(false));
     }
 
     public void StageClear()
     {
-        audioManager.PlayStageClaerAudio();
+        audioManager.PlaySfx(AudioManager.SfxType.ESTAGE_CLEAR);
         if (sceneName != "Lobby")
         {
             cutManager.StageClear();
@@ -102,7 +116,11 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("MoveStage", levelName[sceneNum + 1]);
         audioManager.FadingAudio(false);
+<<<<<<< Updated upstream
         StartCoroutine("stageCLearfadeImage", false);
+=======
+        StartCoroutine(StageClearFadeImage(false));
+>>>>>>> Stashed changes
     }
 
     public void ExitStage()
@@ -128,16 +146,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator StageRestart_Coroutin()
+    IEnumerator StageRestartCoroutin(string sceneName)
     {
         yield return new WaitForSeconds(SceanReStartTime);
         SceneManager.LoadScene(sceneName);
     }
 
-    IEnumerator MoveStage(string _sceneName)
+    IEnumerator MoveStage(string sceneName)
     {
         yield return new WaitForSeconds(SceanChangeTime);
-        SceneManager.LoadScene(_sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator fadeImage(bool fade)
@@ -147,14 +165,17 @@ public class GameManager : MonoBehaviour
         while (Time.time < dirTime)
         {
             fadingImage.color = (fade) ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a - 0.04f) : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a + 0.022f);
-
             yield return new WaitForSeconds(0.05f);
         }
         if (fade)
             fadingImage.gameObject.SetActive(false);
     }
 
+<<<<<<< Updated upstream
     IEnumerator stageCLearfadeImage(bool fade)
+=======
+    IEnumerator StageClearFadeImage(bool fade)
+>>>>>>> Stashed changes
     {
         if (!fade && sceneName != "Lobby")
             yield return new WaitForSeconds(1);
@@ -163,27 +184,9 @@ public class GameManager : MonoBehaviour
         while (Time.time < dirTime)
         {
             fadingImage.color = (fade) ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a - 0.04f) : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, fadingImage.color.a + 0.022f);
-
             yield return new WaitForSeconds(0.05f);
         }
         if (fade)
             fadingImage.gameObject.SetActive(false);
     }
-
-    public bool isOptioning()
-    {
-        return isOption;
-    }
-
-    public void SetIsOption(bool opt)
-    {
-        Debug.Log(opt);
-        isOption = opt;
-    }
-
-    public int GetCurrentCutNum()
-    {
-        return cutManager.GetCurrentCutNum();
-    }
-
 }

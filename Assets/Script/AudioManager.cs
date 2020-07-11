@@ -12,10 +12,17 @@ public class AudioManager : MonoBehaviour
 
     public void AudioInit()
     {
+<<<<<<< Updated upstream
         audioBGMSource.volume = 0.1f;
         audioCutChangeSource.volume = 0.05f;
         audioStageClearSource.volume = 0.05f;
         StartCoroutine(fadeAudio(true));
+=======
+        SetBgmVolume(0.1f);
+        cutChangeAudioSource.volume = 0.05f;
+        stageClearAudioSource.volume = 0.05f;
+        StartCoroutine(FadeAudio(true));
+>>>>>>> Stashed changes
     }
 
 
