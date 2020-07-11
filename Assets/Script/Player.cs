@@ -45,10 +45,8 @@ public class Player : MonoBehaviour, Damageabel
         Gizmos.DrawSphere(transform.position + new Vector3(0, -1.28f * transform.localScale.y, 0), 0.07f);
     }
 
-    public void SetPlayerCutNumber(int i)
-    {
-        playerCutNum = i;
-    }
+    public void SetPlayerCutNumber(int i) => playerCutNum = i;
+   
 
     public void PlayerMove(float axis)
     {
