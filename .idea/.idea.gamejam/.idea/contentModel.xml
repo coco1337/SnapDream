@@ -15,6 +15,7 @@
           </e>
         </e>
         <e p="Script" t="Include">
+          <e p="AudioManager.cs" t="Include" />
           <e p="BoundaryCollider.cs" t="Include" />
           <e p="ButtonBlink.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />

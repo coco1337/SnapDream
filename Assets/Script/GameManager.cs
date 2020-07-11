@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
         if (sceneName != "Lobby")
-            cutManager.CutInitiation();
+            cutManager.CutInit();
         else
             lobbyUI.SetActive(true);
 
