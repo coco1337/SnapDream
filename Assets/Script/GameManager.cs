@@ -26,17 +26,12 @@ public class GameManager : MonoBehaviour
     public AudioManager GetAudioManager => audioManager;
     public CutManager GetCutManager => cutManager;
     static public GameManager GetInstance() => instance;
-<<<<<<< Updated upstream
-
-    // Start is called before the first frame update
-=======
     public void ExitStage() => SceneManager.LoadScene("Lobby");
     public void ExitGame() => Application.Quit();
     public bool isOptioning => isOption;
     public void SetIsOption(bool opt) => isOption = opt;
     public int GetCurrentCutNum() => cutManager.GetCurrentCutNum();
 
->>>>>>> Stashed changes
     void Start()
     {
         isOption = false;
@@ -63,15 +58,8 @@ public class GameManager : MonoBehaviour
 
         audioManager.AudioInit();
 
-<<<<<<< Updated upstream
-        StartCoroutine("fadeImage", true);
-    }
-
-    
-=======
         StartCoroutine(FadeImage(true));
     }    
->>>>>>> Stashed changes
 
     // Update is called once per frame
     void Update()
@@ -116,21 +104,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("MoveStage", levelName[sceneNum + 1]);
         audioManager.FadingAudio(false);
-<<<<<<< Updated upstream
-        StartCoroutine("stageCLearfadeImage", false);
-=======
         StartCoroutine(StageClearFadeImage(false));
->>>>>>> Stashed changes
-    }
-
-    public void ExitStage()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
     }
 
     public void NextCut()
@@ -158,7 +132,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    IEnumerator fadeImage(bool fade)
+    IEnumerator FadeImage(bool fade)
     {
         float dirTime = Time.time + (fade ? SceanChangeTime / 2 : SceanChangeTime);
         fadingImage.gameObject.SetActive(true);
@@ -171,11 +145,7 @@ public class GameManager : MonoBehaviour
             fadingImage.gameObject.SetActive(false);
     }
 
-<<<<<<< Updated upstream
-    IEnumerator stageCLearfadeImage(bool fade)
-=======
     IEnumerator StageClearFadeImage(bool fade)
->>>>>>> Stashed changes
     {
         if (!fade && sceneName != "Lobby")
             yield return new WaitForSeconds(1);
