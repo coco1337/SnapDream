@@ -5,25 +5,30 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMoveController : MonoBehaviour
 {
-    Player playerScript;
-    PlayerInterectController interectController;
+    [SerializeField] private Player player = null;
+    private PlayerInterectController interectController;
 
-    private void Start()
+    public void SetPlayer(Player tempPlayer)
     {
-        playerScript = transform.GetComponentInParent<Player>();
-        interectController = transform.GetComponentInParent<PlayerInterectController>();
+        if(player != null)
+        {
+            tempPlayer.transform.localPosition = player.transform.localPosition;
+            player.playerStop();
+        }
+        this.player = tempPlayer;
+        interectController = player.transform.GetComponentInParent<PlayerInterectController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerScript.isMovable() && !GameManager.GetInstance().isOptioning)
+        if (player != null && player.isMovable() && !GameManager.GetInstance().isOptioning)
         {
             float inputAxis;
-            if (playerScript.GetPlayerState() != Player.PlayerState.Interaction_Ladder)
+            if (player.GetPlayerState() != Player.PlayerState.Interaction_Ladder)
             {
                 inputAxis = Input.GetAxisRaw("Horizontal");
-                playerScript.PlayerMove(inputAxis);
+                player.PlayerMove(inputAxis);
 
                 //Drag
                 if (interectController.dragObject != null)
@@ -32,36 +37,32 @@ public class PlayerMoveController : MonoBehaviour
                 }
 
                 //점프
-                if (Input.GetKeyDown(KeyCode.Z) && playerScript.IsJumpable())
+                if (Input.GetKeyDown(KeyCode.Z) && player.IsJumpable())
                 {
-                    playerScript.moveNextCut();
-                    if (playerScript.isMovable())
-                        playerScript.PlayerJump();
-                    else
-                        playerScript.playerStop(); //이동 정지
+                    GameManager.GetInstance().NextCut();
                 }
 
                 // 상호작용
-                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable() && playerScript.IsThrowable())
+                if (Input.GetKeyDown(KeyCode.X) && interectController.CanInterectable() && player.IsThrowable())
                 {
                     interectController.Interacting();
                 }
 
                 //사다리
-                if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && playerScript.IsJumpable())
+                if (interectController.ladderTarget != null && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) && player.IsJumpable())
                 {
-                    playerScript.getLadder();
+                    player.getLadder();
                 }
 
             }
             else
             {
-                playerScript.transform.position = new Vector2(interectController.ladderTarget.transform.position.x, transform.position.y);
+                player.transform.position = new Vector2(interectController.ladderTarget.transform.position.x, transform.position.y);
                 inputAxis = Input.GetAxisRaw("Vertical");
-                playerScript.PlayerLadderMove(inputAxis);
+                player.PlayerLadderMove(inputAxis);
                 if(inputAxis < 0 && interectController.ladderExit != null)
                 {
-                    playerScript.realeaseLadder();
+                    player.realeaseLadder();
                 }
             }
         }// end of if(Movable())

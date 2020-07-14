@@ -32,7 +32,7 @@ public class PlayerInterectController : MonoBehaviour
 
     public bool CanInterectable()
     {
-        int playerDirection = player.IsPlyerFlip() ? -1 : 1;
+        int playerDirection = player.IsPlyerFlip ? -1 : 1;
         Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(playerDirection * 1.7f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
         if (collider != null && collider.CompareTag("Throw"))
         {

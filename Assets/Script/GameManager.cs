@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
-    [SerializeField] string[] levelName;
+    [SerializeField] string[] LevelName;
     string sceneName;
     int sceneNum;
     [SerializeField] private GameObject exitGameUI;
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     private CutManager cutManager;
     private AudioManager audioManager;
+    private PlayerManager playerManager;
 
     [SerializeField] private float SceanChangeTime = 3f;
     [SerializeField] private float SceanReStartTime = 1f;
@@ -26,17 +27,12 @@ public class GameManager : MonoBehaviour
     public AudioManager GetAudioManager => audioManager;
     public CutManager GetCutManager => cutManager;
     static public GameManager GetInstance() => instance;
-<<<<<<< Updated upstream
-
-    // Start is called before the first frame update
-=======
     public void ExitStage() => SceneManager.LoadScene("Lobby");
     public void ExitGame() => Application.Quit();
     public bool isOptioning => isOption;
     public void SetIsOption(bool opt) => isOption = opt;
     public int GetCurrentCutNum() => cutManager.GetCurrentCutNum();
 
->>>>>>> Stashed changes
     void Start()
     {
         isOption = false;
@@ -50,6 +46,7 @@ public class GameManager : MonoBehaviour
         }
         cutManager = FindObjectOfType<CutManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
 
@@ -57,21 +54,15 @@ public class GameManager : MonoBehaviour
             cutManager.CutInit();
         else
             lobbyUI.SetActive(true);
+        playerManager.PlayerManagerInit();
 
         exitGameUI.SetActive(false);
         exitStageUI.SetActive(false);
 
         audioManager.AudioInit();
 
-<<<<<<< Updated upstream
-        StartCoroutine("fadeImage", true);
-    }
-
-    
-=======
         StartCoroutine(FadeImage(true));
     }    
->>>>>>> Stashed changes
 
     // Update is called once per frame
     void Update()
@@ -114,23 +105,12 @@ public class GameManager : MonoBehaviour
             cutManager.StageClear();
         }
 
-        StartCoroutine("MoveStage", levelName[sceneNum + 1]);
+        if(sceneNum+1 > LevelName.Length)
+            StartCoroutine("MoveStage", "Lobby");
+        else
+            StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
         audioManager.FadingAudio(false);
-<<<<<<< Updated upstream
-        StartCoroutine("stageCLearfadeImage", false);
-=======
         StartCoroutine(StageClearFadeImage(false));
->>>>>>> Stashed changes
-    }
-
-    public void ExitStage()
-    {
-        SceneManager.LoadScene("Lobby");
-    }
-
-    public void ExitGame()
-    {
-        Application.Quit();
     }
 
     public void NextCut()
@@ -143,7 +123,9 @@ public class GameManager : MonoBehaviour
         else
         {
             audioManager.PlayCutChangeAudio();
+            playerManager.MoveToNextCut();
         }
+        
     }
 
     IEnumerator StageRestartCoroutin(string sceneName)
@@ -158,7 +140,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-    IEnumerator fadeImage(bool fade)
+    IEnumerator FadeImage(bool fade)
     {
         float dirTime = Time.time + (fade ? SceanChangeTime / 2 : SceanChangeTime);
         fadingImage.gameObject.SetActive(true);
@@ -171,11 +153,7 @@ public class GameManager : MonoBehaviour
             fadingImage.gameObject.SetActive(false);
     }
 
-<<<<<<< Updated upstream
-    IEnumerator stageCLearfadeImage(bool fade)
-=======
     IEnumerator StageClearFadeImage(bool fade)
->>>>>>> Stashed changes
     {
         if (!fade && sceneName != "Lobby")
             yield return new WaitForSeconds(1);
