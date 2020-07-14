@@ -17,7 +17,7 @@ public class PlayerInterectController : MonoBehaviour
         player = transform.GetComponent<Player>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if(player.GetPlayerState() == Player.PlayerState.Interaction_Drag && dragObject == null)
         {
@@ -32,7 +32,7 @@ public class PlayerInterectController : MonoBehaviour
 
     public bool CanInterectable()
     {
-        int playerDirection = player.IsPlyerFlip() ? -1 : 1;
+        int playerDirection = player.IsPlyerFlip ? -1 : 1;
         Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(playerDirection * 1.7f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
         if (collider != null && collider.CompareTag("Throw"))
         {
@@ -99,7 +99,6 @@ public class PlayerInterectController : MonoBehaviour
     { 
         if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
-            //Player의 Rigidbody의 충돌판정을 잠시 없앤 뒤(무적상태), 뒤로가는 애니메이션 진행
             if (collision.transform.position.y > player.transform.position.y + 1)
             {
                 if(collision.transform.position.x > player.transform.position.x)

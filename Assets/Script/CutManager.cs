@@ -14,7 +14,6 @@ public sealed class CutManager : MonoBehaviour
     [SerializeField] private RectTransform canvas;
     [SerializeField] private List<GameObject> camImage = new List<GameObject>();
     [SerializeField] private int currentCut = 0;
-
     [SerializeField] private Vector2 spawnPosition;
 
     private List<Player> playerList = new List<Player>();
