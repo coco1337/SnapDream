@@ -20,6 +20,7 @@ public sealed class CutManager : MonoBehaviour
     private List<Player> playerList = new List<Player>();
 
     public int GetCurrentCutNum() => currentCut;
+    public List<Player> GetPlayerList => playerList;
 
     // Start is called before the first frame update
     private void Start()
