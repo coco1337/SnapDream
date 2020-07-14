@@ -14,12 +14,12 @@ public sealed class CutManager : MonoBehaviour
     [SerializeField] private RectTransform canvas;
     [SerializeField] private List<GameObject> camImage = new List<GameObject>();
     [SerializeField] private int currentCut = 0;
-
     [SerializeField] private Vector2 spawnPosition;
     
     private List<Player> playerList = new List<Player>();
 
     public int GetCurrentCutNum() => currentCut;
+    public List<Player> GetPlayerList => playerList;
 
     // Start is called before the first frame update
     private void Start()

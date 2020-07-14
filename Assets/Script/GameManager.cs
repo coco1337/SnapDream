@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
-    [SerializeField] string[] levelName;
+    [SerializeField] string[] LevelName;
     string sceneName;
     int sceneNum;
     [SerializeField] private GameObject exitGameUI;
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     private CutManager cutManager;
     private AudioManager audioManager;
+    private PlayerManager playerManager;
 
     [SerializeField] private float SceanChangeTime = 3f;
     [SerializeField] private float SceanReStartTime = 1f;
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
         }
         cutManager = FindObjectOfType<CutManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        playerManager = FindObjectOfType<PlayerManager>();
         sceneName = SceneManager.GetActiveScene().name;
         sceneNum = SceneManager.GetActiveScene().buildIndex;
 
@@ -52,6 +54,7 @@ public class GameManager : MonoBehaviour
             cutManager.CutInit();
         else
             lobbyUI.SetActive(true);
+        playerManager.PlayerManagerInit();
 
         exitGameUI.SetActive(false);
         exitStageUI.SetActive(false);
@@ -102,7 +105,10 @@ public class GameManager : MonoBehaviour
             cutManager.StageClear();
         }
 
-        StartCoroutine("MoveStage", levelName[sceneNum + 1]);
+        if(sceneNum+1 > LevelName.Length)
+            StartCoroutine("MoveStage", "Lobby");
+        else
+            StartCoroutine("MoveStage", LevelName[sceneNum + 1]);
         audioManager.FadingAudio(false);
         StartCoroutine(StageClearFadeImage(false));
     }
@@ -117,7 +123,9 @@ public class GameManager : MonoBehaviour
         else
         {
             audioManager.PlayCutChangeAudio();
+            playerManager.MoveToNextCut();
         }
+        
     }
 
     IEnumerator StageRestartCoroutin(string sceneName)

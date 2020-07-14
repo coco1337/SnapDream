@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour, Damageabel
+public class Player_Previous : MonoBehaviour, Damageabel
 {
     public Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
@@ -12,7 +12,8 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField] public float dragSpeed = 4;
     [SerializeField] public float jumpPower = 5;
     [SerializeField] public float throwPower = 2;
-    [SerializeField] private int playerCutNum;
+    [SerializeField] int playerCutNum;
+    [SerializeField] int currentCutNum = 0;
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
@@ -27,11 +28,10 @@ public class Player : MonoBehaviour, Damageabel
 
     public bool IsPlyerFlip => spriteRenderer.flipX;
 
-    public void SetPlayerCutNumber(int i) => playerCutNum = i;
-    public int GetPlayerCutNumber => playerCutNum;
 
     private void Start()
     {
+        currentCutNum = 0;
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -48,6 +48,7 @@ public class Player : MonoBehaviour, Damageabel
         //Gizmos.DrawSphere(transform.position + new Vector3(0, -1.28f * transform.localScale.y, 0), 0.07f);
     }
 
+    public void SetPlayerCutNumber(int i) => playerCutNum = i;   
 
     public void PlayerMove(float axis)
     {
@@ -99,14 +100,19 @@ public class Player : MonoBehaviour, Damageabel
 
     public void moveNextCut()
     {
-        GameManager.GetInstance().NextCut();
+        currentCutNum += 1;
+        //중복호출 방지
+        if (playerCutNum == 5)
+        {
+            GameManager.GetInstance().NextCut();
+        }
     }
 
     public bool isMovable()
     {
         if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw || playerState == PlayerState.Clear)
             return false;
-        return true;
+        return currentCutNum <= playerCutNum;
     }
 
     public void playerStop()
@@ -120,7 +126,7 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = Vector2.zero;
         rigidbody.bodyType = RigidbodyType2D.Static;
         gameObject.GetComponent<Player>().enabled = false;
-        gameObject.GetComponent<PlayerInterectController>().enabled = false;
+        gameObject.GetComponent<PlayerMoveController>().enabled = false;
     }
 
     public PlayerState GetPlayerState()
@@ -204,9 +210,17 @@ public class Player : MonoBehaviour, Damageabel
         }
     }
 
+    public int GetPlayerCutNumber()
+    {
+        return playerCutNum;
+    }
+
+    public int GetCurrentCutNumber()
+    {
+        return currentCutNum;
+    }
 
 
-    //Player에게 데미지를 주는 함수
     public void Hit(float damage)
     {
         PlayerHealth -= damage;
@@ -214,20 +228,24 @@ public class Player : MonoBehaviour, Damageabel
             DieObject();
     }
 
-    //Player에게 데미지를 주는 Object를 만났을 경우 동작
     public void DieObject()
     {
         playerStop();
         playerState = PlayerState.DIe;
-        GameManager.GetInstance().StageRestart();
+        //중복호출 방지
+        //5번 캐릭터는 최후에 죽으니
+        if (playerCutNum == 5)
+            GameManager.GetInstance().StageRestart();
     }
 
-    //Stage를 Clear 할 시 Player의 동작
     public void StageClear()
     {
         playerState = PlayerState.Clear;
         animator.SetBool("isGround", true);
-        StartCoroutine("StageClearAction");
+        if(currentCutNum <= playerCutNum)
+        {
+            StartCoroutine("StageClearAction");
+        }
     }
 
     IEnumerable StageClearAction()
