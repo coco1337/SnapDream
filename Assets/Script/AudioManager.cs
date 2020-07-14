@@ -42,8 +42,7 @@ public sealed class AudioManager : MonoBehaviour
     public void AudioInit()
     {
         bgmAudioSource.volume = 0.1f;
-        cutChangeAudioSource.volume = 0.05f;
-        stageClearAudioSource.volume = 0.05f;
+        this.SetSfxVolume(sfxVolume);
         StartCoroutine(FadeAudio(true));
     }
     
@@ -78,12 +77,17 @@ public sealed class AudioManager : MonoBehaviour
         StartCoroutine(FadeAudio(false));
     }
 
+    /// <summary>
+    /// type is AudioManager.SfxType, play the type of sound
+    /// </summary>
+    /// <param name="type"></param>
     public void PlaySfx(SfxType type)
     {
         switch (type)
         {
             case SfxType.ESTAGE_CLEAR:
                 stageClearAudioSource.Play();
+                StartCoroutine(FadeAudio(false));
                 break;
             
             case SfxType.ECUT_CHANGE:

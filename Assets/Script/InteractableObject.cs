@@ -27,7 +27,7 @@ public sealed class InteractableObject : CInteractableObject
     //    rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
     [Header("Drag")] 
-    [SerializeField] private float dragWeight;
+    [SerializeField] private float toyBoxWeight;
     [SerializeField] private bool hitSideWall;
 
     [Header("Throw")] 
@@ -51,7 +51,7 @@ public sealed class InteractableObject : CInteractableObject
         gameManager = GameManager.GetInstance();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (moveDirection.y > 0)
         {
@@ -116,7 +116,7 @@ public sealed class InteractableObject : CInteractableObject
             else
             {
                 hitSideWall = false;
-                moveDirection = new Vector2(speed * axis / dragWeight, moveDirection.y);
+                moveDirection = new Vector2(speed * axis / toyBoxWeight, moveDirection.y);
             }
         }
         

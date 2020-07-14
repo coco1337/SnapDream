@@ -16,10 +16,11 @@ public sealed class CutManager : MonoBehaviour
     [SerializeField] private int currentCut = 0;
 
     [SerializeField] private Vector2 spawnPosition;
-    
+
     private List<Player> playerList = new List<Player>();
 
     public int GetCurrentCutNum() => currentCut;
+    public List<Player> GetPlayerList => playerList;
 
     // Start is called before the first frame update
     private void Start()
