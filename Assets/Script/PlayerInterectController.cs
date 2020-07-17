@@ -21,12 +21,12 @@ public class PlayerInterectController : MonoBehaviour
     {
         if(player.GetPlayerState() == Player.PlayerState.Interaction_Drag && dragObject == null)
         {
-            player.realeaseDrag();
+            player.RealeaseDrag();
         }
 
         if(player.GetPlayerState() == Player.PlayerState.Interaction_Ladder && ladderTarget == null)
         {
-            player.realeaseLadder();
+            player.RealeaseLadder();
         }
     }
 
@@ -36,7 +36,6 @@ public class PlayerInterectController : MonoBehaviour
         Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(playerDirection * 1.7f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
         if (collider != null && collider.CompareTag("Throw"))
         {
-            Debug.Log(collider.name);
             throwObject = collider.gameObject;
             return true;
         }
@@ -44,12 +43,44 @@ public class PlayerInterectController : MonoBehaviour
             return false;
     }
 
+    public bool CanThrow()
+    {
+        Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2((player.IsPlyerFlip ? -1 : 1) * 1.7f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        if (collider != null && collider.CompareTag("Throw"))
+        {
+            throwObject = collider.gameObject;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public bool CanDrag()
+    {
+        Collider2D collider = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2((player.IsPlyerFlip ? -1 : 1) * 1f, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        if (collider != null && (collider.CompareTag("Throw") || collider.CompareTag("Drag")))
+        {
+            throwObject = collider.gameObject;
+            return true;
+        }
+        else
+        {
+            player.RealeaseDrag();
+            if (dragObject != null)
+            {
+                dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
+                dragObject = null;
+            }
+            return false;
+        }
+    }
+
     public void Interacting()
     {
         if (throwObject.GetComponent<InteractableObject>().Throw(player.throwPower))
         {
-            player.getThrow();
-            player.realeaseDrag();
+            player.GetThrow();
+            player.RealeaseDrag();
             dragObject = null;
         }
     }
@@ -63,18 +94,32 @@ public class PlayerInterectController : MonoBehaviour
                 || axis < 0 && dragObject.transform.position.x < player.transform.position.x)
             {
                 if(dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed))
-                    player.getDrag();
+                    player.GetDrag();
             }
             else
             {
                 dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
-                player.realeaseDrag();
+                player.RealeaseDrag();
             }
         }
     }
 
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
+        {
+            if (collision.transform.position.y > player.transform.position.y + 1)
+            {
+                if (collision.transform.position.x > player.transform.position.x)
+                    player.transform.position = new Vector3(collision.transform.position.x - 2f, player.transform.position.y);
+                else
+                    player.transform.position = new Vector3(collision.transform.position.x + 2f, player.transform.position.y);
+            }
+        }
+    }
+
+        private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ladder"))
         {
@@ -94,21 +139,7 @@ public class PlayerInterectController : MonoBehaviour
             ladderExit = collision.gameObject;
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    { 
-        if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
-        {
-            if (collision.transform.position.y > player.transform.position.y + 1)
-            {
-                if(collision.transform.position.x > player.transform.position.x)
-                    player.transform.position =  new Vector3(collision.transform.position.x - 2f, player.transform.position.y);
-                else
-                    player.transform.position = new Vector3(collision.transform.position.x + 2f, player.transform.position.y);
-            }
-        }
-
-    }
+    
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -116,15 +147,12 @@ public class PlayerInterectController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ladder"))
         {
             ladderTarget = null;
-            player.realeaseLadder();
+            player.RealeaseLadder();
         }
-
-
         if (collision.gameObject.CompareTag("Ladder Exit"))
         {
             ladderExit = null;
         }
-
         if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
             dragObject = null;
