@@ -123,6 +123,10 @@ public class CInteractableObject : MonoBehaviour
         float minDist = rayMaxDistance;
         foreach (var t in hit2Ds)
         {
+            // 래더 위로 올라가는경우 제외
+            if (t.collider.CompareTag("Ladder") || t.collider.CompareTag("Ladder Exit"))
+                continue;
+            
             if (t.distance != 0)
             {
                 if (minDist > t.distance)
@@ -137,14 +141,54 @@ public class CInteractableObject : MonoBehaviour
     {
         var colliders = Physics2D.BoxCastAll(boxCastRightOrigin, LeftRightBoundSize, 0, 
             Vector2.right, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
-        return colliders.Length > 1 ? true : false;
+        
+        bool result = false;
+
+        if (colliders.Length > 1)
+        {
+            // 사다리때문에 안 밀리는경우가 있었음
+            // colliders[0]는 자기 자신
+            for (int i = 1; i < colliders.Length; ++i)
+            {
+                if (colliders[i].collider.CompareTag("Ladder") || colliders[i].collider.CompareTag("Ladder Exit"))
+                {
+                    result = false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return result;
     }
 
     protected bool IsHitLeft()
     {
         var colliders = Physics2D.BoxCastAll(boxCastLeftOrigin, LeftRightBoundSize, 0,
             Vector2.left, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
-        return colliders.Length > 1 ? true : false;
+
+        bool result = false;
+
+        if (colliders.Length > 1)
+        {
+            // 사다리때문에 안 밀리는경우가 있었음
+            // colliders[0]는 자기 자신
+            for (int i = 1; i < colliders.Length; ++i)
+            {
+                if (colliders[i].collider.CompareTag("Ladder") || colliders[i].collider.CompareTag("Ladder Exit"))
+                {
+                    result = false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        
+        return result;
     }
 
     protected bool IsHitUp(out RaycastHit2D[] colliders)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,7 @@ public sealed class CutManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject cutCamera;
     [SerializeField] private RenderTexture cameraRawImage;
-    [SerializeField] private float cameraBoundury = 20f;
+    [SerializeField] private float cameraBoundary = 20f;
     [SerializeField] private RectTransform canvas;
     [SerializeField] private List<GameObject> camImage = new List<GameObject>();
     [SerializeField] private int currentCut = 0;
@@ -25,6 +26,19 @@ public sealed class CutManager : MonoBehaviour
     private void Start()
     {
         currentCut = 0;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            MoveNextCut();
+        }
+    }
+
+    private void MoveNextCut()
+    {
+        
     }
 
     public void CutInit()
@@ -51,7 +65,7 @@ public sealed class CutManager : MonoBehaviour
             var tempCameraController = tempCamera.GetComponent<CameraController>();
             tempCameraController.basePoint = tempBackGround.transform;            // 삭제 예정
             tempCameraController.player = tempPlayer.transform;
-            tempCameraController.bounduryValue = cameraBoundury;                  // 삭제 예정
+            tempCameraController.bounduryValue = cameraBoundary;                  // 삭제 예정
 
             // 부모 설정
             tempBackGround.transform.parent = cut;
