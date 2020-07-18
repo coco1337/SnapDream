@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(ObjectSyncController))]
 public sealed class CutManager : MonoBehaviour
 {
+    [Header("Cut Information")]
     [SerializeField] private Transform cutField;
     [SerializeField] private GameObject backGround;
     [SerializeField] private GameObject player;
@@ -18,27 +20,23 @@ public sealed class CutManager : MonoBehaviour
     [SerializeField] private Vector2 spawnPosition;
 
     private List<Player> playerList = new List<Player>();
+    private List<Camera> cutCameras = new List<Camera>();
+
+    [Header("Object Sync")]
+    private ObjectSyncController syncController;
 
     public int GetCurrentCutNum() => currentCut;
+    public int MaxCutCount => cutField.childCount;
     public List<Player> GetPlayerList => playerList;
+    public ObjectSyncController GetObjectSyncController => syncController;
+    public Camera GetCamera(int t) => cutCameras[t];
 
     // Start is called before the first frame update
     private void Start()
     {
         currentCut = 0;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            MoveNextCut();
-        }
-    }
-
-    private void MoveNextCut()
-    {
-        
+        syncController = this.GetComponent<ObjectSyncController>();
+        syncController.SetCutManager(this);
     }
 
     public void CutInit()
@@ -51,6 +49,24 @@ public sealed class CutManager : MonoBehaviour
             var tempBackGround = Instantiate(backGround, Vector3.zero, Quaternion.identity);
             var tempPlayer = Instantiate(player, Vector3.zero, Quaternion.identity);
             var tempCamera = Instantiate(cutCamera, Vector3.zero, Quaternion.identity);
+            
+            // 상호작용 가능한 오브젝트 연결
+            // 0일때와 나머지 컷을 구분해서 id 배정해줘야 됨
+            var interactableObjects = tempBackGround.GetComponentsInChildren<ObjectId>();
+            for (int j = 0; j < interactableObjects.Length; ++j)
+            {
+                if (i == 0)
+                {
+                    var t = syncController.GetObjectId();
+                    Debug.Log("Id check : GetObjectId() == " + t + ", j : " + j);
+                }
+                
+                interactableObjects[j].SetId(j);
+                var obj = interactableObjects[j].GetInteractableObject;
+                obj.Init(i);
+                syncController.AddObject(j, obj);
+                //syncController.AddObject(j, interactableObjects[j]);
+            }
 
             // 각 컷별로 카메라 연결
             var rawImage = Instantiate(cameraRawImage);
@@ -66,6 +82,7 @@ public sealed class CutManager : MonoBehaviour
             tempCameraController.basePoint = tempBackGround.transform;            // 삭제 예정
             tempCameraController.player = tempPlayer.transform;
             tempCameraController.bounduryValue = cameraBoundary;                  // 삭제 예정
+            cutCameras.Add(tempCamera.GetComponent<Camera>());
 
             // 부모 설정
             tempBackGround.transform.parent = cut;
@@ -79,11 +96,6 @@ public sealed class CutManager : MonoBehaviour
             
             camImage[i].SetActive(false);
 
-            foreach (var obj in tempBackGround.GetComponentsInChildren<InteractableObject>())
-            {
-                obj.Init(i);
-            }
-
             playerList.Add(tempPlayer.GetComponent<Player>());
         }
 
@@ -95,6 +107,7 @@ public sealed class CutManager : MonoBehaviour
     {
         currentCut++;
         camImage[currentCut].SetActive(true);
+        syncController.MoveNextCut(currentCut);
     }
 
     /// <summary>

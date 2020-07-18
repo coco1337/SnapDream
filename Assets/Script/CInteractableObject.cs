@@ -2,217 +2,246 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class CInteractableObject : MonoBehaviour
+[RequireComponent(typeof(ObjectId))]
+public abstract class CInteractableObject : MonoBehaviour
 {
-    [SerializeField] protected bool isGround;
+	public enum HitBoundaryLocation
+	{
+		NONE = 0,
+		ELEFT_BOUNDARY = 1,
+		ERIGHT_BOUNDARY = 2,
+		ECEIL_BOUNDARY = 3,
+		MAX = ECEIL_BOUNDARY + 1,
+	}
 
-    [Header("Physics")] 
-    [SerializeField] protected Vector2 moveDirection;
-    [SerializeField] protected float gravityScale;
-    [SerializeField] protected float boxCastThickness;
-    [SerializeField] protected List<Collider2D> hitColliders;
-    [SerializeField] protected float padding;
-    [SerializeField] protected float rayMaxDistance;
-    [SerializeField] protected float groundOffset;
-    [SerializeField] protected float sideOffset;
-    [SerializeField] protected float upOffset;
-    [SerializeField] protected BoxCollider2D colliderSelf;
-    private RaycastHit2D[] groundColliders;
+	[SerializeField] protected bool isGround;
 
-    private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
-    private Vector2 LeftRightBoundSize => new Vector2(boxCastThickness, colliderSelf.size.y);
-    private Vector2 boxCastRightOrigin => 
-        new Vector2(transform.position.x + (colliderSelf.size.x + boxCastThickness) / 2 + padding - sideOffset, 
-            transform.position.y + colliderSelf.offset.y);
-    private Vector2 boxCastLeftOrigin =>
-        new Vector2(transform.position.x - (colliderSelf.size.x + boxCastThickness) / 2 - padding + sideOffset, 
-            transform.position.y + colliderSelf.offset.y);
-    private Vector2 boxCastUpOrigin =>
-        new Vector2(transform.position.x, 
-            transform.position.y + (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y + padding - upOffset);
-    private Vector2 boxCastDownOrigin =>
-        new Vector2(transform.position.x, 
-            transform.position.y - (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y - padding + groundOffset);
-    
-    protected virtual void Init()
-    {
-        hitColliders = new List<Collider2D>();
-    }
+	[Header("Physics")] [SerializeField] protected Vector2 moveDirection;
+	[SerializeField] protected float gravityScale;
+	[SerializeField] protected float boxCastThickness;
+	[SerializeField] protected List<Collider2D> hitColliders;
+	[SerializeField] protected float padding;
+	[SerializeField] protected float rayMaxDistance;
+	[SerializeField] protected float groundOffset;
+	[SerializeField] protected float sideOffset;
+	[SerializeField] protected float upOffset;
+	[SerializeField] protected BoxCollider2D colliderSelf;
+	private RaycastHit2D[] groundColliders;
 
-    /// <summary>
-    /// 상하좌우 각각 boxcast hit 체크, 충돌하는게 있는지 체크
-    /// </summary>
-    protected void HitColliderCheck()
-    {
-        hitColliders.AddRange(Physics2D.OverlapBoxAll(boxCastUpOrigin, TopBottomBoundSize, 0));
-        hitColliders.AddRange(Physics2D.OverlapBoxAll(boxCastDownOrigin, TopBottomBoundSize, 0));
-        hitColliders.AddRange(Physics2D.OverlapBoxAll(boxCastLeftOrigin, LeftRightBoundSize, 0));
-        hitColliders.AddRange(Physics2D.OverlapBoxAll(boxCastRightOrigin, LeftRightBoundSize, 0));
-    }
+	[Header("Sync")] [SerializeField] protected ObjectId objectId;
+	[SerializeField] protected int whichCutNum;
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        
-        /*var temp = Physics2D.BoxCastAll(boxCastDownOrigin, TopBottomBoundSize, 
-            0, Vector2.down, rayMaxDistance,1 << LayerMask.NameToLayer("Ground"));
-        if (temp.Length > 0)
-        {
-            foreach (var t in temp)
-            {
-                if (t.distance == 0)
-                    continue;
-                
-                Gizmos.DrawRay(boxCastDownOrigin, Vector3.down * t.distance);
-                Gizmos.DrawWireCube(boxCastDownOrigin + Vector2.down * t.distance, TopBottomBoundSize);
-            }
-        }
-        else
-        {
-            Gizmos.DrawRay(boxCastDownOrigin, Vector3.down * rayMaxDistance);
-        }*/
+	private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
+	private Vector2 LeftRightBoundSize => new Vector2(boxCastThickness, colliderSelf.size.y);
 
-        var temp2 = Physics2D.BoxCastAll(boxCastUpOrigin, TopBottomBoundSize, 0, Vector2.up, rayMaxDistance);
-        if (temp2.Length > 0)
-        {
-            foreach (var t in temp2)
-            {
-                Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * t.distance);
-                Gizmos.DrawWireCube(boxCastUpOrigin + Vector2.up * t.distance, TopBottomBoundSize);
-            }
-        }
-        else
-        {
-            Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * rayMaxDistance);
-        }
-        
-        Gizmos.DrawRay(boxCastUpOrigin, Vector2.up * rayMaxDistance);
-        // Gizmos.DrawWireCube(boxCastUpOrigin, TopBottomBoundSize);
-        // Gizmos.DrawWireCube(boxCastDownOrigin, TopBottomBoundSize);
-        /*Gizmos.DrawWireCube(boxCastLeftOrigin, LeftRightBoundSize);
-        Gizmos.DrawWireCube(boxCastRightOrigin, LeftRightBoundSize);*/
-    }
+	private Vector2 BoxCastRightOrigin =>
+		new Vector2(transform.position.x + (colliderSelf.size.x + boxCastThickness) / 2 + padding - sideOffset,
+			transform.position.y + colliderSelf.offset.y);
 
-    /// <summary>
-    /// Ground Check
-    /// </summary>
-    /// <returns>true : ground, false : midair</returns>
-    protected bool GroundCheck()
-    {
-        groundColliders = Physics2D.BoxCastAll(boxCastDownOrigin, TopBottomBoundSize, 
-            0, Vector2.down, rayMaxDistance,1 << LayerMask.NameToLayer("Ground"));
+	private Vector2 BoxCastLeftOrigin =>
+		new Vector2(transform.position.x - (colliderSelf.size.x + boxCastThickness) / 2 - padding + sideOffset,
+			transform.position.y + colliderSelf.offset.y);
 
-        float minDistance = rayMaxDistance;
-        if (groundColliders.Length > 1)
-        {
-            minDistance = GetMinDistance(groundColliders);
+	private Vector2 BoxCastUpOrigin =>
+		new Vector2(transform.position.x,
+			transform.position.y + (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y + padding -
+			upOffset);
 
-            this.transform.position = new Vector2(this.transform.position.x, 
-                this.transform.position.y + (colliderSelf.size.y / 2 - minDistance));
-            
-            return true;
-        }
+	private Vector2 BoxCastDownOrigin =>
+		new Vector2(transform.position.x,
+			transform.position.y - (colliderSelf.size.y + boxCastThickness) / 2 + colliderSelf.offset.y - padding +
+			groundOffset);
 
-        return false;
-    }
+	public int WhichCutNum => whichCutNum;
 
-    private float GetMinDistance(RaycastHit2D[] hit2Ds)
-    {
-        float minDist = rayMaxDistance;
-        foreach (var t in hit2Ds)
-        {
-            // 래더 위로 올라가는경우 제외
-            if (t.collider.CompareTag("Ladder") || t.collider.CompareTag("Ladder Exit"))
-                continue;
-            
-            if (t.distance != 0)
-            {
-                if (minDist > t.distance)
-                    minDist = t.distance;
-            }
-        }
+	public virtual void Init(int cutNum)
+	{
+		hitColliders = new List<Collider2D>();
+		objectId = this.GetComponent<ObjectId>();
+		objectId.BindObjectId(this);
+		whichCutNum = cutNum;
+	}
 
-        return minDist;
-    }
+	/// <summary>
+	/// 상하좌우 각각 boxcast hit 체크, 충돌하는게 있는지 체크
+	/// </summary>
+	protected void HitColliderCheck()
+	{
+		hitColliders.AddRange(Physics2D.OverlapBoxAll(BoxCastUpOrigin, TopBottomBoundSize, 0));
+		hitColliders.AddRange(Physics2D.OverlapBoxAll(BoxCastDownOrigin, TopBottomBoundSize, 0));
+		hitColliders.AddRange(Physics2D.OverlapBoxAll(BoxCastLeftOrigin, LeftRightBoundSize, 0));
+		hitColliders.AddRange(Physics2D.OverlapBoxAll(BoxCastRightOrigin, LeftRightBoundSize, 0));
+	}
 
-    protected bool IsHitRight()
-    {
-        var colliders = Physics2D.BoxCastAll(boxCastRightOrigin, LeftRightBoundSize, 0, 
-            Vector2.right, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
-        
-        bool result = false;
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.magenta;
 
-        if (colliders.Length > 1)
-        {
-            // 사다리때문에 안 밀리는경우가 있었음
-            // colliders[0]는 자기 자신
-            for (int i = 1; i < colliders.Length; ++i)
-            {
-                if (colliders[i].collider.CompareTag("Ladder") || colliders[i].collider.CompareTag("Ladder Exit"))
-                {
-                    result = false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return result;
-    }
+		var temp = Physics2D.BoxCastAll(BoxCastDownOrigin, TopBottomBoundSize,
+			0, Vector2.down, rayMaxDistance /*, 1 << LayerMask.NameToLayer("Ground")*/);
+		if (temp.Length > 0)
+		{
+			foreach (var t in temp)
+			{
+				Gizmos.DrawRay(BoxCastDownOrigin, Vector3.down * t.distance);
+				Gizmos.DrawWireCube(BoxCastDownOrigin + Vector2.down * t.distance, TopBottomBoundSize);
+			}
+		}
+		else
+		{
+			Gizmos.DrawRay(BoxCastDownOrigin, Vector3.down * rayMaxDistance);
+		}
 
-    protected bool IsHitLeft()
-    {
-        var colliders = Physics2D.BoxCastAll(boxCastLeftOrigin, LeftRightBoundSize, 0,
-            Vector2.left, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
+		Gizmos.DrawRay(BoxCastDownOrigin, Vector2.down * rayMaxDistance);
 
-        bool result = false;
+		Gizmos.color = Color.cyan;
 
-        if (colliders.Length > 1)
-        {
-            // 사다리때문에 안 밀리는경우가 있었음
-            // colliders[0]는 자기 자신
-            for (int i = 1; i < colliders.Length; ++i)
-            {
-                if (colliders[i].collider.CompareTag("Ladder") || colliders[i].collider.CompareTag("Ladder Exit"))
-                {
-                    result = false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
-        
-        return result;
-    }
+		var temp2 = Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0, Vector2.up, rayMaxDistance);
+		if (temp2.Length > 0)
+		{
+			foreach (var t in temp2)
+			{
+				Gizmos.DrawRay(BoxCastUpOrigin, Vector2.up * t.distance);
+				Gizmos.DrawWireCube(BoxCastUpOrigin + Vector2.up * t.distance, TopBottomBoundSize);
+			}
+		}
+		else
+		{
+			Gizmos.DrawRay(BoxCastUpOrigin, Vector2.up * rayMaxDistance);
+		}
 
-    protected bool IsHitUp(out RaycastHit2D[] colliders)
-    {
-        colliders = Physics2D.BoxCastAll(boxCastUpOrigin, TopBottomBoundSize, 0,
-            Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
-        return colliders.Length > 1 ? true : false;
-    }
+		Gizmos.DrawRay(BoxCastUpOrigin, Vector2.up * rayMaxDistance);
 
-    /// <summary>
-    /// 중력 계산해서 방향 적용
-    /// Update()에서 사용
-    /// </summary>
-    protected void TranslateWithGravity()
-    {
-        if (!isGround)
-        {
-            moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime * gravityScale;
-        }
-        else
-        {
-            moveDirection.y = 0;
-        }
-        
-        transform.Translate(moveDirection);
-    }
-}    
+		Gizmos.color = Color.red;
+
+		var temp3 = Physics2D.BoxCastAll(BoxCastRightOrigin, LeftRightBoundSize, 0, Vector2.right, rayMaxDistance);
+		if (temp3.Length > 0)
+		{
+			foreach (var t in temp3)
+			{
+				Gizmos.DrawRay(BoxCastRightOrigin, Vector2.right * t.distance);
+				Gizmos.DrawWireCube(BoxCastRightOrigin + Vector2.right * t.distance, LeftRightBoundSize);
+			}
+		}
+		else
+		{
+			Gizmos.DrawRay(BoxCastRightOrigin, Vector2.right * rayMaxDistance);
+		}
+
+		Gizmos.color = Color.black;
+		var temp4 = Physics2D.BoxCastAll(BoxCastLeftOrigin, LeftRightBoundSize, 0, Vector2.left, rayMaxDistance);
+		if (temp4.Length > 0)
+		{
+			foreach (var t in temp4)
+			{
+				Gizmos.DrawRay(BoxCastLeftOrigin, Vector2.left * t.distance);
+				Gizmos.DrawWireCube(BoxCastLeftOrigin + Vector2.left * t.distance, LeftRightBoundSize);
+			}
+		}
+		else
+		{
+			Gizmos.DrawRay(BoxCastLeftOrigin, Vector2.left * rayMaxDistance);
+		}
+	}
+
+	/// <summary>
+	/// Ground Check
+	/// </summary>
+	/// <returns>true : ground, false : midair</returns>
+	protected bool GroundCheck()
+	{
+		groundColliders = Physics2D.BoxCastAll(BoxCastDownOrigin, TopBottomBoundSize,
+			0, Vector2.down, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
+
+		float minDistance = rayMaxDistance;
+		if (groundColliders.Length > 1)
+		{
+			minDistance = GetMinDistance(groundColliders);
+
+			this.transform.position = new Vector2(this.transform.position.x,
+				this.transform.position.y + (colliderSelf.size.y / 2 - minDistance));
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private float GetMinDistance(RaycastHit2D[] hit2Ds)
+	{
+		float minDist = rayMaxDistance;
+		foreach (var t in hit2Ds)
+		{
+			// 래더 위로 올라가는경우 제외
+			if (t.collider.CompareTag("Ladder") || t.collider.CompareTag("Ladder Exit"))
+				continue;
+
+			if (t.distance != 0)
+			{
+				if (minDist > t.distance)
+					minDist = t.distance;
+			}
+		}
+
+		return minDist;
+	}
+
+	protected bool IsHitRight() => CheckLadderAndSync(Physics2D.BoxCastAll(BoxCastRightOrigin, LeftRightBoundSize, 0,
+			Vector2.right, rayMaxDistance,
+			(1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Boundary"))),
+		HitBoundaryLocation.ERIGHT_BOUNDARY);
+
+	protected bool IsHitLeft() => CheckLadderAndSync(Physics2D.BoxCastAll(BoxCastLeftOrigin, LeftRightBoundSize, 0,
+			Vector2.left, rayMaxDistance,
+			(1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Boundary"))),
+		HitBoundaryLocation.ELEFT_BOUNDARY);
+
+	private bool CheckLadderAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
+	{
+		bool result = false;
+		if (hits.Length > 1)
+		{
+			// 사다리때문에 안 밀리는경우가 있었음
+			// colliders[0]는 자기 자신
+			foreach (var i in hits)
+			{
+				if (!(i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit")))
+					return true;
+
+				if (i.collider.CompareTag("BoundaryCollider"))
+				{
+					// 일단 좌우부터 구현
+					GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+				}
+			}
+		}
+
+		return result;
+	}
+
+	protected bool IsHitUp(out RaycastHit2D[] colliders)
+	{
+		colliders = Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0,
+			Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
+		return colliders.Length > 1 ? true : false;
+	}
+
+	/// <summary>
+	/// 중력 계산해서 방향 적용
+	/// Update()에서 사용
+	/// </summary>
+	protected void TranslateWithGravity()
+	{
+		if (!isGround)
+		{
+			moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime * gravityScale;
+		}
+		else
+		{
+			moveDirection.y = 0;
+		}
+
+		transform.Translate(moveDirection);
+	}
+}

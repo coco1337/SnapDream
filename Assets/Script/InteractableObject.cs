@@ -11,7 +11,6 @@ public sealed class InteractableObject : CInteractableObject
     [SerializeField] private bool isHoldableObject;
     // private Rigidbody2D rb;
     private GameManager gameManager;
-    private int whichCutNum;
     private bool movingXMidAir;
     
     // public Player player;
@@ -36,18 +35,18 @@ public sealed class InteractableObject : CInteractableObject
     public bool IsInstantiated => this.instantiatedForDrag;
     public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
     public void SyncNeeded(bool flag) => this.needSync = flag;
-    public int WhichCutNum => whichCutNum;
 
-    public void Init(int cutNum)
+    /*
+    public override void Init(int cutNum)
     {
-        whichCutNum = cutNum;
-        base.Init();
+        base.Init(cutNum);
     }
+    */
     
     private void Start()
     {
         // rb = this.GetComponent<Rigidbody2D>();
-        objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
+        // objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
         gameManager = GameManager.GetInstance();
     }
 

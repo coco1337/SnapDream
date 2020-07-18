@@ -21,7 +21,7 @@ public class BoundaryCollider : MonoBehaviour
     {
         middlePosition = this.transform.parent.position;
         // 추후 수정
-        objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
+        objectSyncController = GameObject.Find("CutManager").GetComponent<ObjectSyncController>();
         gameManager = GameManager.GetInstance();
     }
 
