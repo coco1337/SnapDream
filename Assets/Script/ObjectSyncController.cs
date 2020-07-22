@@ -11,6 +11,9 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 	private int objectIdCounter = 0;
 
+	private delegate bool SyncAction(int objId);
+	private SyncAction[] syncActions = new SyncAction[(int)CInteractableObject.HitBoundaryLocation.MAX];
+
 	private Dictionary<int, List<CInteractableObject>> objectDictionary =
 		new Dictionary<int, List<CInteractableObject>>();
 
@@ -20,13 +23,23 @@ public sealed class ObjectSyncController : MonoBehaviour
 	public int GetObjectId() => objectIdCounter++;
 	public void SetCutManager(CutManager c) => cutManager = c;
 
+	public bool SyncOtherObjects(int id, CInteractableObject.HitBoundaryLocation loc) => syncActions[(int) loc](id);
+
 	private void Start()
 	{
 		gameManager = GameManager.GetInstance();
 		objectIdCounter = 0;
+		AddDelegates();
 
 		// TODO : Init 함수에서 받아오는게 나음. 일단 임시
 		StartCoroutine(GetGameManager());
+	}
+
+	private void AddDelegates()
+	{
+		syncActions[(int) CInteractableObject.HitBoundaryLocation.ELEFT_BOUNDARY] = HitLeftBoundary;
+		syncActions[(int) CInteractableObject.HitBoundaryLocation.ERIGHT_BOUNDARY] = HitRightBoundary;
+		syncActions[(int) CInteractableObject.HitBoundaryLocation.ECEIL_BOUNDARY] = HitCeilBoundary;
 	}
 
 	private IEnumerator GetGameManager()
@@ -59,6 +72,8 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 	// 왼쪽 충돌이면 이전 컷부터 변화
 	// 오른쪽 충돌이면 이후 컷부터 변화 - 없음
+	
+	// TODO : 삭제 예정
 	public void InstantiateObjects(GameObject obj, Vector2 vel)
 	{
 		var interactableObj = obj.GetComponent<InteractableObject>();
@@ -155,28 +170,99 @@ public sealed class ObjectSyncController : MonoBehaviour
 			{
 				if (val[i].WhichCutNum == movedCutNum)
 				{
-					// TODO : 다른것도 필요하면 여기 추가, 지금은 위치만 (나중에 constraint 사용 여부 확실하게 정하기)
+					// TODO : 다음 컷 이동, 지금은 위치만 (나중에 constraint 사용 여부 확실하게 정하기)
 					val[i].transform.localPosition = val[i - 1].transform.localPosition;
 				}
 			}
 		}
 	}
 
-	public void SyncOtherObjects(int id, CInteractableObject.HitBoundaryLocation loc)
+	/// <summary>
+	/// 카메라의 왼쪽 경계에 CInteractableObject가 충돌 판정 있으면
+	/// </summary>
+	/// <param name="objId">ID of CInteractableObject</param>
+	/// <param name="pos">y position of hit point</param>
+	/// <returns></returns>
+	private bool HitLeftBoundary(int objId)
 	{
-		switch (loc)
+		// 컷이 2개일때와 2개 초과일 때로 분류
+		if (cutManager.MaxCutCount > 2)
 		{
-			case CInteractableObject.HitBoundaryLocation.ECEIL_BOUNDARY:
-				break;
+			// 제일 왼쪽 컷들은 물건을 왼쪽으로 넘길 수 없음
+			if (gameManager.GetCurrentCutNum() == 0 || gameManager.GetCurrentCutNum() == cutManager.MaxCutCount / 2)
+			{
+				return false;
+			}
 
-			case CInteractableObject.HitBoundaryLocation.ELEFT_BOUNDARY:
-				break;
-
-			case CInteractableObject.HitBoundaryLocation.ERIGHT_BOUNDARY:
-				break;
-
-			default:
-				break;
+			var currentCam = cutManager.GetCamera(gameManager.GetCurrentCutNum());
+			
+			// 싱크 필요한 오브젝트
+			CInteractableObject interactedObject = default;
+			if (objectDictionary.TryGetValue(objId, out var objList))
+			{
+				foreach (var obj in objList)
+				{
+					if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum())
+					{
+						interactedObject = obj;
+						break;
+					}
+					
+					Debug.LogError("Can't find target interactable object");
+					return false;
+				}
+			}
+			else
+			{
+				Debug.LogError("Can't find CInteractable Object in Dictionary");
+				return false;
+			}
+			
+			// TODO:해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
+			if (objectDictionary.TryGetValue(objId, out var objList2))
+			{
+				foreach (var obj in objList2)
+				{
+					if (obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() - 1)
+					{
+						if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum())
+						{
+							// TODO 현재 컷과 해당 ID의 오브젝트 컷이 같을때는 일단 중복되어야 됨
+						}
+						else
+						{
+							
+						}
+					}
+				}
+			}
+			
+			// interactedObject.MovingDirection
+			// interactedObject.TranslateAfterHitBoundary();
+			interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
+			
+			// 영향을 주는 컷은 바로 전 컷 부터
+			// 전컷 카메라
+			var targetCam = cutManager.GetCamera(gameManager.GetCurrentCutNum() - 1);
+			
+			// CInteractableObject의 MoveDirection 가져와서 계산
+			
 		}
+		else
+		{
+			
+		}
+
+		return true;
+	}
+
+	private bool HitRightBoundary(int objId)
+	{
+		return true;
+	}
+
+	private bool HitCeilBoundary(int objId)
+	{
+		return true;
 	}
 }

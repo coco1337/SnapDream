@@ -12,12 +12,14 @@ public abstract class CInteractableObject : MonoBehaviour
 		ELEFT_BOUNDARY = 1,
 		ERIGHT_BOUNDARY = 2,
 		ECEIL_BOUNDARY = 3,
-		MAX = ECEIL_BOUNDARY + 1,
+		EFLOOR_BOUNDARY = 4,
+		MAX = EFLOOR_BOUNDARY + 1,
 	}
 
 	[SerializeField] protected bool isGround;
 
-	[Header("Physics")] [SerializeField] protected Vector2 moveDirection;
+	[Header("Physics")] 
+	[SerializeField] protected Vector2 movingDirection;
 	[SerializeField] protected float gravityScale;
 	[SerializeField] protected float boxCastThickness;
 	[SerializeField] protected List<Collider2D> hitColliders;
@@ -29,7 +31,8 @@ public abstract class CInteractableObject : MonoBehaviour
 	[SerializeField] protected BoxCollider2D colliderSelf;
 	private RaycastHit2D[] groundColliders;
 
-	[Header("Sync")] [SerializeField] protected ObjectId objectId;
+	[Header("Sync")] 
+	[SerializeField] protected ObjectId objectId;
 	[SerializeField] protected int whichCutNum;
 
 	private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
@@ -54,6 +57,7 @@ public abstract class CInteractableObject : MonoBehaviour
 			groundOffset);
 
 	public int WhichCutNum => whichCutNum;
+	public Vector2 MovingDirection => movingDirection;
 
 	public virtual void Init(int cutNum)
 	{
@@ -235,13 +239,24 @@ public abstract class CInteractableObject : MonoBehaviour
 	{
 		if (!isGround)
 		{
-			moveDirection.y += Physics.gravity.y * Time.fixedDeltaTime * gravityScale;
+			movingDirection.y += Physics.gravity.y * Time.fixedDeltaTime * gravityScale;
 		}
 		else
 		{
-			moveDirection.y = 0;
+			movingDirection.y = 0;
 		}
 
-		transform.Translate(moveDirection);
+		transform.Translate(movingDirection);
+	}
+
+	public void TranslateAfterHitBoundary(Vector2 dir)
+	{
+		StartCoroutine(MoveCoroutine(dir));
+	}
+
+	private IEnumerator MoveCoroutine(Vector2 dir)
+	{
+		// while (Vector2.Distance(this.transform.position, ))
+		yield return null;
 	}
 }

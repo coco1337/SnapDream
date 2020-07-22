@@ -22,21 +22,41 @@ public sealed class CutManager : MonoBehaviour
     private List<Player> playerList = new List<Player>();
     private List<Camera> cutCameras = new List<Camera>();
 
-    [Header("Object Sync")]
+    [Header("Object Sync")] 
+    [SerializeField] private EdgeCollider2D cameraBoundaryCollider;
     private ObjectSyncController syncController;
 
     public int GetCurrentCutNum() => currentCut;
     public int MaxCutCount => cutField.childCount;
     public List<Player> GetPlayerList => playerList;
     public ObjectSyncController GetObjectSyncController => syncController;
-    public Camera GetCamera(int t) => cutCameras[t];
+    public Camera GetCamera(int cut) => cutCameras[cut];
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         currentCut = 0;
         syncController = this.GetComponent<ObjectSyncController>();
         syncController.SetCutManager(this);
+    }
+
+    private Vector2[] CalculateCameraBoundary(Camera cam)
+    {
+        // 컷마다 계산하는 방식을 한번 계산해서 모두 넘겨주는식으로 수정하기
+        float a = cam.transform.position.z;
+        float fov = cam.fieldOfView * .5f;
+        fov = fov * Mathf.Deg2Rad;
+        float h = (Mathf.Tan(fov) * a);
+        float w = (h / cam.pixelHeight) * cam.pixelWidth;
+
+        var arr = new Vector2[5];
+        arr[0] = new Vector2(-w, -h);
+        arr[1] = new Vector2(w, -h);
+        arr[2] = new Vector2(w, h);
+        arr[3] = new Vector2(-w, h);
+        arr[4] = new Vector2(-w, -h);
+
+        return arr;
     }
 
     public void CutInit()
@@ -93,6 +113,11 @@ public sealed class CutManager : MonoBehaviour
             tempBackGround.transform.localPosition = Vector3.zero;
             tempPlayer.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y, 0);
             tempCamera.transform.localPosition = Vector3.zero + new Vector3(0, 0, -9);
+            
+            var col = Instantiate(cameraBoundaryCollider, tempCamera.transform);
+            col.transform.localPosition = new Vector3(tempCamera.transform.localPosition.x, 
+                tempCamera.transform.localPosition.y, -tempCamera.transform.position.z);
+            col.points = CalculateCameraBoundary(tempCamera.GetComponent<Camera>());
             
             camImage[i].SetActive(false);
 

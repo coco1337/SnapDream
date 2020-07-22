@@ -52,7 +52,7 @@ public sealed class InteractableObject : CInteractableObject
 
     private void Update()
     {
-        if (moveDirection.y > 0)
+        if (movingDirection.y > 0)
         {
             isGround = false;
 
@@ -61,7 +61,7 @@ public sealed class InteractableObject : CInteractableObject
                 // TODO : 나중에 CutManager 추가한 뒤 수정하기 (전체 컷의 반), 일단 하드코딩으로 구현
                 if (transform.localPosition.y > 5.5)
                 {
-                    moveDirection = new Vector2(moveDirection.x, 0);
+                    movingDirection = new Vector2(movingDirection.x, 0);
                 }
             }
         }
@@ -73,7 +73,7 @@ public sealed class InteractableObject : CInteractableObject
                 if (!isGround)
                 {
                     // 이전 프레임에서 midair 였을 때
-                    moveDirection = new Vector2(0, moveDirection.y);
+                    movingDirection = new Vector2(0, movingDirection.y);
                 }
                 isGround = true;
             }
@@ -101,7 +101,7 @@ public sealed class InteractableObject : CInteractableObject
 
         if (axis == 0)
         {
-            moveDirection = new Vector2(0, moveDirection.y);
+            movingDirection = new Vector2(0, movingDirection.y);
         }
         else
         {
@@ -109,13 +109,13 @@ public sealed class InteractableObject : CInteractableObject
             if (base.IsHitLeft() || base.IsHitRight())
             {
                 hitSideWall = true;
-                moveDirection = new Vector2(0, moveDirection.y);
+                movingDirection = new Vector2(0, movingDirection.y);
                 return false;
             }
             else
             {
                 hitSideWall = false;
-                moveDirection = new Vector2(speed * axis / toyBoxWeight, moveDirection.y);
+                movingDirection = new Vector2(speed * axis / toyBoxWeight, movingDirection.y);
             }
         }
         
@@ -142,7 +142,7 @@ public sealed class InteractableObject : CInteractableObject
             return false;
         }
         
-        moveDirection = new Vector2(0, throwPower / throwWeight);
+        movingDirection = new Vector2(0, throwPower / throwWeight);
         return true;
     }
 

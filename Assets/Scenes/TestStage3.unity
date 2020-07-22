@@ -920,7 +920,8 @@ MonoBehaviour:
   camImage: []
   currentCut: 0
   spawnPosition: {x: 0, y: 0}
-  syncController: {fileID: 0}
+  cameraBoundaryCollider: {fileID: 5327602762672345995, guid: 033a2117480563f4695e6df54ccb558b,
+    type: 3}
 --- !u!4 &2033959343
 Transform:
   m_ObjectHideFlags: 0
@@ -948,6 +949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eachCut: []
+  cutManager: {fileID: 0}
   gameManager: {fileID: 0}
   spawnYPos: 0
   cameraLength: 0
