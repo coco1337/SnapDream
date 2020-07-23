@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
 
     public float bounduryValue = 20f;
     float[] bounduryPointX = new float[2];
+    float[] bounduryPointY = new float[2];
 
     Vector3 targetPosition;
 
@@ -18,6 +19,7 @@ public class CameraController : MonoBehaviour
     {
         bounduryPointX[0] = basePoint.position.x - bounduryValue;
         bounduryPointX[1] = basePoint.position.x + bounduryValue;
+        targetPosition.z = transform.position.z;
     }
 
     // Update is called once per frame

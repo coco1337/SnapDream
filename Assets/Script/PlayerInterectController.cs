@@ -19,12 +19,12 @@ public class PlayerInterectController : MonoBehaviour
 
     private void Update()
     {
-        if(player.GetPlayerState() == Player.PlayerState.Interaction_Drag && dragObject == null)
+        if(player.IsDraging() && dragObject == null)
         {
             player.RealeaseDrag();
         }
 
-        if(player.GetPlayerState() == Player.PlayerState.Interaction_Ladder && ladderTarget == null)
+        if(player.IsLadder() && ladderTarget == null)
         {
             player.RealeaseLadder();
         }
