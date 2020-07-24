@@ -194,8 +194,6 @@ public sealed class ObjectSyncController : MonoBehaviour
 				return false;
 			}
 
-			var currentCam = cutManager.GetCamera(gameManager.GetCurrentCutNum());
-			
 			// 싱크 필요한 오브젝트 찾기, foreach 밑에랑 합쳐서 한 개로 만들 수 있을듯
 			CInteractableObject interactedObject = default;
 			if (objectDictionary.TryGetValue(objId, out var objList))
@@ -217,9 +215,12 @@ public sealed class ObjectSyncController : MonoBehaviour
 				Debug.LogError("Can't find CInteractable Object in Dictionary");
 				return false;
 			}
-			
+
 			if (interactedObject == default)
+			{
 				Debug.LogError("interactable object is default");
+				return false;
+			}
 			
 			// 오브젝트 생성될 좌표 파악하기
 			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
@@ -228,47 +229,41 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 			var instantiatedObjectList = new List<CInteractableObject>();
 			
-			// TODO:해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
-			if (objectDictionary.TryGetValue(objId, out var objList2))
+			// 해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
+			foreach (var obj in objList)
 			{
-				foreach (var obj in objList2)
+				if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
 				{
-					if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
-					{
-						// TODO 현재 컷과 해당 ID의 오브젝트 컷이 같을때는 일단 중복되어야 됨
-						// 일단 해당 오브젝트 클론 생성
-						var instantiated = Instantiate(obj, obj.transform.parent);
-						instantiatedObjectList.Add(instantiated);
-						instantiated.Init(obj.WhichCutNum);
-						instantiated.GetComponent<ObjectId>().SetId(obj.GetId);
+					// 현재 컷과 이전 컷에 오브젝트 생성 (어차피 미래 컷은 안보임)
+					var instantiated = Instantiate(obj, obj.transform.parent);
+					instantiatedObjectList.Add(instantiated);
+					instantiated.Init(obj.WhichCutNum);
 
-						instantiated.transform.localPosition =
-							new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
-								previousCam.transform.localPosition.y + instantiatePosY);
-					}
-					/*
-					else if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
-					{
-						obj.transform.localPosition = 
-							new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
+					instantiated.transform.localPosition =
+						new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
 							previousCam.transform.localPosition.y + instantiatePosY);
-					}
-					*/
 				}
+				else if (obj.WhichCutNum > GameManager.GetInstance().GetCurrentCutNum())
+				{
+					// TODO : 미래컷에 영향 주는것을 보여줘야 하면 여기서
+				}
+				/*
+				else if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
+				{
+					obj.transform.localPosition = 
+						new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
+						previousCam.transform.localPosition.y + instantiatePosY);
+				}
+				*/
 			}
+
+			// TODO : 생성된 오브젝트 Dictionary에 추가 및 기존 오브젝트 싱크 해제여부 확실히 하기
 			
-			// 생성 및 이동 다 끝났으면 Dictionary에 추가
 			
 			// interactedObject.MovingDirection
 			// interactedObject.TranslateAfterHitBoundary();
 			interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
-			
-			// 영향을 주는 컷은 바로 전 컷 부터
-			// 전컷 카메라
-			var targetCam = cutManager.GetCamera(gameManager.GetCurrentCutNum() - 1);
-			
-			// CInteractableObject의 MoveDirection 가져와서 계산
-			
+			Destroy(interactedObject.gameObject);
 		}
 		else
 		{
@@ -283,8 +278,70 @@ public sealed class ObjectSyncController : MonoBehaviour
 		return true;
 	}
 
+	/// <summary>
+	/// 카메라의 위쪽 경계에 CInteractableObject가 충돌 판정 있으면
+	/// </summary>
+	/// <param name="objId"></param>
+	/// <returns></returns>
 	private bool HitCeilBoundary(int objId)
 	{
+		if (cutManager.MaxCutCount > 2)
+		{
+			// 위쪽 컷은 물건을 위로 던질 수 없음
+			if (gameManager.GetCurrentCutNum() < cutManager.MaxCutCount / 2)
+				return false;
+
+			CInteractableObject interactedObject = default;
+			if (objectDictionary.TryGetValue(objId, out var objList))
+			{
+				foreach (var obj in objList)
+				{
+					if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum())
+					{
+						interactedObject = obj;
+						break;
+					}
+				}
+			}
+			else
+			{
+				Debug.LogError("Can't find CInteractable Object in Dictionary");
+				return false;
+			}
+
+			if (interactedObject == default)
+			{
+				Debug.LogError("interactable object is default");
+				return false;
+			}
+
+			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
+			var instantiatePosX = interactedObject.transform.localPosition.x - camPos.x;
+			var aboveCam = cutManager.GetCamera(interactedObject.WhichCutNum / 2).transform;
+
+			var instantiatedObjectList = new List<CInteractableObject>();
+			foreach (var obj in objList)
+			{
+				if (obj.WhichCutNum <= GameManager.GetInstance().GetCurrentCutNum() &&
+				    obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() / 2)
+				{
+					var instantiated = Instantiate(obj, obj.transform.parent);
+					instantiatedObjectList.Add(instantiated);
+					instantiated.Init(obj.WhichCutNum);
+
+					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
+						aboveCam.transform.localPosition.y - cutManager.GetCameraBoundaryHeight / 2);
+				}
+				else if (obj.WhichCutNum > GameManager.GetInstance().GetCurrentCutNum())
+				{
+					// TODO : 미래 컷에 영향을 주는 것을 보여줘야 하면 여기서
+				}
+			}
+			
+			// TODO : 생성된 오브젝트 Dictionary에 추가, 기존 오브젝트 싱크 해제여부
+			interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
+			Destroy(interactedObject.gameObject);
+		}
 		return true;
 	}
 }

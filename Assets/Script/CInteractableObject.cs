@@ -202,9 +202,11 @@ public abstract class CInteractableObject : MonoBehaviour
 			(1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Boundary"))),
 		HitBoundaryLocation.ELEFT_BOUNDARY);
 
+	protected bool IsHitUp() => CheckUpperBoundaryAndSync(Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0,
+		Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Boundary")), HitBoundaryLocation.ECEIL_BOUNDARY);
+
 	private bool CheckLadderAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
 	{
-		bool result = false;
 		if (hits.Length > 1)
 		{
 			// 사다리때문에 안 밀리는경우가 있었음
@@ -214,15 +216,15 @@ public abstract class CInteractableObject : MonoBehaviour
 				// 자기 자신은 넘어가고
 				if (i.transform == this.gameObject.transform)
 					continue;
-				
+
 				// 래더도 무시
 				if (i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit"))
 					continue;
 
 				// 벽 박으면 true반환
 				if (i.transform.CompareTag("Ground"))
-					result = true;
-				
+					return true;
+
 				// 카메라 경계 콜라이더
 				if (i.collider.CompareTag("BoundaryCollider"))
 				{
@@ -233,14 +235,14 @@ public abstract class CInteractableObject : MonoBehaviour
 			}
 		}
 
-		return result;
+		return false;
 	}
 
-	protected bool IsHitUp(out RaycastHit2D[] colliders)
+
+	private bool CheckUpperBoundaryAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
 	{
-		colliders = Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0,
-			Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Ground"));
-		return colliders.Length > 1 ? true : false;
+		// TODO : 위에 닿았을 때 구현
+		return false;
 	}
 
 	/// <summary>
