@@ -25,12 +25,16 @@ public sealed class CutManager : MonoBehaviour
     [Header("Object Sync")] 
     [SerializeField] private EdgeCollider2D cameraBoundaryCollider;
     private ObjectSyncController syncController;
+    private float cameraBoundaryWidth;
+    private float cameraBoundaryHeight;
 
     public int GetCurrentCutNum() => currentCut;
     public int MaxCutCount => cutField.childCount;
     public List<Player> GetPlayerList => playerList;
     public ObjectSyncController GetObjectSyncController => syncController;
     public Camera GetCamera(int cut) => cutCameras[cut];
+    public float GetCameraBoundaryWidth => cameraBoundaryWidth;
+    public float GetCameraBoundaryHeight => cameraBoundaryHeight;
 
     // Start is called before the first frame update
     private void Awake()
@@ -42,12 +46,14 @@ public sealed class CutManager : MonoBehaviour
 
     private Vector2[] CalculateCameraBoundary(Camera cam)
     {
-        // 컷마다 계산하는 방식을 한번 계산해서 모두 넘겨주는식으로 수정하기
+        // TODO : 컷마다 계산하는 방식을 한번만 계산해서 모두 넘겨주는 식으로 수정하기
         float a = cam.transform.position.z;
         float fov = cam.fieldOfView * .5f;
         fov = fov * Mathf.Deg2Rad;
         float h = (Mathf.Tan(fov) * a);
         float w = (h / cam.pixelHeight) * cam.pixelWidth;
+        cameraBoundaryWidth = w;
+        cameraBoundaryHeight = h;
 
         var arr = new Vector2[5];
         arr[0] = new Vector2(-w, -h);

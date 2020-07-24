@@ -58,6 +58,7 @@ public abstract class CInteractableObject : MonoBehaviour
 
 	public int WhichCutNum => whichCutNum;
 	public Vector2 MovingDirection => movingDirection;
+	public int GetId => objectId.GetId;
 
 	public virtual void Init(int cutNum)
 	{
@@ -210,13 +211,24 @@ public abstract class CInteractableObject : MonoBehaviour
 			// colliders[0]는 자기 자신
 			foreach (var i in hits)
 			{
-				if (!(i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit")))
-					return true;
+				// 자기 자신은 넘어가고
+				if (i.transform == this.gameObject.transform)
+					continue;
+				
+				// 래더도 무시
+				if (i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit"))
+					continue;
 
+				// 벽 박으면 true반환
+				if (i.transform.CompareTag("Ground"))
+					result = true;
+				
+				// 카메라 경계 콜라이더
 				if (i.collider.CompareTag("BoundaryCollider"))
 				{
 					// 일단 좌우부터 구현
 					GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					return true;
 				}
 			}
 		}

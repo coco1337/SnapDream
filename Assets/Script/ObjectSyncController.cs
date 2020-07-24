@@ -196,7 +196,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 			var currentCam = cutManager.GetCamera(gameManager.GetCurrentCutNum());
 			
-			// 싱크 필요한 오브젝트
+			// 싱크 필요한 오브젝트 찾기, foreach 밑에랑 합쳐서 한 개로 만들 수 있을듯
 			CInteractableObject interactedObject = default;
 			if (objectDictionary.TryGetValue(objId, out var objList))
 			{
@@ -208,8 +208,8 @@ public sealed class ObjectSyncController : MonoBehaviour
 						break;
 					}
 					
-					Debug.LogError("Can't find target interactable object");
-					return false;
+					//Debug.LogError("Can't find target interactable object");
+					//return false;
 				}
 			}
 			else
@@ -218,24 +218,46 @@ public sealed class ObjectSyncController : MonoBehaviour
 				return false;
 			}
 			
+			if (interactedObject == default)
+				Debug.LogError("interactable object is default");
+			
+			// 오브젝트 생성될 좌표 파악하기
+			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
+			var instantiatePosY = interactedObject.transform.localPosition.y - camPos.y;
+			var previousCam = cutManager.GetCamera(interactedObject.WhichCutNum - 1).transform;
+
+			var instantiatedObjectList = new List<CInteractableObject>();
+			
 			// TODO:해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
 			if (objectDictionary.TryGetValue(objId, out var objList2))
 			{
 				foreach (var obj in objList2)
 				{
-					if (obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() - 1)
+					if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
 					{
-						if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum())
-						{
-							// TODO 현재 컷과 해당 ID의 오브젝트 컷이 같을때는 일단 중복되어야 됨
-						}
-						else
-						{
-							
-						}
+						// TODO 현재 컷과 해당 ID의 오브젝트 컷이 같을때는 일단 중복되어야 됨
+						// 일단 해당 오브젝트 클론 생성
+						var instantiated = Instantiate(obj, obj.transform.parent);
+						instantiatedObjectList.Add(instantiated);
+						instantiated.Init(obj.WhichCutNum);
+						instantiated.GetComponent<ObjectId>().SetId(obj.GetId);
+
+						instantiated.transform.localPosition =
+							new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
+								previousCam.transform.localPosition.y + instantiatePosY);
 					}
+					/*
+					else if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
+					{
+						obj.transform.localPosition = 
+							new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
+							previousCam.transform.localPosition.y + instantiatePosY);
+					}
+					*/
 				}
 			}
+			
+			// 생성 및 이동 다 끝났으면 Dictionary에 추가
 			
 			// interactedObject.MovingDirection
 			// interactedObject.TranslateAfterHitBoundary();
