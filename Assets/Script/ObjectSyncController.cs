@@ -337,6 +337,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 					instantiatedObjectList.Add(instantiated);
 					instantiated.Init(obj.WhichCutNum);
 
+					// TODO : 생성 위치 다시 잡아줘야됨
 					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
 						aboveCam.transform.localPosition.y - cutManager.GetCameraBoundaryHeight / 2);
 				}

@@ -52,6 +52,8 @@ public sealed class InteractableObject : CInteractableObject
 
     private void Update()
     {
+        // TODO : 던질때를 알수있는 필터같은게 필요함 
+        
         if (movingDirection.y > 0)
         {
             isGround = false;
@@ -64,7 +66,7 @@ public sealed class InteractableObject : CInteractableObject
                     movingDirection = new Vector2(movingDirection.x, 0);
                 }
             }
-            else if (whichCutNum > GameManager.GetInstance().GetCutManager.MaxCutCount / 2 &&
+            else if (whichCutNum > GameManager.GetInstance().GetCutManager.MaxCutCount / 2 - 1 &&
                      whichCutNum == GameManager.GetInstance().GetCurrentCutNum())
             {
                 if (base.IsHitUp())

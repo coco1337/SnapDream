@@ -244,6 +244,14 @@ public abstract class CInteractableObject : MonoBehaviour
 	private bool CheckUpperBoundaryAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
 	{
 		// TODO : 위에 닿았을 때 구현
+		foreach (var hit in hits)
+		{
+			if (hit.collider.CompareTag("BoundaryCollider"))
+			{
+				GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+				return true;
+			}
+		}
 		return false;
 	}
 
