@@ -34,7 +34,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	[Header("Sync")] 
 	[SerializeField] protected ObjectId objectId;
 	[SerializeField] protected int whichCutNum;
-	[SerializeField] protected bool synced;
+	[SerializeField] protected bool synced = true;
 
 	private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
 	private Vector2 LeftRightBoundSize => new Vector2(boxCastThickness, colliderSelf.size.y);
@@ -286,6 +286,6 @@ public abstract class CInteractableObject : MonoBehaviour
 
 	public void DisconnectSync()
 	{
-		this.synced = true;
+		this.synced = false;
 	}
 }

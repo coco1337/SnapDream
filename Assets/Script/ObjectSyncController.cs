@@ -234,7 +234,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 			{
 				if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() 
 				    || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1 
-				    && !obj.IsSynced)
+				    && obj.IsSynced)
 				{
 					// 현재 컷과 이전 컷에 오브젝트 생성 (어차피 미래 컷은 안보임)
 					var instantiated = Instantiate(obj, obj.transform.parent);
@@ -320,14 +320,14 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
 			var instantiatePosX = interactedObject.transform.localPosition.x - camPos.x;
-			var aboveCam = cutManager.GetCamera(interactedObject.WhichCutNum / 2).transform;
+			var aboveCam = cutManager.GetCamera(interactedObject.WhichCutNum - GameManager.GetInstance().GetCutManager.MaxCutCount / 2).transform;
 
 			var instantiatedObjectList = new List<CInteractableObject>();
 			foreach (var obj in objList)
 			{
 				if (obj.WhichCutNum <= GameManager.GetInstance().GetCurrentCutNum()
 				    && obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() / 2
-				    && !obj.IsSynced)
+				    && obj.IsSynced)
 				{
 					var instantiated = Instantiate(obj, obj.transform.parent);
 					
@@ -339,7 +339,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 					// TODO : 생성 위치 다시 잡아줘야됨
 					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
-						aboveCam.transform.localPosition.y - cutManager.GetCameraBoundaryHeight / 2);
+						aboveCam.transform.localPosition.y - cutManager.GetCameraBoundaryHeight);
 				}
 				else if (obj.WhichCutNum > GameManager.GetInstance().GetCurrentCutNum())
 				{
