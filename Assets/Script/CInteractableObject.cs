@@ -34,6 +34,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	[Header("Sync")] 
 	[SerializeField] protected ObjectId objectId;
 	[SerializeField] protected int whichCutNum;
+	[SerializeField] protected bool synced;
 
 	private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
 	private Vector2 LeftRightBoundSize => new Vector2(boxCastThickness, colliderSelf.size.y);
@@ -59,6 +60,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	public int WhichCutNum => whichCutNum;
 	public Vector2 MovingDirection => movingDirection;
 	public int GetId => objectId.GetId;
+	public bool IsSynced => synced;
 
 	public virtual void Init(int cutNum)
 	{
@@ -272,5 +274,10 @@ public abstract class CInteractableObject : MonoBehaviour
 	{
 		// while (Vector2.Distance(this.transform.position, ))
 		yield return null;
+	}
+
+	public void DisconnectSync()
+	{
+		this.synced = true;
 	}
 }

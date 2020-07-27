@@ -95,8 +95,8 @@ public sealed class ObjectSyncController : MonoBehaviour
 				.localPosition.x;
 
 			// 생성될 컷의 카메라 x 좌표(바로 직전 컷의 카메라 좌표)
-			var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 1].transform.Find("Camera(Clone)").transform
-				.localPosition.x;
+			var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 1]
+				.transform.Find("Camera(Clone)").transform.localPosition.x;
 
 			// 아마도 물건 길이 + 1
 			var result = targetCameraX + (cameraLength / 2) + 1;
@@ -128,8 +128,8 @@ public sealed class ObjectSyncController : MonoBehaviour
 		var cameraX = eachCut[gameManager.GetCurrentCutNum()].transform.Find("Camera(Clone)").transform.localPosition.x;
 
 		// 생성될 컷의 카메라 x 좌표
-		var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 3].transform.Find("Camera(Clone)").transform
-			.localPosition.x;
+		var targetCameraX = eachCut[gameManager.GetCurrentCutNum() - 3]
+			.transform.Find("Camera(Clone)").transform.localPosition.x;
 
 		// 생성될 오브젝트의 좌표
 		var result = (obj.transform.localPosition.x - cameraX) + targetCameraX;
@@ -232,10 +232,16 @@ public sealed class ObjectSyncController : MonoBehaviour
 			// 해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
 			foreach (var obj in objList)
 			{
-				if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1)
+				if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() 
+				    || obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum() - 1 
+				    && !obj.IsSynced)
 				{
 					// 현재 컷과 이전 컷에 오브젝트 생성 (어차피 미래 컷은 안보임)
 					var instantiated = Instantiate(obj, obj.transform.parent);
+					
+					// 오브젝트 싱크 끊기
+					obj.DisconnectSync();
+					
 					instantiatedObjectList.Add(instantiated);
 					instantiated.Init(obj.WhichCutNum);
 
@@ -257,9 +263,6 @@ public sealed class ObjectSyncController : MonoBehaviour
 				*/
 			}
 
-			// TODO : 생성된 오브젝트 Dictionary에 추가 및 기존 오브젝트 싱크 해제여부 확실히 하기
-			
-			
 			// interactedObject.MovingDirection
 			// interactedObject.TranslateAfterHitBoundary();
 			interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
@@ -322,10 +325,15 @@ public sealed class ObjectSyncController : MonoBehaviour
 			var instantiatedObjectList = new List<CInteractableObject>();
 			foreach (var obj in objList)
 			{
-				if (obj.WhichCutNum <= GameManager.GetInstance().GetCurrentCutNum() &&
-				    obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() / 2)
+				if (obj.WhichCutNum <= GameManager.GetInstance().GetCurrentCutNum()
+				    && obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() / 2
+				    && !obj.IsSynced)
 				{
 					var instantiated = Instantiate(obj, obj.transform.parent);
+					
+					// 오브젝트 싱크 끊기
+					obj.DisconnectSync();
+					
 					instantiatedObjectList.Add(instantiated);
 					instantiated.Init(obj.WhichCutNum);
 
