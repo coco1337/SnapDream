@@ -163,21 +163,20 @@ public class Player : MonoBehaviour, Damageabel
     }
 
     //던지는 동작
-    public void GetThrow()
+    public void ThrowStart()
     {
         if (IsThrowable())
         {
             PlayerMove(0);
             animator.SetTrigger("throwObject");
             playerState = PlayerState.Interaction_Throw;
-            StartCoroutine(EndThrowObject());
         }
-    } 
+    }
 
-    //던지는 동작이 끝난 후 Idle 상태로 돌아오기 위한 함수
-    IEnumerator EndThrowObject()
+    //던지기 동작이 끝날 때 호출 되는 함수
+    //Animation 이벤트로 호출된다.
+    public void ThrowEnd()
     {
-        yield return new WaitForSeconds(throwAnimationTime);
         if (playerState == PlayerState.Interaction_Throw)
         {
             playerState = PlayerState.Idle;
@@ -229,8 +228,4 @@ public class Player : MonoBehaviour, Damageabel
     }
 
 
-    public void ThrowEnd()
-    {
-        Debug.Log("Throw End");
-    }
 }

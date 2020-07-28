@@ -79,7 +79,7 @@ public class PlayerInterectController : MonoBehaviour
     {
         if (throwObject.GetComponent<InteractableObject>().Throw(player.throwPower))
         {
-            player.GetThrow();
+            player.ThrowStart();
             player.RealeaseDrag();
             dragObject = null;
         }
