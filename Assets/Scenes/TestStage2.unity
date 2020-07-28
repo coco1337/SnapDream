@@ -240,6 +240,11 @@ PrefabInstance:
       propertyPath: LevelName.Array.data[13]
       value: Stage1
       objectReference: {fileID: 0}
+    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5194788657549916441, guid: e87f4630849625f4f87b2444ee298bef,
         type: 3}
       propertyPath: m_audioClip
