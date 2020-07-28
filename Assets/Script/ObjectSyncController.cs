@@ -243,7 +243,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 					obj.DisconnectSync();
 					
 					instantiatedObjectList.Add(instantiated);
-					instantiated.Init(obj.WhichCutNum);
+					instantiated.Init(obj.WhichCutNum, interactedObject.MovingDirection);
 
 					instantiated.transform.localPosition =
 						new Vector2(previousCam.transform.localPosition.x + cutManager.GetCameraBoundaryWidth / 2,
@@ -290,16 +290,14 @@ public sealed class ObjectSyncController : MonoBehaviour
 	{
 		if (cutManager.MaxCutCount > 2)
 		{
-			// 위쪽 컷은 물건을 위로 던질 수 없음
-			if (gameManager.GetCurrentCutNum() < cutManager.MaxCutCount / 2)
-				return false;
-
 			CInteractableObject interactedObject = default;
+			int currentCutNum = GameManager.GetInstance().GetCurrentCutNum();
+
 			if (objectDictionary.TryGetValue(objId, out var objList))
 			{
 				foreach (var obj in objList)
 				{
-					if (obj.WhichCutNum == GameManager.GetInstance().GetCurrentCutNum())
+					if (obj.WhichCutNum == currentCutNum)
 					{
 						interactedObject = obj;
 						break;
@@ -322,28 +320,52 @@ public sealed class ObjectSyncController : MonoBehaviour
 			var instantiatePosX = interactedObject.transform.localPosition.x - camPos.x;
 			var aboveCam = cutManager.GetCamera(interactedObject.WhichCutNum - GameManager.GetInstance().GetCutManager.MaxCutCount / 2).transform;
 
-			var instantiatedObjectList = new List<CInteractableObject>();
-			foreach (var obj in objList)
+			for (int i = 0; i < objList.Count; ++i)
 			{
-				if (obj.WhichCutNum <= GameManager.GetInstance().GetCurrentCutNum()
-				    && obj.WhichCutNum >= GameManager.GetInstance().GetCurrentCutNum() / 2
-				    && obj.IsSynced)
+				var a = objList[i].WhichCutNum;
+				var b = currentCutNum;
+				var c = GameManager.GetInstance().GetCutManager.MaxCutCount / 2;
+				var d = objList[i].IsSynced;
+				
+				// TODO : 3가지로 나눠서 해결, 현재컷보다 과거컷이면 추가생성 후 ID 연결, 현재 컷이면 생성후 기존오브젝트 파괴, 현재보다 미래 컷이면 이동
+				if (objList[i].WhichCutNum >= currentCutNum - GameManager.GetInstance().GetCutManager.MaxCutCount / 2 && objList[i].WhichCutNum < currentCutNum)
 				{
-					var instantiated = Instantiate(obj, obj.transform.parent);
+					var instantiated = Instantiate(objList[i], objList[i].transform.parent);
 					
 					// 오브젝트 싱크 끊기
-					obj.DisconnectSync();
+					objList[i].DisconnectSync();
 					
-					instantiatedObjectList.Add(instantiated);
-					instantiated.Init(obj.WhichCutNum);
+					// 리스트 항목 교체, 다른 방법 찾기
+					objList[i] = instantiated;
+					
+					instantiated.Init(objList[i].WhichCutNum, interactedObject.MovingDirection);
 
 					// TODO : 생성 위치 다시 잡아줘야됨
 					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
-						aboveCam.transform.localPosition.y - cutManager.GetCameraBoundaryHeight);
+						aboveCam.transform.localPosition.y + cutManager.GetCameraBoundaryHeight);
 				}
-				else if (obj.WhichCutNum > GameManager.GetInstance().GetCurrentCutNum())
+				else if (objList[i].WhichCutNum == currentCutNum)
 				{
-					// TODO : 미래 컷에 영향을 주는 것을 보여줘야 하면 여기서
+					var instantiated = Instantiate(objList[i], objList[i].transform.parent);
+					
+					// 오브젝트 싱크 끊기
+					objList[i].DisconnectSync();
+					
+					// 리스트 항목 교체, 다른 방법 찾기
+					objList[i] = instantiated;
+					
+					instantiated.Init(objList[i].WhichCutNum, interactedObject.MovingDirection);
+
+					// TODO : 생성 위치 다시 잡아줘야됨
+					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
+						aboveCam.transform.localPosition.y + cutManager.GetCameraBoundaryHeight);
+				}
+				else if (objList[i].WhichCutNum > currentCutNum)
+				{
+					objList[i].Init(objList[i].WhichCutNum, interactedObject.MovingDirection);
+					// 위치만 잡아주기
+					objList[i].transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
+						aboveCam.transform.localPosition.y + cutManager.GetCameraBoundaryHeight);
 				}
 			}
 			

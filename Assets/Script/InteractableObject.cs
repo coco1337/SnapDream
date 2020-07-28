@@ -58,20 +58,16 @@ public sealed class InteractableObject : CInteractableObject
         {
             isGround = false;
 
-            if (gameManager.GetCurrentCutNum() < gameManager.GetCurrentCutNum() / 2)
+            if (base.IsHitUp(out var needSync))
             {
-                // TODO : 나중에 CutManager 추가한 뒤 수정하기 (전체 컷의 반), 일단 하드코딩으로 구현
-                if (transform.localPosition.y > 5.5)
+                // 위에 닿았을 때
+                if (needSync)
+                {
+                    
+                }
+                else
                 {
                     movingDirection = new Vector2(movingDirection.x, 0);
-                }
-            }
-            else if (whichCutNum > GameManager.GetInstance().GetCutManager.MaxCutCount / 2 - 1 &&
-                     whichCutNum == GameManager.GetInstance().GetCurrentCutNum())
-            {
-                if (base.IsHitUp())
-                {
-                    // TODO : 위에 닿았을때 구현
                 }
             }
         }

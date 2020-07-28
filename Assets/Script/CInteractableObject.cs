@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(ObjectId))]
 public abstract class CInteractableObject : MonoBehaviour
@@ -62,12 +63,14 @@ public abstract class CInteractableObject : MonoBehaviour
 	public int GetId => objectId.GetId;
 	public bool IsSynced => synced;
 
-	public virtual void Init(int cutNum)
+	public virtual void Init(int cutNum, Vector2 moveDir = new Vector2())
 	{
+		// TODO : 여기서 싱크 이후의 MoveDirection을 받아야함
 		hitColliders = new List<Collider2D>();
 		objectId = this.GetComponent<ObjectId>();
 		objectId.BindObjectId(this);
 		whichCutNum = cutNum;
+		movingDirection = moveDir;
 	}
 
 	/// <summary>
@@ -204,8 +207,8 @@ public abstract class CInteractableObject : MonoBehaviour
 			(1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Boundary"))),
 		HitBoundaryLocation.ELEFT_BOUNDARY);
 
-	protected bool IsHitUp() => CheckUpperBoundaryAndSync(Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0,
-		Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Boundary")), HitBoundaryLocation.ECEIL_BOUNDARY);
+	protected bool IsHitUp(out bool needSync) => CheckUpperBoundaryAndSync(Physics2D.BoxCastAll(BoxCastUpOrigin, TopBottomBoundSize, 0,
+		Vector2.up, rayMaxDistance, 1 << LayerMask.NameToLayer("Boundary")), HitBoundaryLocation.ECEIL_BOUNDARY, out needSync);
 
 	private bool CheckLadderAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
 	{
@@ -241,15 +244,25 @@ public abstract class CInteractableObject : MonoBehaviour
 	}
 
 
-	private bool CheckUpperBoundaryAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc)
+	private bool CheckUpperBoundaryAndSync(RaycastHit2D[] hits, HitBoundaryLocation loc, out bool needSync)
 	{
+		needSync = false;
 		// TODO : 위에 닿았을 때 구현
 		foreach (var hit in hits)
 		{
 			if (hit.collider.CompareTag("BoundaryCollider"))
 			{
-				GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
-				return true;
+				if (!(GameManager.GetInstance().GetCurrentCutNum() < GameManager.GetInstance().GetCutManager.MaxCutCount / 2))
+				{
+					GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					needSync = true;
+					return true;
+				}
+				else
+				{
+					needSync = false;
+					return true;
+				}
 			}
 		}
 		return false;
