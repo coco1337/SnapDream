@@ -35,6 +35,7 @@ public sealed class CutManager : MonoBehaviour
     public Camera GetCamera(int cut) => cutCameras[cut];
     public float GetCameraBoundaryWidth => cameraBoundaryWidth;
     public float GetCameraBoundaryHeight => cameraBoundaryHeight;
+    public void SetBackGround(GameObject prefab) => backGround = prefab;
 
     // Start is called before the first frame update
     private void Awake()

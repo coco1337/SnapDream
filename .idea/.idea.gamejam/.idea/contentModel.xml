@@ -19,21 +19,30 @@
           <e p="BoundaryCollider.cs" t="Include" />
           <e p="ButtonBlink.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
+          <e p="CanvasManager.cs" t="Include" />
           <e p="CartoonManager.cs" t="Include" />
           <e p="CInteractableObject.cs" t="Include" />
           <e p="CutManager.cs" t="Include" />
           <e p="Damageabel.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
-          <e p="InputController.cs" t="Include" />
           <e p="InteractableObject.cs" t="Include" />
           <e p="ObjectId.cs" t="Include" />
           <e p="ObjectSoundController.cs" t="Include" />
           <e p="ObjectSyncController.cs" t="Include" />
-          <e p="Player.cs" t="Include" />
-          <e p="Player_Previous.cs" t="Include" />
-          <e p="PlayerInterectController.cs" t="Include" />
-          <e p="PlayerManager.cs" t="Include" />
+          <e p="Player" t="Include">
+            <e p="InputController.cs" t="Include" />
+            <e p="Player.cs" t="Include" />
+            <e p="Player_Previous.cs" t="Include" />
+            <e p="PlayerInterectController.cs" t="Include" />
+            <e p="PlayerManager.cs" t="Include" />
+          </e>
           <e p="SendMailToDev.cs" t="Include" />
+          <e p="Switch" t="Include">
+            <e p="Switch.cs" t="Include" />
+            <e p="Switch_Active.cs" t="Include" />
+            <e p="Switch_Move.cs" t="Include" />
+            <e p="Switchable.cs" t="Include" />
+          </e>
           <e p="Thorn.cs" t="Include" />
           <e p="TiletleMove.cs" t="Include" />
         </e>
