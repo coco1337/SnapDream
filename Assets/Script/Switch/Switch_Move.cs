@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class Switch_Move : MonoBehaviour, Switchable
 {
-    [SerializeField] Vector2 startPosition;
-    [SerializeField] Vector2 endPosition;
+    [SerializeField] Transform startPosition;
+    [SerializeField] Transform endPosition;
     [SerializeField] float speed = 1;
     Vector3 targetPosition;
 
     private void Start()
     {
-        transform.position = startPosition;
+        transform.position = startPosition.position;
     }
 
     public void SwitchOn()
     {
         StopCoroutine(Move());
-        targetPosition = endPosition;
+        targetPosition = endPosition.position;
         StartCoroutine(Move());
     }
 
     public void SwitchOff()
     {
         StopCoroutine(Move());
-        targetPosition = startPosition;
+        targetPosition = startPosition.position;
         StartCoroutine(Move());
     }
 

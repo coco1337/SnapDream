@@ -228,4 +228,9 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
+
+    public void ThrowEnd()
+    {
+        Debug.Log("Throw End");
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public sealed class GameManager : MonoBehaviour
 {
     static GameManager instance;
     [SerializeField] string[] LevelName;
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private CutManager cutManager;
     private AudioManager audioManager;
     private PlayerManager playerManager;
+    private CanvasManager canvasManager;
 
     [SerializeField] private float SceanChangeTime = 3f;
     [SerializeField] private float SceanReStartTime = 1f;
@@ -62,7 +63,7 @@ public class GameManager : MonoBehaviour
         audioManager.AudioInit();
 
         StartCoroutine(FadeImage(true));
-    }    
+    }
 
     // Update is called once per frame
     void Update()
@@ -88,6 +89,11 @@ public class GameManager : MonoBehaviour
         {
             StageClear();
         }
+    }
+
+    void StageStart()
+    {
+
     }
 
     public void StageRestart()
