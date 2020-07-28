@@ -44,7 +44,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 	private IEnumerator GetGameManager()
 	{
-		yield return new WaitForFixedUpdate();
+		yield return null;
 		if (gameManager == null)
 		{
 			gameManager = GameManager.GetInstance();

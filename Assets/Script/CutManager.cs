@@ -136,9 +136,17 @@ public sealed class CutManager : MonoBehaviour
 
     public void MoveToNextCut()
     {
-        currentCut++;
-        camImage[currentCut].SetActive(true);
-        syncController.MoveNextCut(currentCut);
+        if (currentCut < MaxCutCount - 1)
+        {
+            currentCut++;
+            camImage[currentCut].SetActive(true);
+            syncController.MoveNextCut(currentCut);
+        }
+        else
+        {
+            // 컷 못넘김
+        }
+        
     }
 
     /// <summary>
