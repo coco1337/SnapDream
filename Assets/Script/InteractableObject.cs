@@ -11,7 +11,6 @@ public sealed class InteractableObject : CInteractableObject
     [SerializeField] private bool isHoldableObject;
     // private Rigidbody2D rb;
     private GameManager gameManager;
-    private int whichCutNum;
     private bool movingXMidAir;
     
     // public Player player;
@@ -27,7 +26,7 @@ public sealed class InteractableObject : CInteractableObject
     //    rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
     [Header("Drag")] 
-    [SerializeField] private float dragWeight;
+    [SerializeField] private float toyBoxWeight;
     [SerializeField] private bool hitSideWall;
 
     [Header("Throw")] 
@@ -36,33 +35,39 @@ public sealed class InteractableObject : CInteractableObject
     public bool IsInstantiated => this.instantiatedForDrag;
     public void Instantiated(bool flag) => this.instantiatedForDrag = flag;
     public void SyncNeeded(bool flag) => this.needSync = flag;
-    public int WhichCutNum => whichCutNum;
 
-    public void Init(int cutNum)
+    /*
+    public override void Init(int cutNum)
     {
-        whichCutNum = cutNum;
-        base.Init();
+        base.Init(cutNum);
     }
+    */
     
     private void Start()
     {
         // rb = this.GetComponent<Rigidbody2D>();
-        objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
+        // objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
         gameManager = GameManager.GetInstance();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (moveDirection.y > 0)
+        // TODO : 던질때를 알수있는 필터같은게 필요함 
+        
+        if (movingDirection.y > 0)
         {
             isGround = false;
 
-            if (gameManager.GetCurrentCutNum() < 3)
+            if (base.IsHitUp(out var needSync))
             {
-                // TODO : 나중에 CutManager 추가한 뒤 수정하기 (전체 컷의 반), 일단 하드코딩으로 구현
-                if (transform.localPosition.y > 5.5)
+                // 위에 닿았을 때
+                if (needSync)
                 {
-                    moveDirection = new Vector2(moveDirection.x, 0);
+                    
+                }
+                else
+                {
+                    movingDirection = new Vector2(movingDirection.x, 0);
                 }
             }
         }
@@ -74,7 +79,7 @@ public sealed class InteractableObject : CInteractableObject
                 if (!isGround)
                 {
                     // 이전 프레임에서 midair 였을 때
-                    moveDirection = new Vector2(0, moveDirection.y);
+                    movingDirection = new Vector2(0, movingDirection.y);
                 }
                 isGround = true;
             }
@@ -102,7 +107,7 @@ public sealed class InteractableObject : CInteractableObject
 
         if (axis == 0)
         {
-            moveDirection = new Vector2(0, moveDirection.y);
+            movingDirection = new Vector2(0, movingDirection.y);
         }
         else
         {
@@ -110,13 +115,13 @@ public sealed class InteractableObject : CInteractableObject
             if (base.IsHitLeft() || base.IsHitRight())
             {
                 hitSideWall = true;
-                moveDirection = new Vector2(0, moveDirection.y);
+                movingDirection = new Vector2(0, movingDirection.y);
                 return false;
             }
             else
             {
                 hitSideWall = false;
-                moveDirection = new Vector2(speed * axis / dragWeight, moveDirection.y);
+                movingDirection = new Vector2(speed * axis / toyBoxWeight, movingDirection.y);
             }
         }
         
@@ -143,7 +148,7 @@ public sealed class InteractableObject : CInteractableObject
             return false;
         }
         
-        moveDirection = new Vector2(0, throwPower / throwWeight);
+        movingDirection = new Vector2(0, throwPower / throwWeight);
         return true;
     }
 

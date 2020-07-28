@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\coco\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\coco\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_gamejam.-1767539012.00" t="ExcludeRecursive" />
-    <e p="C:\Users\coco\Documents\GitHub\gamejam" t="IncludeRecursive">
+    <e p="C:\Users\user\AppData\Local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\user\AppData\Local\JetBrains\Rider2020.1\resharper-host\Local\Transient\ReSharperHost\v201\SolutionCaches\_SnapDream.1482420115.00" t="ExcludeRecursive" />
+    <e p="C:\Users\user\Documents\GitHub\SnapDream" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="ClearManager.cs" t="Include" />
@@ -40,9 +40,9 @@
         <e p="StageClear.cs" t="Include" />
         <e p="testImageS.cs" t="Include" />
       </e>
-      <e p="gamejam.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
+      <e p="SnapDream.sln" t="IncludeFlat" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
   </component>

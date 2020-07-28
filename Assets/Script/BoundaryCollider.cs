@@ -16,12 +16,17 @@ public class BoundaryCollider : MonoBehaviour
     private ObjectSyncController objectSyncController;
     private GameManager gameManager;
 
+    public void Init()
+    {
+        
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         middlePosition = this.transform.parent.position;
         // 추후 수정
-        objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
+        objectSyncController = GameObject.Find("CutManager").GetComponent<ObjectSyncController>();
         gameManager = GameManager.GetInstance();
     }
 
