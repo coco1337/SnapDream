@@ -126,7 +126,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
         rigidbody.velocity = Vector2.zero;
         rigidbody.bodyType = RigidbodyType2D.Static;
         gameObject.GetComponent<Player>().enabled = false;
-        gameObject.GetComponent<InputController>().enabled = false;
+        gameObject.GetComponent<PlayerInput>().enabled = false;
     }
 
     public PlayerState GetPlayerState()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InputController : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     //외부 참조 변수
     [SerializeField] private Player player = null;

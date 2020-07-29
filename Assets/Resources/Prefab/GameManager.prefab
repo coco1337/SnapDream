@@ -58,29 +58,9 @@ MonoBehaviour:
   - Stage6
   - Chapter2 Clear
   - End
-  backGround: {fileID: 3210185523473565243, guid: aa1c09554b224e24d924a5560c771aac,
-    type: 3}
-  player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
-  cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,
-    type: 3}
-  cameraRawImage:
-  - {fileID: 8400000, guid: 8a7c913a0a018a44985a1c2a3c51cf38, type: 2}
-  - {fileID: 8400000, guid: f22fc31cdd4b05449bde68e6fe62cf79, type: 2}
-  - {fileID: 8400000, guid: 6798eca07d2f4b84a911d173da518415, type: 2}
-  - {fileID: 8400000, guid: 2eb8f206ec5dbbb48b1272e9cc138449, type: 2}
-  - {fileID: 8400000, guid: 7dd79f3637faf9d46a549f9ec78368b9, type: 2}
-  - {fileID: 8400000, guid: 1cae77438fe3e234593735e368bd8d4c, type: 2}
-  cameraBoundury: 17
-  spawnPosition: {x: -20, y: -3}
-  cutField: {fileID: 0}
-  canvas: {fileID: 6142460231287012236}
-  camImage: []
   exitGameUI: {fileID: 2831608084815675014}
   exitStageUI: {fileID: 2831608084851585515}
   lobbyUI: {fileID: 2831608082925456667}
-  audioBGMSource: {fileID: 5194788657549916441}
-  audioCutChangeSource: {fileID: 681688448}
-  audioStageClearSource: {fileID: 490299749}
   SceanChangeTime: 4
   SceanReStartTime: 0.2
   fadingImage: {fileID: 7335480135191684901}
@@ -434,6 +414,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -900,12 +881,6 @@ PrefabInstance:
 --- !u!224 &407478754 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2831608083019909685, guid: 95ce64af2794ce7469851de577e67d82,
-    type: 3}
-  m_PrefabInstance: {fileID: 2831608083158887383}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &6142460231287012236 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8247642903461761115, guid: 95ce64af2794ce7469851de577e67d82,
     type: 3}
   m_PrefabInstance: {fileID: 2831608083158887383}
   m_PrefabAsset: {fileID: 0}
