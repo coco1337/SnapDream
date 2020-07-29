@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGround: 0
-  moveDirection: {x: 0, y: 0}
+  movingDirection: {x: 0, y: 0}
   gravityScale: 0.03
   boxCastThickness: 0.1
   hitColliders: []
@@ -148,6 +148,8 @@ MonoBehaviour:
   upOffset: 0.4
   colliderSelf: {fileID: 8053859382454307588}
   objectId: {fileID: 0}
+  whichCutNum: 0
+  synced: 1
   isHoldableObject: 0
   instantiatedForDrag: 0
   needSync: 0
