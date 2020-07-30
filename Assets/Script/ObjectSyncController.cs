@@ -100,7 +100,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 			int currentCutNum = GameManager.GetInstance().GetCurrentCutNum();
 			
 			// 제일 왼쪽 컷들은 물건을 왼쪽으로 넘길 수 없음
-			if (currentCutNum == 0 || currentCutNum == (cutManager.MaxCutCount / 2) + 1)
+			if (currentCutNum == 0 || currentCutNum == cutManager.MaxCutCount / 2)
 			{
 				return false;
 			}
