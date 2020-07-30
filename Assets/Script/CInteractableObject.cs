@@ -286,19 +286,13 @@ public abstract class CInteractableObject : MonoBehaviour
 		transform.Translate(movingDirection);
 	}
 
-	public void TranslateAfterHitBoundary(Vector2 dir)
-	{
-		StartCoroutine(MoveCoroutine(dir));
-	}
-
-	private IEnumerator MoveCoroutine(Vector2 dir)
-	{
-		// while (Vector2.Distance(this.transform.position, ))
-		yield return null;
-	}
-
 	public void DisconnectSync()
 	{
 		this.synced = false;
+	}
+
+	public void AfterSync(float time)
+	{
+		
 	}
 }
