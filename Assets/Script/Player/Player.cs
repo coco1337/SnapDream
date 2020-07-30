@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, Damageabel
     [SerializeField] public float speed = 4;
     [SerializeField] public float dragSpeed = 4;
     [SerializeField] public float throwPower = 2;
+    [SerializeField] public float jumpPower = 5;
     [SerializeField] private int playerCutNum;
     public bool isGround;
     Animator animator;
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour, Damageabel
     //Player 이동 처리 함수
     public void PlayerMove(float axis)
     {
-        if(axis != 0) spriteRenderer.flipX = (axis < 0);
+        if (axis != 0) spriteRenderer.flipX = (axis < 0);
 
         if (IsLadder())
         {
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour, Damageabel
             animator.speed = Mathf.Abs(axis);
             rigidbody.velocity = new Vector2(0, speed * axis);
         }
-       
+
         else
         {
             if (playerInterectController == null)
@@ -121,7 +122,7 @@ public class Player : MonoBehaviour, Damageabel
         gameObject.GetComponent<PlayerInterectController>().enabled = false;
     }
 
-    
+
     //사다리 관련 함수
     public void GetLadder()
     {
@@ -189,7 +190,7 @@ public class Player : MonoBehaviour, Damageabel
     public void Hit(float damage)
     {
         PlayerHealth -= damage;
-        if(PlayerHealth <= 0)
+        if (PlayerHealth <= 0)
             DieObject();
     }
 
@@ -212,7 +213,7 @@ public class Player : MonoBehaviour, Damageabel
     IEnumerator StageClearAction()
     {
         float startTime = Time.time + 5;
-        while(startTime > Time.time)
+        while (startTime > Time.time)
         {
             ClearMove(1);
             yield return null;
@@ -227,5 +228,32 @@ public class Player : MonoBehaviour, Damageabel
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
     }
 
+
+    public void PlayerZAction()
+    {
+        PlayerJump();
+    }
+
+    public void PlayerJump()
+    {
+        isGround = false;
+        animator.SetBool("isGround", isGround);
+        animator.SetTrigger("jump");
+        playerState = PlayerState.Jump;
+        rigidbody.velocity = Vector2.zero;
+        rigidbody.AddForce(Vector2.up * jumpPower);
+        StartCoroutine(JumpCutChange());
+    }
+
+    IEnumerator JumpCutChange()
+    {
+        yield return new WaitForSeconds(0.5f);
+        while (!isGround) yield return null;
+        PlayerMove(0);
+        //Wait to Change Animation from Jump to Idle
+        yield return new WaitForSeconds(0.1f);
+        GameManager.GetInstance().NextCut();
+
+    }
 
 }
