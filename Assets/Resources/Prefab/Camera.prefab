@@ -90,3 +90,5 @@ MonoBehaviour:
   basePoint: {fileID: 0}
   player: {fileID: 0}
   bounduryValue: 20
+  xMargin: 8
+  yMargin: 5
