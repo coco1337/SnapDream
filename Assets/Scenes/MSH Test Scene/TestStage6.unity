@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutField: {fileID: 485221138}
-  backGround: {fileID: 3210185523473565243, guid: aa1c09554b224e24d924a5560c771aac,
+  backGround: {fileID: 3210185523473565243, guid: 2d841b538e8ab02469ded7fecba79e92,
     type: 3}
   player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
   cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,
@@ -1203,7 +1203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eachCut: []
   cutManager: {fileID: 0}
-  gameManager: {fileID: 0}
   spawnYPos: 0
   cameraLength: 0
 --- !u!1 &2146103172
