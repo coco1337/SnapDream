@@ -88,6 +88,7 @@ public class PlayerInterectController : MonoBehaviour
     // 물건 옮기기
     public void MoveInteractObject(float axis)
     {
+        Debug.Log("Move Interact : " + axis + "\nDragObject : " + dragObject);
         if (dragObject != null && player.isGround)
         {
             if (axis > 0 && dragObject.transform.position.x > player.transform.position.x
@@ -98,6 +99,7 @@ public class PlayerInterectController : MonoBehaviour
             }
             else
             {
+                Debug.Log("Move exit");
                 dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
                 player.RealeaseDrag();
             }
@@ -155,7 +157,7 @@ public class PlayerInterectController : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Drag") || collision.gameObject.CompareTag("Throw"))
         {
-            dragObject = null;
+            MoveInteractObject(0);
         }
         if (collision.gameObject.CompareTag("Throw"))
         {
