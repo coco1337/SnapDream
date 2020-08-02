@@ -30,11 +30,15 @@ public class CameraController : MonoBehaviour
         / basePoint.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
         minBounduryPosition.x = basePoint.position.x - (width / 2) + xMargin;
-        minBounduryPosition.y = basePoint.position.y - (height / 2);
-        //- (height / 2) + yMargin;
+        minBounduryPosition.y = basePoint.position.y - (height / 2) + yMargin;
+        //- (height / 2) + ;
         maxBounduryPosition.x = basePoint.position.x + (width / 2) - xMargin;
-        maxBounduryPosition.y = basePoint.position.y + (height / 2);
-            //+ (height / 2) - yMargin;
+        maxBounduryPosition.y = basePoint.position.y + (height / 2) - yMargin;
+        //+ (height / 2) - yMargin;
+
+        Debug.Log("width : " + width);
+        Debug.Log("Height : " + height);
+        Debug.Log("Y Min : " + minBounduryPosition.y + "\nY Max : " + maxBounduryPosition.y);
     }
 
     // Start is called before the first frame update

@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 3210185523277615006}
   m_Layer: 8
   m_Name: Object (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 3210185524400947019}
   m_Layer: 8
   m_Name: Object (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -710,7 +710,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1604493165
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 114e299037dc2da42889053854a02d3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 1459807065836002288}
   m_Layer: 8
   m_Name: wall
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -914,7 +914,7 @@ GameObject:
   - component: {fileID: 993491209164996501}
   m_Layer: 8
   m_Name: Object (5)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -972,7 +972,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1604493165
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 114e299037dc2da42889053854a02d3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1094,6 +1094,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ladder (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046748396161138123, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046748398066516045, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e8be3678997f84f8804b5ea50be471, type: 3}
@@ -1441,6 +1451,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ladder
       objectReference: {fileID: 0}
+    - target: {fileID: 9046748396161138123, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046748398066516045, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e8be3678997f84f8804b5ea50be471, type: 3}
 --- !u!4 &3210185522853437842 stripped
@@ -1520,6 +1540,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ladder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046748396161138123, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046748398066516045, guid: 27e8be3678997f84f8804b5ea50be471,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e8be3678997f84f8804b5ea50be471, type: 3}
