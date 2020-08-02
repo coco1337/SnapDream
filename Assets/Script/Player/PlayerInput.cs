@@ -36,7 +36,7 @@ public class PlayerInput : MonoBehaviour
                     //컷 이동
                     if (Input.GetKeyDown(KeyCode.Z) && player.IsCutChangeable())
                     {
-                        GameManager.GetInstance().NextCut();
+                        player.PlayerZAction();
                     }
 
                     // 상호작용

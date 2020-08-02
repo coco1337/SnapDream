@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_Previous : MonoBehaviour, Damageabel
+public class Player : MonoBehaviour, Damageabel
 {
     public Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
 
     [SerializeField] public float speed = 4;
     [SerializeField] public float dragSpeed = 4;
-    [SerializeField] public float jumpPower = 5;
     [SerializeField] public float throwPower = 2;
-    [SerializeField] int playerCutNum;
+    [SerializeField] private int playerCutNum;
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
@@ -24,17 +23,19 @@ public class Player_Previous : MonoBehaviour, Damageabel
         Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged, Clear
     }
     [SerializeField] PlayerState playerState;
+
+
+    public bool IsPlyerFlip => spriteRenderer.flipX;
     public void SetPlayerCutNumber(int i) => playerCutNum = i;
     public int GetPlayerCutNumber => playerCutNum;
 
-    public bool IsPlyerFlip => spriteRenderer.flipX;
 
     // Player 상태 확인 관련 함수들
     //이동 가능한지를 확인하는 함수
     public bool IsMovable() => (playerState != PlayerState.Stop && playerState != PlayerState.DIe && playerState != PlayerState.Interaction_Throw && playerState != PlayerState.Clear);
 
     //Cut Change 가능 여부 확인하는 함수
-    public bool IsCutChangeable() => (playerState == PlayerState.Idle || playerState == PlayerState.Move) && IsJumpable();
+    public bool IsCutChangeable() => (playerState == PlayerState.Idle || playerState == PlayerState.Move);
 
     //Object를 던질 수 있는지 확인하는 함수
     public bool IsThrowable() => (playerInterectController.CanThrow() && (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Interaction_Drag));
@@ -44,15 +45,6 @@ public class Player_Previous : MonoBehaviour, Damageabel
 
     //현재 오브젝트를 미는 중인지 확인하는 함수
     public bool IsDraging() => (playerState == PlayerState.Interaction_Drag);
-    public bool IsJumpable()
-    {
-        if (playerState == PlayerState.Idle || playerState == PlayerState.Move)
-            return true;
-        else
-            return false;
-    }
-
-
     private void Start()
     {
         playerState = PlayerState.Idle;
@@ -65,11 +57,11 @@ public class Player_Previous : MonoBehaviour, Damageabel
     {
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
     }
-     
 
+    //Player 이동 처리 함수
     public void PlayerMove(float axis)
     {
-        if (axis != 0) spriteRenderer.flipX = (axis < 0);
+        if(axis != 0) spriteRenderer.flipX = (axis < 0);
 
         if (IsLadder())
         {
@@ -77,7 +69,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
             animator.speed = Mathf.Abs(axis);
             rigidbody.velocity = new Vector2(0, speed * axis);
         }
-
+       
         else
         {
             if (playerInterectController == null)
@@ -109,30 +101,12 @@ public class Player_Previous : MonoBehaviour, Damageabel
         }
     }
 
-    public void PlayerLadderMove(float axis)
-    {
-        if (playerState == PlayerState.Interaction_Ladder)
-        {
-            animator.SetFloat("ladderSpeed", Mathf.Abs(axis)+0.2f);
-            animator.speed = Mathf.Abs(axis);
-            rigidbody.velocity = new Vector2(0, speed * axis);
-        }
-    }
-
-    public void PlayerJump()
-    {
-        isGround = false;
-        animator.SetBool("isGround", isGround);
-        animator.SetTrigger("jump");
-        playerState = PlayerState.Jump;
-        rigidbody.velocity = Vector2.zero;
-        rigidbody.AddForce(Vector2.up * jumpPower);
-    }
-
+    //Player Cut 이동 처리 함수
     public void MoveToNextCut()
     {
         GameManager.GetInstance().NextCut();
     }
+
     public void StopPlayer()
     {
         playerState = PlayerState.Stop;
@@ -147,8 +121,8 @@ public class Player_Previous : MonoBehaviour, Damageabel
         gameObject.GetComponent<PlayerInterectController>().enabled = false;
     }
 
-
-
+    
+    //사다리 관련 함수
     public void GetLadder()
     {
         if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
@@ -188,26 +162,30 @@ public class Player_Previous : MonoBehaviour, Damageabel
         }
     }
 
-    public void getThrow()
+    //던지는 동작
+    public void ThrowStart()
     {
         if (IsThrowable())
         {
             PlayerMove(0);
             animator.SetTrigger("throwObject");
             playerState = PlayerState.Interaction_Throw;
-            StartCoroutine(EndThrowObject());
         }
-    } 
+    }
 
-    IEnumerator EndThrowObject()
+    //던지기 동작이 끝날 때 호출 되는 함수
+    //Animation 이벤트로 호출된다.
+    public void ThrowEnd()
     {
-        yield return new WaitForSeconds(throwAnimationTime);
         if (playerState == PlayerState.Interaction_Throw)
         {
             playerState = PlayerState.Idle;
         }
     }
 
+
+
+    //Player에게 데미지를 주는 함수
     public void Hit(float damage)
     {
         PlayerHealth -= damage;
@@ -215,6 +193,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
             DieObject();
     }
 
+    //Player에게 데미지를 주는 Object를 만났을 경우 동작
     public void DieObject()
     {
         StopPlayer();
@@ -222,6 +201,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
         GameManager.GetInstance().StageRestart();
     }
 
+    //Stage를 Clear 할 시 Player의 동작
     public void StageClear()
     {
         playerState = PlayerState.Clear;
@@ -232,7 +212,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
     IEnumerator StageClearAction()
     {
         float startTime = Time.time + 5;
-        while (startTime > Time.time)
+        while(startTime > Time.time)
         {
             ClearMove(1);
             yield return null;
@@ -245,6 +225,12 @@ public class Player_Previous : MonoBehaviour, Damageabel
         animator.SetBool("isGround", isGround);
         animator.SetFloat("moveSpeed", Mathf.Abs(axis));
         rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+    }
+
+
+    public void PlayerZAction()
+    {
+        GameManager.GetInstance().NextCut();
     }
 
 }
