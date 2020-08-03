@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         SpriteRenderer back = background.GetComponent<SpriteRenderer>();
         float width = (basePoint.GetComponent<SpriteRenderer>().sprite.rect.xMax - basePoint.GetComponent<SpriteRenderer>().sprite.rect.xMin)
             / basePoint.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        float height = (basePoint.GetComponent<SpriteRenderer>().sprite.rect.yMax - basePoint.GetComponent<SpriteRenderer>().sprite.rect.yMin)
+        float height = (basePoint.GetComponent<SpriteRenderer>().sprite.rect.yMax - basePoint.GetComponent<SpriteRenderer>().sprite.rect.yMin) * background.localScale.y
         / basePoint.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
         minBounduryPosition.x = basePoint.position.x - (width / 2) + xMargin;
