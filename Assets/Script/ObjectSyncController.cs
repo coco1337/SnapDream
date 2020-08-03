@@ -90,14 +90,13 @@ public sealed class ObjectSyncController : MonoBehaviour
 	/// 카메라의 왼쪽 경계에 CInteractableObject가 충돌 판정 있으면
 	/// </summary>
 	/// <param name="objId">ID of CInteractableObject</param>
-	/// <param name="pos">y position of hit point</param>
 	/// <returns></returns>
 	private bool HitLeftBoundary(int objId)
 	{
 		// 컷이 2개일때와 2개 초과일 때로 분류
 		if (cutManager.MaxCutCount > 2)
 		{
-			int currentCutNum = GameManager.GetInstance().GetCurrentCutNum();
+			int currentCutNum = StageManager.GetInstance().GetCurrentCutNum();
 			
 			// 제일 왼쪽 컷들은 물건을 왼쪽으로 넘길 수 없음
 			if (currentCutNum == 0 || currentCutNum == cutManager.MaxCutCount / 2)
@@ -200,7 +199,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 		if (cutManager.MaxCutCount > 2)
 		{
 			CInteractableObject interactedObject = default;
-			int currentCutNum = GameManager.GetInstance().GetCurrentCutNum();
+			int currentCutNum = StageManager.GetInstance().GetCurrentCutNum();
 
 			if (objectDictionary.TryGetValue(objId, out var objList))
 			{

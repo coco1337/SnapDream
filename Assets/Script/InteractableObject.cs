@@ -13,7 +13,6 @@ public sealed class InteractableObject : CInteractableObject
 	private bool isHoldableObject;
 
 	// private Rigidbody2D rb;
-	private GameManager gameManager;
 	private bool movingXMidAir;
 
 	// public Player player;
@@ -43,13 +42,6 @@ public sealed class InteractableObject : CInteractableObject
 	}
 	*/
 
-	private void Start()
-	{
-		// rb = this.GetComponent<Rigidbody2D>();
-		// objectSyncController = GameObject.Find("ObjectSyncManager").GetComponent<ObjectSyncController>();
-		gameManager = GameManager.GetInstance();
-	}
-
 	private void Update()
 	{
 		// TODO : 던질때를 알수있는 필터같은게 필요함 
@@ -58,8 +50,8 @@ public sealed class InteractableObject : CInteractableObject
 		{
 			isGround = false;
 
-			if (transform.localPosition.y > gameManager.GetCutManager.GetCameraBoundaryHeight +
-				gameManager.GetCutManager.GetCamera(whichCutNum).transform.position.y)
+			if (transform.localPosition.y > StageManager.GetInstance().GetCutManager.GetCameraBoundaryHeight +
+				StageManager.GetInstance().GetCutManager.GetCamera(whichCutNum).transform.position.y)
 			{
 				if (base.IsHitUp(out var needSync))
 				{
@@ -130,12 +122,12 @@ public sealed class InteractableObject : CInteractableObject
 			}
 		}
 
-		if (whichCutNum == gameManager.GetCurrentCutNum())
+		if (whichCutNum == StageManager.GetInstance().GetCurrentCutNum())
 		{
 			if (axis != 0)
-				gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EDRAG);
+				StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.DRAG);
 			else
-				gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EEND_DRAG);
+				StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.END_DRAG);
 
 			if (this.needSync)
 			{
@@ -188,7 +180,7 @@ public sealed class InteractableObject : CInteractableObject
 
 		if (collision.gameObject.CompareTag("BoundaryCollider"))
 		{
-			if (whichCutNum != gameManager.GetCurrentCutNum())
+			if (whichCutNum != StageManager.GetInstance().GetCurrentCutNum())
 			{
 				return;
 			}
@@ -232,6 +224,7 @@ public sealed class InteractableObject : CInteractableObject
 			this.stayUpperCollider = false;
 		}
 
-		gameManager.GetAudioManager.PlaySfx(AudioManager.SfxType.EEND_DRAG);
+		// TODO : 사운드
+		// GameManager.Instantiate().PlaySfx(AudioManager.ESfxType.END_DRAG);
 	}
 }

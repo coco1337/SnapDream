@@ -99,7 +99,7 @@ public class StageManager : MonoBehaviour, ISceneManager
 
     public void StageClear()
     {
-        audioManager.PlaySfx(AudioManager.SfxType.ESTAGE_CLEAR);
+        audioManager.PlaySfx(AudioManager.ESfxType.STAGE_CLEAR);
         playerManager.StageClear();
         SceneChange(StageType.Stage);
     }
