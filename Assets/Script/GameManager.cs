@@ -46,16 +46,16 @@ public sealed class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         sceneManager.SceneInit(sceneValue);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
-        Debug.Log(sceneManager.ToString());
-        sceneManager.SceneInit(sceneValue);
-        throw new System.NotImplementedException();
-    }
+    //private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    //{
+    //    sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
+    //    Debug.Log(sceneManager.ToString());
+    //    sceneManager.SceneInit(sceneValue);
+    //    throw new System.NotImplementedException();
+    //}
 
     // Update is called once per frame
     void Update()
