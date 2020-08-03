@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, Damageabel
                 animator.SetFloat("dragSpeed", Mathf.Abs(axis));
                 animator.SetFloat("moveSpeed", 0);
                 rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
-                playerInterectController.MoveInteractObject(axis);
+                playerInterectController.MoveInteractObject(dragSpeed * axis);
             }
             else
             {
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour, Damageabel
     //Player Cut 이동 처리 함수
     public void MoveToNextCut()
     {
-        GameManager.GetInstance().NextCut();
+        StageManager.GetInstance().NextCut();
     }
 
     public void StopPlayer()
@@ -199,7 +199,7 @@ public class Player : MonoBehaviour, Damageabel
     {
         StopPlayer();
         playerState = PlayerState.DIe;
-        GameManager.GetInstance().StageRestart();
+        StageManager.GetInstance().StageRestart();
     }
 
     //Stage를 Clear 할 시 Player의 동작
@@ -252,7 +252,7 @@ public class Player : MonoBehaviour, Damageabel
         PlayerMove(0);
         //Wait to Change Animation from Jump to Idle
         yield return new WaitForSeconds(0.1f);
-        GameManager.GetInstance().NextCut();
+        StageManager.GetInstance().NextCut();
 
     }
 

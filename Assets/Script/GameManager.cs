@@ -18,26 +18,41 @@ public sealed class GameManager : MonoBehaviour
     //1 : Stage Select Scene
     //2 : Stage Scene
     //3 : Endding Scene
-    [SerializeField] string[] SceneList;
-    [SerializeField] int sceneValue;
-    ISceneManager sceneManager;
+    [SerializeField] private string[] sceneList;
+    [SerializeField] private string[] stageSceneList;
+    [SerializeField] private int sceneValue;
+    private ISceneManager sceneManager;
 
     static public GameManager GetInstance() => instance;
     public void ExitGame() => Application.Quit();
 
-    public int GetCurrentCutNum() => cutManager.GetCurrentCutNum();
+    private void Awake()
+    {
+        Screen.SetResolution(1920, 1080, true);
+        sceneValue = 0;
+        sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
+        Debug.Log(sceneManager.ToString());
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
-        Screen.SetResolution(1920, 1080, true);
-        instance = FindObjectOfType<GameManager>();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        sceneManager.SceneInit(sceneValue);
         SceneManager.sceneLoaded += OnSceneLoaded;
-        sceneValue = 0;
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
+        Debug.Log(sceneManager.ToString());
         sceneManager.SceneInit(sceneValue);
         throw new System.NotImplementedException();
     }
@@ -51,12 +66,20 @@ public sealed class GameManager : MonoBehaviour
     public void SceneLoad(StageType stageType, int sceneChangeValue = 0)
     {
         sceneValue = sceneChangeValue;
-        SceneManager.LoadScene(SceneList[(int)stageType]);
+        if (stageType == StageType.Stage)
+            SceneManager.LoadScene(stageSceneList[sceneValue]);
+        else
+            SceneManager.LoadScene(sceneList[(int)stageType]);
     }
-
 
     public void SceneRestart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+
+    //For Error Collect
+    public CutManager GetCutManager => StageManager.GetInstance().GetCutManager;
+    public AudioManager GetAudioManager => StageManager.GetInstance().GetAudioManager;
+    public int GetCurrentCutNum() { return 0; }
 }

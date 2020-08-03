@@ -17,7 +17,7 @@ public class PlayerManager : MonoBehaviour
 
     public void MoveToNextCut()
     {
-        inputController.SetPlayer(playerList[GameManager.GetInstance().GetCurrentCutNum()]);
+        inputController.SetPlayer(playerList[StageManager.GetInstance().GetCurrentCutNum()]);
     }
 
     public void StageClear()

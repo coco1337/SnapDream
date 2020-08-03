@@ -26,7 +26,7 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.GetInstance().isOptioning) {
+        if(!StageManager.GetInstance().isOptioning) {
             if (player != null && player.IsMovable())
             {
                 if (!player.IsLadder())

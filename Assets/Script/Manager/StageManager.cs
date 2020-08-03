@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour, ISceneManager
     private CutManager cutManager;
     private AudioManager audioManager;
     private PlayerManager playerManager;
-    private CanvasManager canvasManager;
+    private StageUIManager uiManager;
 
     private int stageValue;
 
@@ -31,19 +31,18 @@ public class StageManager : MonoBehaviour, ISceneManager
 
         isOption = false;
         stageValue = sceneValue;
-        if (Application.isEditor)
-        {
-            if ((cutManager = FindObjectOfType<CutManager>()) == null)
-                Debug.LogError("No CutManager");
-            if ((audioManager = FindObjectOfType<AudioManager>()) == null)
-                Debug.LogError("No AudioManager");
-            if ((playerManager = FindObjectOfType<PlayerManager>()) == null)
-                Debug.LogError("No PlayerManager");
-        }
+        if ((cutManager = FindObjectOfType<CutManager>()) == null)
+            Debug.LogError("No CutManager");
+        if ((audioManager = FindObjectOfType<AudioManager>()) == null)
+            Debug.LogError("No AudioManager");
+        if ((playerManager = FindObjectOfType<PlayerManager>()) == null)
+            Debug.LogError("No PlayerManager");
+        if ((uiManager = FindObjectOfType<StageUIManager>()) == null)
+            Debug.LogError("No uiManagerr");
         cutManager.CutInit();
         playerManager.PlayerManagerInit();
         audioManager.AudioInit();
-        canvasManager.CanvasInit(sceneChangeTime, sceneReStartTime);
+        uiManager.CanvasInit(sceneChangeTime, sceneReStartTime);
     }
     // Start is called before the first frame update
     void Start()
@@ -70,13 +69,13 @@ public class StageManager : MonoBehaviour, ISceneManager
         {
             if (isOption)
             {
-                canvasManager.ESCMenuActive(false);
+                uiManager.ESCMenuActive(false);
                 isOption = false;
 
             }
             else
             {
-                canvasManager.ESCMenuActive(true);
+                uiManager.ESCMenuActive(true);
                 isOption = true;
             }
         }
@@ -87,7 +86,7 @@ public class StageManager : MonoBehaviour, ISceneManager
 
     }
 
-    void StageRestart() {
+    public void StageRestart() {
         StartCoroutine(StageRestartTime());
     }
 
@@ -108,7 +107,7 @@ public class StageManager : MonoBehaviour, ISceneManager
     public void SceneChange(StageType stageType)
     {
         audioManager.FadingAudio(false);
-        canvasManager.StageClaer();
+        uiManager.StageClaer();
         StartCoroutine(StageChangeTime(stageType));
     }
 

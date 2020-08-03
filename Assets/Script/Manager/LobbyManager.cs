@@ -21,8 +21,13 @@ public class LobbyManager : MonoBehaviour, ISceneManager
         {
             Destroy(gameObject);
         }
-
     }
+
+    public void StageStart()
+    {
+        GameManager.GetInstance().SceneLoad(StageType.Stage, 0);
+    }
+
 
     // Update is called once per frame
     void Update()

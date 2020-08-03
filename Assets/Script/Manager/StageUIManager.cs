@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class CanvasManager : MonoBehaviour
+public sealed class StageUIManager : MonoBehaviour
 {
     [SerializeField] private GameObject exitGameUI;
     [SerializeField] private GameObject exitStageUI;
-    [SerializeField] private GameObject lobbyUI;
     [SerializeField] private Image fadingImage;
     [SerializeField] private float sceneChangeTime;
     [SerializeField] private float sceneRestartTime;

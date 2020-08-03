@@ -131,7 +131,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
 
     public void MoveToNextCut()
     {
-        GameManager.GetInstance().NextCut();
+        //GameManager.GetInstance().NextCut();
     }
     public void StopPlayer()
     {
@@ -219,7 +219,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
     {
         StopPlayer();
         playerState = PlayerState.DIe;
-        GameManager.GetInstance().StageRestart();
+        //GameManager.GetInstance().StageRestart();
     }
 
     public void StageClear()
