@@ -21,9 +21,11 @@ public sealed class GameManager : MonoBehaviour
     [SerializeField] private string[] sceneList;
     [SerializeField] private string[] stageSceneList;
     [SerializeField] private int sceneValue;
+    [SerializeField] private AudioManager audioManager;
     private ISceneManager sceneManager;
 
     static public GameManager GetInstance() => instance;
+    public AudioManager GetAudioManager => audioManager;
     public void ExitGame() => Application.Quit();
 
     private void Awake()
@@ -76,7 +78,6 @@ public sealed class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
 
     ////For Error Collect
     //public CutManager GetCutManager => StageManager.GetInstance().GetCutManager;

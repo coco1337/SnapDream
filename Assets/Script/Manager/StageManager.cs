@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviour, ISceneManager
         stageValue = sceneValue;
         if ((cutManager = FindObjectOfType<CutManager>()) == null)
             Debug.LogError("No CutManager");
-        if ((audioManager = FindObjectOfType<AudioManager>()) == null)
+        if ((audioManager = GameManager.GetInstance().GetAudioManager) == null)
             Debug.LogError("No AudioManager");
         if ((playerManager = FindObjectOfType<PlayerManager>()) == null)
             Debug.LogError("No PlayerManager");
