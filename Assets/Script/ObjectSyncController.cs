@@ -149,7 +149,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
 					instantiated.transform.localPosition =
 						new Vector2(previousCam.transform.localPosition.x - cutManager.GetCameraBoundaryWidth,
-							previousCam.transform.localPosition.y + instantiatePosY);
+							previousCam.transform.localPosition.y - instantiatePosY);
 				}
 				else if (objList[i].WhichCutNum > currentCutNum)
 				{
