@@ -221,20 +221,14 @@ public abstract class CInteractableObject : MonoBehaviour
 				// 자기 자신은 넘어가고
 				if (i.transform == this.gameObject.transform)
 					continue;
-
-				// 래더도 무시
-				if (i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit"))
+				else if (i.collider.CompareTag("Ladder") || i.collider.CompareTag("Ladder Exit"))	// 래더도 무시
 					continue;
-
-				// 벽 박으면 true반환
-				if (i.transform.CompareTag("Ground"))
+				else if (i.transform.CompareTag("Ground"))	// 벽 박으면 true반환
 					return true;
-
-				// 카메라 경계 콜라이더
-				if (i.collider.CompareTag("BoundaryCollider"))
+				else if (i.collider.CompareTag("BoundaryCollider"))	// 카메라 경계 콜라이더
 				{
 					// 일단 좌우부터 구현
-					GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
 					return true;
 				}
 			}
@@ -252,9 +246,9 @@ public abstract class CInteractableObject : MonoBehaviour
 		{
 			if (hit.collider.CompareTag("BoundaryCollider"))
 			{
-				if (!(GameManager.GetInstance().GetCurrentCutNum() < GameManager.GetInstance().GetCutManager.MaxCutCount / 2))
+				if (!(StageManager.GetInstance().GetCurrentCutNum() < StageManager.GetInstance().GetCutManager.MaxCutCount / 2))
 				{
-					GameManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
 					needSync = true;
 					return true;
 				}

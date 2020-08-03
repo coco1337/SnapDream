@@ -14,7 +14,6 @@ public class BoundaryCollider : MonoBehaviour
     public InteractableObject interactableObj;
     
     private ObjectSyncController objectSyncController;
-    private GameManager gameManager;
 
     public void Init()
     {
@@ -27,7 +26,6 @@ public class BoundaryCollider : MonoBehaviour
         middlePosition = this.transform.parent.position;
         // 추후 수정
         objectSyncController = GameObject.Find("CutManager").GetComponent<ObjectSyncController>();
-        gameManager = GameManager.GetInstance();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,7 +33,7 @@ public class BoundaryCollider : MonoBehaviour
         if (collision.gameObject.CompareTag("Drag"))
         {
             interactableObj = collision.gameObject.GetComponent<InteractableObject>();
-            if (gameManager.GetCurrentCutNum() == interactableObj.WhichCutNum)
+            if (StageManager.GetInstance().GetCurrentCutNum() == interactableObj.WhichCutNum)
             {
                 // objectSyncController.HitCollider(interactableObj, true, this.transform.localPosition);
             }

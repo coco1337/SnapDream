@@ -29,7 +29,7 @@ public sealed class CutManager : MonoBehaviour
     private float cameraBoundaryHeight;
 
     public int GetCurrentCutNum() => currentCut;
-    public int MaxCutCount => cutField.childCount;
+    public int MaxCutCount => cutField.childCount;    //TODO : 컷 상/하 구분에 사용되는데 바뀌면 다른 대안 찾기
     public List<Player> GetPlayerList => playerList;
     public ObjectSyncController GetObjectSyncController => syncController;
     public Camera GetCamera(int cut) => cutCameras[cut];

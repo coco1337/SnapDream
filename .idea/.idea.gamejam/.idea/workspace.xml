@@ -34,6 +34,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E98ED036-8295-432E-8C11-E52D6243EE11/f4/65bea32f/Transform.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Switch/Switch_Active.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Switch/Switch_Move.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/Manager/StageManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/ObjectSoundController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Thorn.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/CInteractableObject.cs" root0="FORCE_HIGHLIGHTING" />
@@ -62,14 +63,15 @@
         <option value="$PROJECT_DIR$/Assets/Script/InteractableObjectClass.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ISwitchAction.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ObjectId.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/CutManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/CInteractableObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/Manager/StageManager.cs" />
       </list>
     </option>
   </component>
@@ -95,10 +97,10 @@
       <option name="pid" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="22176">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="22176" />
+      <option name="pid" />
       <method v="2" />
     </configuration>
   </component>
@@ -132,6 +134,8 @@
       <workItem from="1595117224228" duration="17305000" />
       <workItem from="1595951905204" duration="55000" />
       <workItem from="1596093235084" duration="1959000" />
+      <workItem from="1596258241557" duration="3301000" />
+      <workItem from="1596449199609" duration="1444000" />
     </task>
     <servers />
   </component>
@@ -268,24 +272,24 @@
     <state x="1982" y="-8" width="954" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594447688317" />
     <state x="776" y="-9" width="944" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1595079919156" />
     <state x="-7" y="0" width="1934" height="1047" key="dock-window-1/0.0.3840.1080@0.0.3840.1080" timestamp="1592809677586" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1594896700632">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1596450049407">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1080.0.1080.1880/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590557125622" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1594896700632" />
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1596450049407" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Script/InteractableObject.cs</url>
-          <line>118</line>
+          <line>110</line>
           <properties documentPath="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" initialLine="118">
             <startOffsets>
-              <option value="2581" />
+              <option value="2358" />
             </startOffsets>
             <endOffsets>
-              <option value="2623" />
+              <option value="2400" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="3" />
