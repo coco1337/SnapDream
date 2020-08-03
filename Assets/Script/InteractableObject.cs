@@ -92,6 +92,22 @@ public sealed class InteractableObject : CInteractableObject
 		}
 
 		base.TranslateWithGravity();
+		PlaySfx();
+	}
+
+	private void PlaySfx()
+	{
+		if (StageManager.GetInstance().GetCurrentCutNum() != whichCutNum)
+			return;
+		
+		if (movingDirection.x != 0 && movingDirection.y == 0)
+		{
+			StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.DRAG);
+		}
+		else
+		{
+			StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.END_DRAG);
+		}
 	}
 
 	public bool Drag(float axis)
@@ -103,7 +119,7 @@ public sealed class InteractableObject : CInteractableObject
 
 		if (axis == 0)
 		{
-			movingDirection = new Vector2(0, movingDirection.y);
+			movingDirection.x = 0;
 		}
 		else
 		{
@@ -111,30 +127,16 @@ public sealed class InteractableObject : CInteractableObject
 			if (base.IsHitLeft() || base.IsHitRight())
 			{
 				hitSideWall = true;
-				movingDirection = new Vector2(0, movingDirection.y);
-
+				movingDirection.x = 0;
 				return false;
 			}
 			else
 			{
 				hitSideWall = false;
-				movingDirection = new Vector2(axis, movingDirection.y);
+				movingDirection.x = axis;
 			}
 		}
-
-		if (whichCutNum == StageManager.GetInstance().GetCurrentCutNum())
-		{
-			if (axis != 0)
-				StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.DRAG);
-			else
-				StageManager.GetInstance().GetAudioManager.PlaySfx(AudioManager.ESfxType.END_DRAG);
-
-			if (this.needSync)
-			{
-				// objectSyncController.SyncObject(this.childObjectPair, rb.velocity);
-			}
-		}
-
+		
 		return true;
 	}
 
