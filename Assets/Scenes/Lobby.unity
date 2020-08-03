@@ -687,16 +687,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2831608084815675014, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2831608084851585515, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3617803703561763768, guid: e87f4630849625f4f87b2444ee298bef,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -756,51 +746,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: sceneList.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: stageSceneList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: LevelName.Array.data[2]
-      value: Stage1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: LevelName.Array.data[1]
-      value: Cartoon
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: sceneList.Array.data[0]
-      value: Lobby
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: sceneList.Array.data[1]
-      value: Chapter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: sceneList.Array.data[2]
-      value: Stage 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: sceneList.Array.data[3]
-      value: End
-      objectReference: {fileID: 0}
-    - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
-        type: 3}
-      propertyPath: stageSceneList.Array.data[0]
-      value: TestStageMSH
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4630849625f4f87b2444ee298bef, type: 3}
@@ -1264,8 +1209,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 473370101}
-        m_MethodName: 
+      - m_Target: {fileID: 473370103}
+        m_MethodName: StageStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

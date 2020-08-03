@@ -48,6 +48,7 @@ public sealed class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         sceneManager.SceneInit(sceneValue);
+        Debug.Log(SceneManager.GetActiveScene().name + " Start");
         //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 

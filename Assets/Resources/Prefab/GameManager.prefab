@@ -575,7 +575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92e6720ecbd9a974e93afb71940332ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneList: []
-  stageSceneList: []
+  sceneList:
+  - Lobby
+  - Chapter
+  - TestStageMSH
+  - End
+  stageSceneList:
+  - TestStageMSH
   sceneValue: 0
   audioManager: {fileID: 1926233703}

@@ -800,8 +800,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 3.8987813, y: 1.8539249}
-  - {x: 3.8990586, y: 3.1745303}
+  - {x: 3.8816278, y: 3.1709983}
+  - {x: 3.8789306, y: 1.8716186}
 --- !u!1 &5730121345273996991
 GameObject:
   m_ObjectHideFlags: 0
