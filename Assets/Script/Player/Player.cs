@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, Damageabel
                 animator.SetFloat("dragSpeed", Mathf.Abs(axis));
                 animator.SetFloat("moveSpeed", 0);
                 rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
-                playerInterectController.MoveInteractObject(dragSpeed * axis);
+                playerInterectController.MoveInteractObject(dragSpeed * axis * Time.deltaTime);
             }
             else
             {

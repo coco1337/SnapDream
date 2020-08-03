@@ -94,7 +94,7 @@ public sealed class InteractableObject : CInteractableObject
 		base.TranslateWithGravity();
 	}
 
-	public bool Drag(float axis, float speed)
+	public bool Drag(float axis)
 	{
 		if (!isGround)
 		{
@@ -118,7 +118,7 @@ public sealed class InteractableObject : CInteractableObject
 			else
 			{
 				hitSideWall = false;
-				movingDirection = new Vector2(speed * axis / toyBoxWeight, movingDirection.y);
+				movingDirection = new Vector2(axis, movingDirection.y);
 			}
 		}
 

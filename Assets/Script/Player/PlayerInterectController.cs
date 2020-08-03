@@ -68,7 +68,7 @@ public class PlayerInterectController : MonoBehaviour
             player.RealeaseDrag();
             if (dragObject != null)
             {
-                dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
+                dragObject.GetComponent<InteractableObject>().Drag(0);
                 dragObject = null;
             }
             return false;
@@ -94,13 +94,13 @@ public class PlayerInterectController : MonoBehaviour
             if (axis > 0 && dragObject.transform.position.x > player.transform.position.x
                 || axis < 0 && dragObject.transform.position.x < player.transform.position.x)
             {
-                if(dragObject.GetComponent<InteractableObject>().Drag(axis, player.dragSpeed))
+                if(dragObject.GetComponent<InteractableObject>().Drag(axis))
                     player.GetDrag();
             }
             else
             {
                 Debug.Log("Move exit");
-                dragObject.GetComponent<InteractableObject>().Drag(0, player.dragSpeed);
+                dragObject.GetComponent<InteractableObject>().Drag(0);
                 player.RealeaseDrag();
             }
         }
