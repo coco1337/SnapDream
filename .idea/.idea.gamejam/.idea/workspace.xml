@@ -16,7 +16,14 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:origin/SeperateManagers" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35751311-2614-434b-a748-af16a1f86834" name="Default Changelist" comment="" />
@@ -69,9 +76,9 @@
         <option value="$PROJECT_DIR$/Assets/Script/BoundaryCollider.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/CInteractableObject.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/ObjectSyncController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Script/Manager/StageManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" />
-        <option value="$PROJECT_DIR$/Assets/Script/Manager/StageManager.cs" />
       </list>
     </option>
   </component>
@@ -149,7 +156,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/SeperateManagers" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -272,29 +291,10 @@
     <state x="1982" y="-8" width="954" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1594447688317" />
     <state x="776" y="-9" width="944" height="1027" maximized="true" key="dock-window-1/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1595079919156" />
     <state x="-7" y="0" width="1934" height="1047" key="dock-window-1/0.0.3840.1080@0.0.3840.1080" timestamp="1592809677586" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1596450049407">
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1596451743660">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1080.0.1080.1880/1920.0.1920.1040@1920.0.1920.1040" timestamp="1590557125622" />
-    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1596450049407" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Script/InteractableObject.cs</url>
-          <line>110</line>
-          <properties documentPath="$PROJECT_DIR$/Assets/Script/InteractableObject.cs" initialLine="118">
-            <startOffsets>
-              <option value="2358" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2400" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="2543" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1596451743660" />
   </component>
 </project>

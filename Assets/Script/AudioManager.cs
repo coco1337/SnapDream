@@ -91,23 +91,20 @@ public sealed class AudioManager : MonoBehaviour
 			case ESfxType.STAGE_CLEAR:
 				stageClearAudioSource.Play();
 				StartCoroutine(FadeAudio(false));
-
 				break;
 
 			case ESfxType.CUT_CHANGE:
 				cutChangeAudioSource.Play();
-
 				break;
 
 			case ESfxType.DRAG:
-				dragAudioSource.Play();
 				dragAudioSource.loop = true;
-
+				if (!dragAudioSource.isPlaying)
+					dragAudioSource.Play();
 				break;
 
 			case ESfxType.END_DRAG:
 				dragAudioSource.Stop();
-
 				break;
 
 			default:
