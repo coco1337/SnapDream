@@ -78,8 +78,8 @@ public sealed class GameManager : MonoBehaviour
     }
 
 
-    //For Error Collect
-    public CutManager GetCutManager => StageManager.GetInstance().GetCutManager;
-    public AudioManager GetAudioManager => StageManager.GetInstance().GetAudioManager;
-    public int GetCurrentCutNum() { return 0; }
+    ////For Error Collect
+    //public CutManager GetCutManager => StageManager.GetInstance().GetCutManager;
+    //public AudioManager GetAudioManager => StageManager.GetInstance().GetAudioManager;
+    //public int GetCurrentCutNum() { return 0; }
 }
