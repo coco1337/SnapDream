@@ -12,6 +12,7 @@ TagManager:
   - Ladder Exit
   - Drag
   - Throw
+  - SceneManager
   layers:
   - Default
   - TransparentFX

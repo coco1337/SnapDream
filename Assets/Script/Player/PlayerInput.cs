@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InputController : MonoBehaviour
+public class PlayerInput : MonoBehaviour
 {
     //외부 참조 변수
     [SerializeField] private Player player = null;
@@ -26,7 +26,7 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.GetInstance().isOptioning) {
+        if(!StageManager.GetInstance().isOptioning) {
             if (player != null && player.IsMovable())
             {
                 if (!player.IsLadder())
@@ -36,7 +36,7 @@ public class InputController : MonoBehaviour
                     //컷 이동
                     if (Input.GetKeyDown(KeyCode.Z) && player.IsCutChangeable())
                     {
-                        GameManager.GetInstance().NextCut();
+                        player.PlayerZAction();
                     }
 
                     // 상호작용

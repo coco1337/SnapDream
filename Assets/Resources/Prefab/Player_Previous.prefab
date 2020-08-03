@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3734823234040795835}
-  - component: {fileID: 3734823234040795833}
   - component: {fileID: 8586401418491371803}
   - component: {fileID: 3734823234040795834}
   - component: {fileID: 1232941799937994549}
   - component: {fileID: 3734823234040795832}
   - component: {fileID: 1982036965}
   - component: {fileID: 2207995116283627464}
+  - component: {fileID: 8408070007994387854}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player_Previous
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,28 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3734823234040795833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3734823234040795831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50b80a65fe995ce4e832ea572d4db130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 3734823234040795832}
-  speed: 5.2
-  dragSpeed: 4
-  throwPower: 14
-  jumpPower: 500
-  playerCutNum: 5
-  isGround: 0
-  PlayerHealth: 1
-  throwAnimationTime: 0.6
-  playerState: 0
 --- !u!114 &8586401418491371803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,3 +195,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.98160565, y: 0.9142153}
   m_EdgeRadius: 0
+--- !u!114 &8408070007994387854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3734823234040795831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d86a570a81ec5d4dbbafabf76cc3df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 3734823234040795832}
+  speed: 5.2
+  dragSpeed: 4
+  jumpPower: 5
+  throwPower: 14
+  playerCutNum: 0
+  isGround: 0
+  PlayerHealth: 1
+  throwAnimationTime: 0.6
+  playerState: 0

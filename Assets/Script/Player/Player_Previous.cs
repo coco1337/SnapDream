@@ -13,68 +13,99 @@ public class Player_Previous : MonoBehaviour, Damageabel
     [SerializeField] public float jumpPower = 5;
     [SerializeField] public float throwPower = 2;
     [SerializeField] int playerCutNum;
-    [SerializeField] int currentCutNum = 0;
     public bool isGround;
     Animator animator;
     [SerializeField] float PlayerHealth = 1f;
     [SerializeField] float throwAnimationTime = 1f;
+    private PlayerInterectController playerInterectController;
 
     public enum PlayerState
     {
         Idle, Move, Jump, Interaction_Ladder, Interaction_Throw, Interaction_Drag, DIe, Stop, Damaged, Clear
     }
     [SerializeField] PlayerState playerState;
-
+    public void SetPlayerCutNumber(int i) => playerCutNum = i;
+    public int GetPlayerCutNumber => playerCutNum;
 
     public bool IsPlyerFlip => spriteRenderer.flipX;
+
+    // Player 상태 확인 관련 함수들
+    //이동 가능한지를 확인하는 함수
+    public bool IsMovable() => (playerState != PlayerState.Stop && playerState != PlayerState.DIe && playerState != PlayerState.Interaction_Throw && playerState != PlayerState.Clear);
+
+    //Cut Change 가능 여부 확인하는 함수
+    public bool IsCutChangeable() => (playerState == PlayerState.Idle || playerState == PlayerState.Move) && IsJumpable();
+
+    //Object를 던질 수 있는지 확인하는 함수
+    public bool IsThrowable() => (playerInterectController.CanThrow() && (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Interaction_Drag));
+
+    //현재 사다리를 타는 중인지 확인하는 함수
+    public bool IsLadder() => (playerState == PlayerState.Interaction_Ladder);
+
+    //현재 오브젝트를 미는 중인지 확인하는 함수
+    public bool IsDraging() => (playerState == PlayerState.Interaction_Drag);
+    public bool IsJumpable()
+    {
+        if (playerState == PlayerState.Idle || playerState == PlayerState.Move)
+            return true;
+        else
+            return false;
+    }
 
 
     private void Start()
     {
-        currentCutNum = 0;
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+        playerInterectController = transform.GetComponent<PlayerInterectController>();
     }
 
     void Update()
     {
         isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
     }
-
-    void OnDrawGizmosSelected()
-    {
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawSphere(transform.position + new Vector3(0, -1.28f * transform.localScale.y, 0), 0.07f);
-    }
-
-    public void SetPlayerCutNumber(int i) => playerCutNum = i;   
+     
 
     public void PlayerMove(float axis)
     {
-        if (playerState == PlayerState.Interaction_Drag)
+        if (axis != 0) spriteRenderer.flipX = (axis < 0);
+
+        if (IsLadder())
         {
-            if (axis != 0)
-            {
-                spriteRenderer.flipX = (axis == -1);
-            }
-            animator.SetFloat("dragSpeed", Mathf.Abs(axis));
-            rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
+            animator.SetFloat("ladderSpeed", Mathf.Abs(axis) + 0.2f);
+            animator.speed = Mathf.Abs(axis);
+            rigidbody.velocity = new Vector2(0, speed * axis);
         }
+
         else
         {
-            if (isGround)
-                playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
-            else
-                playerState = PlayerState.Jump;
-            if (axis != 0)
+            if (playerInterectController == null)
             {
-                spriteRenderer.flipX = (axis == -1);
+                Debug.Log("Player Script : Interect Controller is Null");
+                return;
             }
-            animator.SetBool("isGround", isGround);
-            animator.SetFloat("moveSpeed", Mathf.Abs(axis));
-            rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
-            animator.SetFloat("palyerVerticalSpeed", rigidbody.velocity.y);
+            if (playerInterectController.CanDrag())
+            {
+                playerState = PlayerState.Interaction_Drag;
+                animator.SetBool("isGround", isGround);
+                animator.SetFloat("dragSpeed", Mathf.Abs(axis));
+                animator.SetFloat("moveSpeed", 0);
+                rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
+                playerInterectController.MoveInteractObject(axis);
+            }
+            else
+            {
+                if (isGround)
+                    playerState = (axis == 0f) ? PlayerState.Idle : PlayerState.Move;
+                else
+                    playerState = PlayerState.Jump;
+                animator.SetBool("isGround", isGround);
+                animator.SetFloat("moveSpeed", Mathf.Abs(axis));
+                animator.SetFloat("dragSpeed", 0);
+                rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+                animator.SetFloat("palyerVerticalSpeed", rigidbody.velocity.y);
+            }
         }
     }
 
@@ -98,24 +129,11 @@ public class Player_Previous : MonoBehaviour, Damageabel
         rigidbody.AddForce(Vector2.up * jumpPower);
     }
 
-    public void moveNextCut()
+    public void MoveToNextCut()
     {
-        currentCutNum += 1;
-        //중복호출 방지
-        if (playerCutNum == 5)
-        {
-            GameManager.GetInstance().NextCut();
-        }
+        //GameManager.GetInstance().NextCut();
     }
-
-    public bool isMovable()
-    {
-        if (playerState == PlayerState.Stop || playerState == PlayerState.DIe || playerState == PlayerState.Interaction_Throw || playerState == PlayerState.Clear)
-            return false;
-        return currentCutNum <= playerCutNum;
-    }
-
-    public void playerStop()
+    public void StopPlayer()
     {
         playerState = PlayerState.Stop;
         animator.enabled = false;
@@ -126,40 +144,22 @@ public class Player_Previous : MonoBehaviour, Damageabel
         rigidbody.velocity = Vector2.zero;
         rigidbody.bodyType = RigidbodyType2D.Static;
         gameObject.GetComponent<Player>().enabled = false;
-        gameObject.GetComponent<InputController>().enabled = false;
+        gameObject.GetComponent<PlayerInterectController>().enabled = false;
     }
 
-    public PlayerState GetPlayerState()
-    {
-        return playerState;    
-    }
 
-    public bool IsJumpable()
-    {
-        if (playerState == PlayerState.Idle || playerState == PlayerState.Move)
-            return true;
-        else
-            return false;
-    }
 
-    public bool IsThrowable()
+    public void GetLadder()
     {
-        if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Interaction_Drag)
-            return true;
-        else
-            return false;
-    }
-
-    public void getLadder()
-    {
-        rigidbody.bodyType = RigidbodyType2D.Kinematic;
         if (playerState == PlayerState.Idle || playerState == PlayerState.Move || playerState == PlayerState.Jump)
         {
+            rigidbody.bodyType = RigidbodyType2D.Kinematic;
             playerState = PlayerState.Interaction_Ladder;
+            transform.position = new Vector3(playerInterectController.ladderTarget.transform.position.x, transform.position.y, transform.position.z);
         }
     }
 
-    public void realeaseLadder()
+    public void RealeaseLadder()
     {
         rigidbody.bodyType = RigidbodyType2D.Dynamic;
         animator.speed = 1;
@@ -170,8 +170,8 @@ public class Player_Previous : MonoBehaviour, Damageabel
         }
     }
 
-
-    public void getDrag()
+    //오브젝트 미는 것 관련 함수
+    public void GetDrag()
     {
         if (playerState == PlayerState.Move)
         {
@@ -179,7 +179,7 @@ public class Player_Previous : MonoBehaviour, Damageabel
         }
     }
 
-    public void realeaseDrag()
+    public void RealeaseDrag()
     {
         animator.SetFloat("dragSpeed", 0);
         if (playerState == PlayerState.Interaction_Drag)
@@ -194,8 +194,6 @@ public class Player_Previous : MonoBehaviour, Damageabel
         {
             PlayerMove(0);
             animator.SetTrigger("throwObject");
-            animator.SetFloat("moveSpeed", 0);
-            animator.SetFloat("dragSpeed", 0);
             playerState = PlayerState.Interaction_Throw;
             StartCoroutine(EndThrowObject());
         }
@@ -210,17 +208,6 @@ public class Player_Previous : MonoBehaviour, Damageabel
         }
     }
 
-    public int GetPlayerCutNumber()
-    {
-        return playerCutNum;
-    }
-
-    public int GetCurrentCutNumber()
-    {
-        return currentCutNum;
-    }
-
-
     public void Hit(float damage)
     {
         PlayerHealth -= damage;
@@ -230,28 +217,22 @@ public class Player_Previous : MonoBehaviour, Damageabel
 
     public void DieObject()
     {
-        playerStop();
+        StopPlayer();
         playerState = PlayerState.DIe;
-        //중복호출 방지
-        //5번 캐릭터는 최후에 죽으니
-        if (playerCutNum == 5)
-            GameManager.GetInstance().StageRestart();
+        //GameManager.GetInstance().StageRestart();
     }
 
     public void StageClear()
     {
         playerState = PlayerState.Clear;
         animator.SetBool("isGround", true);
-        if(currentCutNum <= playerCutNum)
-        {
-            StartCoroutine("StageClearAction");
-        }
+        StartCoroutine(StageClearAction());
     }
 
-    IEnumerable StageClearAction()
+    IEnumerator StageClearAction()
     {
         float startTime = Time.time + 5;
-        while(startTime > Time.time)
+        while (startTime > Time.time)
         {
             ClearMove(1);
             yield return null;

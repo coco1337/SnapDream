@@ -25,7 +25,7 @@ public class TiletleMove : MonoBehaviour
     {
         if(Time.time < directionTime)
         {
-            Vector3 movePosition = new Vector3(960, transform.position.y + ((moveDirection) ? maxMovePosition : -maxMovePosition) * Time.deltaTime/moveTime, 0);
+            Vector3 movePosition = new Vector3(transform.position.x, transform.position.y + ((moveDirection) ? maxMovePosition : -maxMovePosition) * Time.deltaTime/moveTime, 0);
             rectTransform.position = movePosition;
         }
         else
