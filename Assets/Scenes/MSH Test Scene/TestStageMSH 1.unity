@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutField: {fileID: 485221138}
-  backGround: {fileID: 9040248466525310957, guid: 9c5c962bdde4da04e8a893b2b7d26fab,
+  backGround: {fileID: 5185082705814897239, guid: 5e84156149de70f4c83dbafdc7d6e6c6,
     type: 3}
   player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
   cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,

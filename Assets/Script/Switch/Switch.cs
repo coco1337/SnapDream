@@ -11,7 +11,7 @@ public class Switch : MonoBehaviour
     private void Start()
     {
         animator = this.GetComponent<Animator>();
-        if (switchTarget == null)
+        if (switchTargetObject == null)
         {
             transform.GetComponent<Switch>().enabled = false;
             Debug.Log("Switch Target is Null");

@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     Vector2 minBounduryPosition;
     Vector2 maxBounduryPosition;
     [SerializeField] float xMargin = 8;
-    [SerializeField] float yMargin = 5;
+    [SerializeField] float yMargin = 2.5f;
 
     public void Init()
     {
@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
     {
         targetPosition = transform.position;
         targetPosition.x = Mathf.Clamp(player.position.x, minBounduryPosition.x, maxBounduryPosition.x);
-        targetPosition.y = Mathf.Clamp(player.position.y, minBounduryPosition.y, maxBounduryPosition.y);
+        targetPosition.y = Mathf.Clamp(player.position.y + yMargin, minBounduryPosition.y, maxBounduryPosition.y);
         transform.position = targetPosition;
     }
 }
