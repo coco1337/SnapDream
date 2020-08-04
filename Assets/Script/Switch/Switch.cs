@@ -11,9 +11,16 @@ public class Switch : MonoBehaviour
     private void Start()
     {
         animator = this.GetComponent<Animator>();
-        switchTarget = switchTargetObject.GetComponent<Switchable>();
         if (switchTarget == null)
+        {
+            transform.GetComponent<Switch>().enabled = false;
             Debug.Log("Switch Target is Null");
+
+        }
+        else
+        {
+            switchTarget = switchTargetObject.GetComponent<Switchable>();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
