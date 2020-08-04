@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutField: {fileID: 485221138}
-  backGround: {fileID: 9040248466525310957, guid: 9c5c962bdde4da04e8a893b2b7d26fab,
+  backGround: {fileID: 3210185523473565243, guid: 37461e0eba3b2a84a99aa29ec55947ff,
     type: 3}
   player: {fileID: 3734823234040795831, guid: a12a50e8164adc64fbfb3f2cd3659d9b, type: 3}
   cutCamera: {fileID: 6315714426696139395, guid: 988c9739b8f98e0448c5bd4519c4677c,
@@ -739,7 +739,7 @@ MonoBehaviour:
   canvas: {fileID: 468564375}
   camImage: []
   currentCut: 0
-  spawnPosition: {x: 0, y: 0}
+  spawnPosition: {x: -22.5, y: -3}
   cameraBoundaryCollider: {fileID: 5327602762672345995, guid: 033a2117480563f4695e6df54ccb558b,
     type: 3}
 --- !u!4 &2033959343

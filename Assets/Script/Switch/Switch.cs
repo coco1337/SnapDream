@@ -20,16 +20,31 @@ public class Switch : MonoBehaviour
         else
         {
             switchTarget = switchTargetObject.GetComponent<Switchable>();
+            Debug.Log("Switchable : " + switchTarget.ToString());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Switch Colliding : " + collision.ToString());
+        if (collision.transform.CompareTag("Throw"))
+        {
+            switchTarget.SwitchOn();
+            animator.SetBool("Activation", true);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Throw"))
+        {
+            switchTarget.SwitchOff();
+            animator.SetBool("Activation", false);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Throw"))
-        {
-            switchTarget.SwitchOn();
-            animator.SetBool("Activation", true);
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)

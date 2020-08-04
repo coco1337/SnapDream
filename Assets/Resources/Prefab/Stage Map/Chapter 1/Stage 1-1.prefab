@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 801717623}
   m_Layer: 0
   m_Name: PlayerSpawnPosition
-  m_TagString: Untagged
+  m_TagString: SpawnPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1853,11 +1853,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ClearPosition
-      objectReference: {fileID: 0}
-    - target: {fileID: 2830822148707823417, guid: 3b697d9ba00d1264483713ef94bcf632,
-        type: 3}
-      propertyPath: m_Layer
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5050364184292474700, guid: 3b697d9ba00d1264483713ef94bcf632,
         type: 3}

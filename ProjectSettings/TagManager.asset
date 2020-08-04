@@ -13,6 +13,7 @@ TagManager:
   - Drag
   - Throw
   - SceneManager
+  - SpawnPosition
   layers:
   - Default
   - TransparentFX
