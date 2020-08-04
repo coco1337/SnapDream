@@ -84,11 +84,6 @@ public sealed class InteractableObject : CInteractableObject
 				// midair
 				isGround = false;
 			}
-
-			if (this.transform.localPosition.y < -7)
-			{
-				Destroy(this.gameObject);
-			}
 		}
 
 		base.TranslateWithGravity();
