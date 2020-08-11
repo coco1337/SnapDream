@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, Damageabel
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.localScale.y), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
+        isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -1.28f * transform.lossyScale.y), 0.12f, 1 << LayerMask.NameToLayer("Ground"));
     }
 
     //Player 이동 처리 함수
@@ -85,6 +85,7 @@ public class Player : MonoBehaviour, Damageabel
                 animator.SetFloat("dragSpeed", Mathf.Abs(axis));
                 animator.SetFloat("moveSpeed", 0);
                 rigidbody.velocity = new Vector2(dragSpeed * axis, rigidbody.velocity.y);
+                //rigidbody.MovePosition((Vector2)transform.position + new Vector2(dragSpeed * axis * Time.deltaTime, 0));
                 playerInterectController.MoveInteractObject(dragSpeed * axis * Time.deltaTime);
             }
             else
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour, Damageabel
                 animator.SetFloat("moveSpeed", Mathf.Abs(axis));
                 animator.SetFloat("dragSpeed", 0);
                 rigidbody.velocity = new Vector2(speed * axis, rigidbody.velocity.y);
+                //rigidbody.MovePosition((Vector2)transform.position + new Vector2(speed * axis * Time.deltaTime, 0));
                 animator.SetFloat("palyerVerticalSpeed", rigidbody.velocity.y);
             }
         }

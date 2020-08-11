@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8053859382454307588}
   - component: {fileID: -9043185776435693864}
   - component: {fileID: -6546349132627631326}
+  - component: {fileID: 291455322728263169}
   m_Layer: 8
   m_Name: Toy Box
   m_TagString: Throw
@@ -166,3 +167,24 @@ MonoBehaviour:
   toyBoxWeight: 110
   hitSideWall: 0
   throwWeight: 55
+--- !u!50 &291455322728263169
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8053859382454307584}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
