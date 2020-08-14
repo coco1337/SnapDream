@@ -6,8 +6,8 @@ using UnityEngine;
 
 public sealed class ObjectSyncController : MonoBehaviour
 {
-  [Header("실제 컷의 카메카 크기, 컷의 모양, 컷의 순서가 맞는지 확인")] [SerializeField]
-  private GameObject dummyCutsParent;
+  [Header("실제 컷의 카메카 크기, 컷의 모양, 컷의 순서가 맞는지 확인")] 
+  [SerializeField] private GameObject dummyCutsParent;
 
   [SerializeField] private GameObject[] eachCut;
   [SerializeField] private CutManager cutManager;
@@ -124,13 +124,14 @@ public sealed class ObjectSyncController : MonoBehaviour
     if (!interactedObject.IsSynced)
       return false;
 
-    if (Physics2D.Raycast(interactedObject.transform.position, Vector2.left, rayDistance,
-      1 << LayerMask.NameToLayer("Boundary")))
-    {
-      // TODO : 오브젝트 로컬 포지션 가져오기 - 해당 더미컷의 로컬 포지션으로 변환 -> 레이 쏘기
-      var originPos = interactedObject.transform.localPosition;
-      var dummyPos = originPos + dummyCuts[currentCutNum].transform.position;
-    }
+    var hit = Physics2D.Raycast(interactedObject.transform.position, Vector2.left, rayDistance,
+	    1 << LayerMask.NameToLayer("Dummy"));
+  
+    // TODO : 오브젝트 카메라 기준 포지션 가져오기 - 해당 더미컷의 로컬 포지션으로 변환 -> 레이 쏘기
+    var cutCam = StageManager.GetInstance().GetCutManager.GetCamera(currentCutNum);
+    var originPos = interactedObject.transform.localPosition;
+    var dummyPos = dummyCuts[currentCutNum].transform.position;
+    Debug.DrawRay(dummyCuts[currentCutNum].transform.position, Vector2.left, Color.blue, 10f);
     // // 오브젝트 생성될 좌표 파악하기
     // var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
     // var instantiatePosY = interactedObject.transform.localPosition.y - camPos.y;
