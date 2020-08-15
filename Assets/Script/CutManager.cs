@@ -47,18 +47,13 @@ public sealed class CutManager : MonoBehaviour
 //		syncController.SetCutManager(this);
 //	}
 
-	/// <summary>
-	/// edge colllider 버전
-	/// </summary>
-	/// <param name="cam"></param>
-	/// <returns></returns>
-	private Vector2[] CalculateCameraBoundary(Camera cam)
+	private Vector2[] CalculateCameraBoundary(Camera cam, out float w, out float h)
 	{
 		float a = cam.transform.position.z;
 		float fov = cam.fieldOfView * .5f;
 		fov = fov * Mathf.Deg2Rad;
-		float h = (Mathf.Tan(fov) * a);
-		float w = (h / cam.pixelHeight) * cam.pixelWidth;
+		h = (Mathf.Tan(fov) * a);
+		w = (h / cam.pixelHeight) * cam.pixelWidth;
 		cameraBoundaryWidth = w;
 		cameraBoundaryHeight = h;
 
@@ -70,19 +65,6 @@ public sealed class CutManager : MonoBehaviour
 		arr[4] = new Vector2(-w, -h);
 
 		return arr;
-	}
-
-	private Vector2 CalculateCameraBoundaryBoxCollider(Camera cam)
-	{
-		float a = cam.transform.position.z;
-		float fov = cam.fieldOfView * .5f;
-		fov = fov * Mathf.Deg2Rad;
-		float h = (Mathf.Tan(fov) * a);
-		float w = (h / cam.pixelHeight) * cam.pixelWidth;
-		cameraBoundaryWidth = w;
-		cameraBoundaryHeight = h;
-
-		return new Vector2(2 * w, 2 * h);
 	}
 
 	public void CutInit()
@@ -134,6 +116,7 @@ public sealed class CutManager : MonoBehaviour
 			tempCameraController.basePoint = tempBackGround.transform; // 삭제 예정
 			tempCameraController.player = tempPlayer.transform;
 			tempCameraController.bounduryValue = cameraBoundary; // 삭제 예정
+			tempCameraController.Init();
 			cutCameras.Add(tempCamera.GetComponent<Camera>());
 
 			// 부모 설정
@@ -152,15 +135,13 @@ public sealed class CutManager : MonoBehaviour
 				var col = Instantiate(cameraBoundaryCollider, tempCamera.transform);
 				col.transform.localPosition = new Vector3(tempCamera.transform.localPosition.x,
 					tempCamera.transform.localPosition.y, -tempCamera.transform.position.z);
-				col.points = CalculateCameraBoundary(tempCamera.GetComponent<Camera>());
+				col.points = CalculateCameraBoundary(tempCamera.GetComponent<Camera>(), out var w, out var h);
 			}
 			else
 			{
 				Debug.LogError(nameof(CutManager) + " Error, pls check camera boundary collider");
 				return;
 			}
-
-			// 더미 생성 및 더미 사이즈 조절
 
 			camImage[i].SetActive(false);
 
