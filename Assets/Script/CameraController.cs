@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
+        SetCameraBackground(basePoint);
+        targetPosition.z = transform.position.z;
 
     }
 
@@ -31,29 +33,19 @@ public class CameraController : MonoBehaviour
 
         minBounduryPosition.x = basePoint.position.x - (width / 2) + xMargin;
         minBounduryPosition.y = basePoint.position.y - (height / 2) + yMargin;
-        //- (height / 2) + ;
         maxBounduryPosition.x = basePoint.position.x + (width / 2) - xMargin;
         maxBounduryPosition.y = basePoint.position.y + (height / 2) - yMargin;
-        //+ (height / 2) - yMargin;
-
-        Debug.Log("width : " + width);
-        Debug.Log("Height : " + height);
-        Debug.Log("Y Min : " + minBounduryPosition.y + "\nY Max : " + maxBounduryPosition.y);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        SetCameraBackground(basePoint);
-        targetPosition.z = transform.position.z;
     }
 
     // Update is called once per frame
     void Update()
     {
-        targetPosition = transform.position;
-        targetPosition.x = Mathf.Clamp(player.position.x, minBounduryPosition.x, maxBounduryPosition.x);
-        targetPosition.y = Mathf.Clamp(player.position.y + yMargin, minBounduryPosition.y, maxBounduryPosition.y);
-        transform.position = targetPosition;
+        if (player != null)
+        {
+            targetPosition = transform.position;
+            targetPosition.x = Mathf.Clamp(player.position.x, minBounduryPosition.x, maxBounduryPosition.x);
+            targetPosition.y = Mathf.Clamp(player.position.y + yMargin, minBounduryPosition.y, maxBounduryPosition.y);
+            transform.position = targetPosition;
+        }
     }
 }

@@ -694,7 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eachCut: []
-  cutManager: {fileID: 0}
+  cutManager: {fileID: 2033959342}
   spawnYPos: 0
   cameraLength: 0
 --- !u!1001 &3923427798470186713
