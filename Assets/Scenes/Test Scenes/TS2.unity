@@ -580,6 +580,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1018717671058104960, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018717671157175613, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018717671415385362, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018717671551747883, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018717672229334134, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1018717672328142210, guid: 283406a3145038a4abdbba743813c598,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -639,6 +664,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cut
+      objectReference: {fileID: 0}
+    - target: {fileID: 1018717672654327170, guid: 283406a3145038a4abdbba743813c598,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 283406a3145038a4abdbba743813c598, type: 3}
