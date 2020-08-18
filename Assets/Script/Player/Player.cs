@@ -199,6 +199,7 @@ public class Player : MonoBehaviour, Damageabel
     //Player에게 데미지를 주는 Object를 만났을 경우 동작
     public void DieObject()
     {
+        Debug.Log("Debug1");
         StopPlayer();
         playerState = PlayerState.DIe;
         StageManager.GetInstance().StageRestart();

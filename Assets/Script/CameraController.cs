@@ -18,7 +18,6 @@ public class CameraController : MonoBehaviour
     {
         SetCameraBackground(basePoint);
         targetPosition.z = transform.position.z;
-
     }
 
     //Camera의 Boundury를 설정하는 함수

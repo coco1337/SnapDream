@@ -750,7 +750,7 @@ PrefabInstance:
     - target: {fileID: 3617803703561763775, guid: e87f4630849625f4f87b2444ee298bef,
         type: 3}
       propertyPath: stageSceneList.Array.data[0]
-      value: TestStageMSH 2
+      value: TS2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4630849625f4f87b2444ee298bef, type: 3}
