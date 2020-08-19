@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
         var fov = cam.fieldOfView * .5f;
         fov = fov * Mathf.Deg2Rad;
         var h = (Mathf.Tan(fov) * a) * (-1);
-        var w = (h / cam.pixelHeight) * cam.pixelWidth * (-1);
+        var w = (h / cam.pixelHeight) * cam.pixelWidth;
 
         Debug.Log("W : " + w + "\nH : " + h);
 
