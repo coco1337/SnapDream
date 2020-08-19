@@ -17,15 +17,20 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
+        transform.localPosition = Vector3.zero + new Vector3(0, 0, -9);
+        Camera cam = transform.GetComponent<Camera>();
+
+        //cam.fieldOfView = 2.0f * Mathf.Atan(20 * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
+
         SetCameraBackground(basePoint);
         targetPosition.z = transform.position.z;
+
     }
 
     //Camera의 Boundary를 설정하는 함수
     //입력 값으로 SpriteRenderer를 가진 Transform을 받는다.
     public void SetCameraBackground(Transform background)
     {
-        transform.localPosition = Vector3.zero + new Vector3(0, 0, -9);
         SpriteRenderer back = background.GetComponent<SpriteRenderer>();
         float width = (basePoint.GetComponent<SpriteRenderer>().sprite.rect.xMax - basePoint.GetComponent<SpriteRenderer>().sprite.rect.xMin)
             / basePoint.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
