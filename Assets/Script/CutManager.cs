@@ -20,6 +20,8 @@ public sealed class CutManager : MonoBehaviour
 	[SerializeField] private int currentCut = 0;
 	[SerializeField] private Vector2 spawnPosition;
 
+	[SerializeField] private GameObject dummyCutParent;
+
 	private List<Player> playerList = new List<Player>();
 	private List<Camera> cutCameras = new List<Camera>();
 
@@ -47,13 +49,13 @@ public sealed class CutManager : MonoBehaviour
 //		syncController.SetCutManager(this);
 //	}
 
-	private Vector2[] CalculateCameraBoundary(Camera cam, out float w, out float h)
+	private Vector2[] CalculateCameraBoundary(Camera cam)
 	{
-		float a = cam.transform.position.z;
-		float fov = cam.fieldOfView * .5f;
+		var a = cam.transform.position.z;
+		var fov = cam.fieldOfView * .5f;
 		fov = fov * Mathf.Deg2Rad;
-		h = (Mathf.Tan(fov) * a);
-		w = (h / cam.pixelHeight) * cam.pixelWidth;
+		var h = (Mathf.Tan(fov) * a);
+		var w = (h / cam.pixelHeight) * cam.pixelWidth;
 		cameraBoundaryWidth = w;
 		cameraBoundaryHeight = h;
 
@@ -74,6 +76,8 @@ public sealed class CutManager : MonoBehaviour
 		syncController.SetCutManager(this);
 		
 		currentCut = 0;
+		
+		var children = dummyCutParent.GetComponentsInChildren<Renderer>();
 
 		for (int i = 0; i < cutField.childCount; i++)
 		{
@@ -135,13 +139,15 @@ public sealed class CutManager : MonoBehaviour
 				var col = Instantiate(cameraBoundaryCollider, tempCamera.transform);
 				col.transform.localPosition = new Vector3(tempCamera.transform.localPosition.x,
 					tempCamera.transform.localPosition.y, -tempCamera.transform.position.z);
-				col.points = CalculateCameraBoundary(tempCamera.GetComponent<Camera>(), out var w, out var h);
+				col.points = CalculateCameraBoundary(tempCamera.GetComponent<Camera>());
 			}
 			else
 			{
 				Debug.LogError(nameof(CutManager) + " Error, pls check camera boundary collider");
 				return;
 			}
+
+			children[i].material.mainTexture = rawImage;
 
 			camImage[i].SetActive(false);
 
@@ -171,9 +177,9 @@ public sealed class CutManager : MonoBehaviour
 	/// </summary>
 	public void StageClear()
 	{
-		foreach (var player in playerList)
+		foreach (var p in playerList)
 		{
-			player.StageClear();
+			p.StageClear();
 		}
 	}
 }

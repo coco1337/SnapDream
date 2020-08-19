@@ -123,15 +123,33 @@ public sealed class ObjectSyncController : MonoBehaviour
 
     if (!interactedObject.IsSynced)
       return false;
-
-    var hit = Physics2D.Raycast(interactedObject.transform.position, Vector2.left, rayDistance,
-	    1 << LayerMask.NameToLayer("Dummy"));
-  
+	  
     // TODO : 오브젝트 카메라 기준 포지션 가져오기 - 해당 더미컷의 로컬 포지션으로 변환 -> 레이 쏘기
     var cutCam = StageManager.GetInstance().GetCutManager.GetCamera(currentCutNum);
-    var originPos = interactedObject.transform.localPosition;
-    var dummyPos = dummyCuts[currentCutNum].transform.position;
-    Debug.DrawRay(dummyCuts[currentCutNum].transform.position, Vector2.left, Color.blue, 10f);
+	  var hitCut = Physics2D.Raycast(interactedObject.transform.position, Vector2.left, rayDistance,
+		  1 << LayerMask.NameToLayer("Boundary"));
+	  var originPos = hitCut.point - (Vector2)cutCam.transform.position;
+	  Vector2 dummyPos = dummyCuts[currentCutNum + 1].transform.position;
+	  // Debug.DrawRay(dummyPos + originPos, Vector2.left * rayDistance, Color.blue, 10f);
+	  var hitDummy = Physics2D.Raycast(dummyPos + originPos, Vector2.left, rayDistance,
+		  1 << LayerMask.NameToLayer("Dummy"));
+
+	  int targetCutNum = -1;
+
+	  for (int i = 1; i < dummyCuts.Length; ++i)
+	  {
+		  if (dummyCuts[i] == hitDummy.transform)
+		  {
+			  targetCutNum = i - 1;
+			  break;
+		  }
+	  }
+
+	  var spawnPosInDummy = (Vector2) dummyCuts[targetCutNum + 1].position -
+	                        (hitDummy.point - ((Vector2) interactedObject.transform.position - hitCut.point));
+	  // TODO : 타겟 컷 찾고(targetCutNum 이용), 그 컷의 카메라 기준으로 좌표 계산 후 스폰
+	  // var spawnPos
+	  
     // // 오브젝트 생성될 좌표 파악하기
     // var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
     // var instantiatePosY = interactedObject.transform.localPosition.y - camPos.y;
