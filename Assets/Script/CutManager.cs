@@ -119,7 +119,7 @@ public sealed class CutManager : MonoBehaviour
 			var tempCameraController = tempCamera.GetComponent<CameraController>();
 			tempCameraController.basePoint = tempBackGround.transform; // 삭제 예정
 			tempCameraController.player = tempPlayer.transform;
-			tempCameraController.bounduryValue = cameraBoundary; // 삭제 예정
+			tempCameraController.boundaryValue = cameraBoundary; // 삭제 예정
 			tempCameraController.Init();
 			cutCameras.Add(tempCamera.GetComponent<Camera>());
 
