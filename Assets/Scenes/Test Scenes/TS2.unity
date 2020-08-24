@@ -237,6 +237,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e87f4630849625f4f87b2444ee298bef, type: 3}
+--- !u!1 &438500571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427798843998312, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &454940961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427798336445723, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &455800983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427799615551849, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &468564369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -901,6 +919,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 849268400}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1350290583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427798518055661, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1555881189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427799867259755, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1606536906
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +997,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1735692465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3923427799531341773, guid: 841c32da5f96df34a84d35bae4755ea1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3923427798470186713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2020567158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1105,6 @@ MonoBehaviour:
   currentCut: 0
   spawnPosition: {x: 0, y: 0}
   dummyCutParent: {fileID: 849268401}
-  cutCameras: []
   cameraBoundaryCollider: {fileID: 3592494011987652208, guid: 033a2117480563f4695e6df54ccb558b,
     type: 3}
 --- !u!4 &2033959343
@@ -1100,10 +1135,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dummyCutsParent: {fileID: 849268401}
-  eachCut: []
+  eachCut:
+  - {fileID: 438500571}
+  - {fileID: 1735692465}
+  - {fileID: 1350290583}
+  - {fileID: 455800983}
+  - {fileID: 454940961}
+  - {fileID: 1555881189}
   cutManager: {fileID: 0}
   rayDistance: 3
-  dummyCuts: []
   spawnYPos: 0
   cameraLength: 0
 --- !u!1001 &3923427798470186713

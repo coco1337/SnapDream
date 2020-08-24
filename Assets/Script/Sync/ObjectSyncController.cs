@@ -126,28 +126,70 @@ public sealed class ObjectSyncController : MonoBehaviour
 	  
     // TODO : 오브젝트 카메라 기준 포지션 가져오기 - 해당 더미컷의 로컬 포지션으로 변환 -> 레이 쏘기
     var cutCam = StageManager.GetInstance().GetCutManager.GetCamera(currentCutNum);
-	  var hitCut = Physics2D.Raycast(interactedObject.transform.position, Vector2.left, rayDistance,
+	  var hitCut = Physics2D.Raycast(interactedObject.transform.position, Vector3.left, rayDistance,
 		  1 << LayerMask.NameToLayer("Boundary"));
 	  var originPos = hitCut.point - (Vector2)cutCam.transform.position;
 	  Vector2 dummyPos = dummyCuts[currentCutNum + 1].transform.position;
-	  // Debug.DrawRay(dummyPos + originPos, Vector2.left * rayDistance, Color.blue, 10f);
-	  var hitDummy = Physics2D.Raycast(dummyPos + originPos, Vector2.left, rayDistance,
+	  Debug.DrawRay(dummyPos + originPos, Vector3.left * rayDistance, Color.blue, 10f);
+	  var hitDummy = Physics2D.RaycastAll(dummyPos + originPos, Vector3.left, rayDistance,
 		  1 << LayerMask.NameToLayer("Dummy"));
 
+	  if (hitDummy.Length != 2)
+	  {
+		  return false;
+	  }
+	  
 	  int targetCutNum = -1;
 
 	  for (int i = 1; i < dummyCuts.Length; ++i)
 	  {
-		  if (dummyCuts[i] == hitDummy.transform)
+		  if (dummyCuts[i] == hitDummy[1].transform)
 		  {
 			  targetCutNum = i - 1;
 			  break;
 		  }
 	  }
 
-	  var spawnPosInDummy = (Vector2) dummyCuts[targetCutNum + 1].position -
-	                        (hitDummy.point - ((Vector2) interactedObject.transform.position - hitCut.point));
+	  Debug.DrawRay((Vector2) dummyCuts[targetCutNum + 1].position,
+		  hitDummy[1].point - ((Vector2) interactedObject.transform.position - hitCut.point) - (Vector2) dummyCuts[targetCutNum + 1].position, Color.green, 10f);
+	  var spawnPosVector = (Vector2) dummyCuts[targetCutNum + 1].position -
+	                        (hitDummy[1].point - ((Vector2) interactedObject.transform.position - hitCut.point));
 	  // TODO : 타겟 컷 찾고(targetCutNum 이용), 그 컷의 카메라 기준으로 좌표 계산 후 스폰
+
+	  var destPos = (Vector2) cutManager.GetCamera(targetCutNum).transform.position - spawnPosVector;
+	  Debug.DrawRay(eachCut[targetCutNum].transform.position,
+		  (Vector2) cutManager.GetCamera(targetCutNum).transform.position - spawnPosVector, Color.red, 10f);
+	  
+	  if (targetCutNum > currentCutNum)
+	  {
+		  // TODO : 미래 컷으로 보낸 경우
+	  }
+	  else
+	  {
+		  for (int i = targetCutNum; i < eachCut.Length; ++i)
+		  {
+			  // 미래 컷은 안 보여주기 때문에 i > currentCutNum보다 큰 경우는 구현할 필요 없음
+			  if (i < currentCutNum)
+			  {
+				  var instantiated = Instantiate(objList[objId], objList[objId].transform.parent);
+				  
+				  // 싱크 교체 (위험할 수 있음)
+				  objList[objId].DisconnectSync();
+				  objList[objId] = instantiated;
+				  instantiated.Init(objList[objId].WhichCutNum);
+
+				  instantiated.transform.localPosition = destPos;
+			  }
+			  else if (i == currentCutNum)
+			  {
+				  interactedObject.transform.localPosition = destPos;
+			  }
+			  else if (i > currentCutNum)
+			  {
+				  // 미래 컷인 경우
+			  }
+		  }
+	  }
 	  // var spawnPos
 	  
     // // 오브젝트 생성될 좌표 파악하기
