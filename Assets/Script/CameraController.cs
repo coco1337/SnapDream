@@ -20,11 +20,18 @@ public class CameraController : MonoBehaviour
         transform.localPosition = Vector3.zero + new Vector3(0, 0, -9);
         Camera cam = transform.GetComponent<Camera>();
 
-        //cam.fieldOfView = 2.0f * Mathf.Atan(20 * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
+        cam.fieldOfView = 2.0f * Mathf.Atan(10 * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
 
         SetCameraBackground(basePoint);
         targetPosition.z = transform.position.z;
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(Color.blue.r, Color.blue.g, Color.blue.b, 0.1f);
+        Gizmos.DrawCube((Vector3)((minBoundaryPosition + maxBoundaryPosition) / 2),
+            new Vector3(maxBoundaryPosition.x - minBoundaryPosition.x, maxBoundaryPosition.y - minBoundaryPosition.y, 0));
     }
 
     //Camera의 Boundary를 설정하는 함수
@@ -38,11 +45,11 @@ public class CameraController : MonoBehaviour
         / basePoint.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
 
         Camera cam = transform.GetComponent<Camera>();
-        var a = cam.transform.position.z;
+        var a = Mathf.Abs(cam.transform.position.z);
         var fov = cam.fieldOfView * .5f;
         fov = fov * Mathf.Deg2Rad;
-        var h = (Mathf.Tan(fov) * a) * (-1);
-        var w = (h / cam.pixelHeight) * cam.pixelWidth * (-1);
+        var h = (Mathf.Tan(fov) * a);
+        var w = (h / cam.pixelHeight) * cam.pixelWidth;
 
         Debug.Log("W : " + w + "\nH : " + h);
 

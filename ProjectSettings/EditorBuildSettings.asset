@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Cartoon.unity
     guid: 526959fd5fdfbb545828d1a74c0ebea4
   - enabled: 1
-    path: Assets/Scenes/Chapter2 Clear.unity
+    path: Assets/Scenes/Clear Scene.unity
     guid: a53c01e5bf5b2f1429f4e8311f18497a
   - enabled: 1
     path: Assets/Scenes/End.unity
