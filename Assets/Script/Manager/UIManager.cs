@@ -15,26 +15,24 @@ public sealed class UIManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+    public void Init()
+    {
+        canvas = GetComponent<Canvas>();
+        isFading = false;
+    }
+
     public void FadeIn(float fadingTime)
     {
-        Debug.Log("Fading IN");
-        isFading = true;
+        if (isFading)
+            return;
         StartCoroutine(Fading(false, fadingTime));
     }
 
     public void FadeOut(float fadingTime)
     {
-        Debug.Log("Fading OUT");
-        isFading = true;
+        if (isFading)
+            return;
         StartCoroutine(Fading(true, fadingTime));
-    }
-
-
-
-    void Start()
-    {
-        canvas = GetComponent<Canvas>();
-        isFading = false;
     }
 
     void Update()
@@ -49,8 +47,9 @@ public sealed class UIManager : MonoBehaviour
     //fadingTime : Second to fade in/out
     IEnumerator Fading(bool fade, float fadingTime)
     {
+        isFading = true;
         //-0.5f : 해당 시간동안의 변화는 유저가 인지하지 못하고 오히려 버그로 보일 가능성이 있어서, 0.5초 일찍 종료
-        float dirTime = Time.time + fadingTime - 0.5f;
+        float dirTime = Time.time + fadingTime - 0.2f;
         float fadingAlphaValue = 1 / fadingTime * Time.deltaTime;
         fadingImage.gameObject.SetActive(true);
         fadingImage.color = (fade)
@@ -64,7 +63,6 @@ public sealed class UIManager : MonoBehaviour
             fadingImage.color += changeColorValue;
             yield return null;
         }
-        Debug.Log("Fading End");
 
         fadingImage.color = (fade)
             ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 0)
@@ -72,5 +70,6 @@ public sealed class UIManager : MonoBehaviour
         if (fade)
             fadingImage.gameObject.SetActive(false);
         isFading = false;
+        Debug.Log("Fading End");
     }
 }

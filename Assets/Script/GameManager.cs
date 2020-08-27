@@ -39,7 +39,7 @@ public sealed class GameManager : MonoBehaviour
         Screen.SetResolution(1920, 1080, true);
         sceneValue = 0;
         sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
-        Debug.Log(sceneManager.ToString());
+        //Debug.Log(sceneManager.ToString());
         DontDestroyOnLoad(gameObject);
 
         if (instance == null)
@@ -52,8 +52,9 @@ public sealed class GameManager : MonoBehaviour
         }
         isGameManagerActioning = false;
         isExeMenuActioning = false;
+        uiManager.Init();
         uiManager.FadeOut(sceneChangeTime);
-        Debug.Log(SceneManager.GetActiveScene().name + " Start");
+        //Debug.Log(SceneManager.GetActiveScene().name + " Start");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -89,9 +90,11 @@ public sealed class GameManager : MonoBehaviour
     {
         if (!isGameManagerActioning && !uiManager.isFading)
         {
+            isGameManagerActioning = true;
             sceneValue = sceneChangeValue;
             if (stageType == StageType.Stage)
-                StartCoroutine(SceneChangeAction(stageSceneList[sceneValue], sceneChangeTime));
+                StartCoroutine(SceneChangeAction(stageSceneList[0], sceneChangeTime));
+                //StartCoroutine(SceneChangeAction(stageSceneList[sceneValue], sceneChangeTime));
             else
                 StartCoroutine(SceneChangeAction(sceneList[(int)stageType], sceneChangeTime));
         }
@@ -107,11 +110,14 @@ public sealed class GameManager : MonoBehaviour
 
     IEnumerator SceneChangeAction(string sceneName, float changeTime)
     {
-        isGameManagerActioning = true;
-        uiManager.FadeIn(changeTime);
-        while(uiManager.isFading)
-            yield return null;
-        isGameManagerActioning = false;
-        SceneManager.LoadScene(sceneName);
+        if (!uiManager.isFading)
+        {
+            isGameManagerActioning = true;
+            uiManager.FadeIn(changeTime);
+            while (uiManager.isFading)
+                yield return null;
+            isGameManagerActioning = false;
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }

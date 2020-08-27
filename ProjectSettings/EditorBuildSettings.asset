@@ -12,17 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Cartoon.unity
     guid: 526959fd5fdfbb545828d1a74c0ebea4
   - enabled: 1
-    path: Assets/Scenes/Clear Scene.unity
+    path: Assets/Scenes/Credit.unity
     guid: a53c01e5bf5b2f1429f4e8311f18497a
   - enabled: 1
     path: Assets/Scenes/End.unity
     guid: 60816a2e686b5a84f891592e96ac7b4f
-  - enabled: 1
-    path: Assets/Scenes/MSH Test Scene/TestStageMSH.unity
-    guid: 5f18e7dcb9c033043be4fe846bdeca7f
-  - enabled: 1
-    path: Assets/Scenes/MSH Test Scene/TestStageMSH 2.unity
-    guid: 5de96a54617485c488a41377ae7b9a4c
   - enabled: 1
     path: Assets/Scenes/Test Scenes/TS2.unity
     guid: f97f3d5cf6649614f890fc2a88564077

@@ -654,11 +654,11 @@ MonoBehaviour:
   isExeMenuActioning: 0
   sceneList:
   - Lobby
-  - Chapter
+  - Stage Select
   - TestStageMSH 2
   - End
   stageSceneList:
-  - TestStageMSH
+  - TS2
   sceneValue: 0
   audioManager: {fileID: 1926233703}
   uiManager: {fileID: 1192475848}

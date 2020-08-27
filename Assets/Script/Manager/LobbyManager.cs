@@ -23,15 +23,19 @@ public class LobbyManager : MonoBehaviour, ISceneManager
         }
     }
 
-    public void StageStart()
+    public void GameStart()
     {
-        GameManager.GetInstance().SceneLoad(StageType.Stage, 0);
+        if(!GameManager.GetInstance().isGameManagerActioning)
+            GameManager.GetInstance().SceneLoad(StageType.StageSelect, 0);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameManager.GetInstance().SceneLoad(StageType.StageSelect, 0);
+        }
     }
 }

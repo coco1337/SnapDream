@@ -15,13 +15,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] float yRange;
     [SerializeField] float yMargine;
 
-    public void Init()
+
+    //cutType : 컷의 종류
+    public void Init(int cutType = 0)
     {
         transform.localPosition = Vector3.zero + new Vector3(0, 0, -9);
         Camera cam = transform.GetComponent<Camera>();
 
-        cam.fieldOfView = 2.0f * Mathf.Atan(10 * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
-
+        //cutType == 0 : 높이 1칸
+        //cutType == 1 : 높이 2칸
+        switch (cutType)
+        {
+            case 0:
+                cam.fieldOfView = 2.0f * Mathf.Atan(10 * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
+                break;
+            case 1:
+                cam.fieldOfView = 2.0f * Mathf.Atan(20.8f * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
+                break;
+        }
         SetCameraBackground(basePoint);
         targetPosition.z = transform.position.z;
 
