@@ -23,7 +23,12 @@ public class StageManager : MonoBehaviour, ISceneManager
     public AudioManager GetAudioManager => audioManager;
     public CutManager GetCutManager => cutManager;
     public bool isOptioning => isOption;
-    public int GetCurrentCutNum() => cutManager.GetCurrentCutNum();
+    public int GetCurrentCutNum() {
+
+        if (cutManager == null)
+            return 0;
+    return cutManager.GetCurrentCutNum();
+        }
 
     public void SceneInit(int sceneValue) {
         if (sceneValue > StageBackgroundList.Length)
