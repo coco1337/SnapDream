@@ -35,7 +35,7 @@ public class LobbyManager : MonoBehaviour, ISceneManager
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            GameManager.GetInstance().SceneLoad(StageType.StageSelect, 0);
+            GameStart();
         }
     }
 }
