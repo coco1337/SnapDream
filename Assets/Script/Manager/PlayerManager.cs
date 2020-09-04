@@ -12,6 +12,10 @@ public class PlayerManager : MonoBehaviour
         playerList = FindObjectOfType<CutManager>().GetPlayerList;
         inputController = transform.GetComponent<PlayerInput>();
         while (playerList[0] == null) { }
+        foreach(Player player in playerList)
+        {
+            player.PlayerInit();
+        }
         inputController.SetPlayer(playerList[0]);
     }
 

@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public sealed class UIManager : MonoBehaviour
 {
-    public bool isFading;
+    private bool isFading;
 
     [SerializeField] private Canvas canvas;
     [SerializeField] private Image fadingImage;
+
+    public bool IsFading() => isFading;
 
     private void Awake()
     {
@@ -48,16 +50,16 @@ public sealed class UIManager : MonoBehaviour
     IEnumerator Fading(bool fade, float fadingTime)
     {
         isFading = true;
-        //-0.5f : 해당 시간동안의 변화는 유저가 인지하지 못하고 오히려 버그로 보일 가능성이 있어서, 0.5초 일찍 종료
-        float dirTime = Time.time + fadingTime - 0.2f;
         float fadingAlphaValue = 1 / fadingTime * Time.deltaTime;
         fadingImage.gameObject.SetActive(true);
         fadingImage.color = (fade)
             ? new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1)
             : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 0);
+        //-0.5f : 해당 시간동안의 변화는 유저가 인지하지 못하고 오히려 버그로 보일 가능성이 있어서, 0.5초 일찍 종료
+        float dirTime = Time.time + fadingTime - 0.2f;
         Color changeColorValue = (fade) ? new Color(0, 0, 0, -fadingAlphaValue) : new Color(0, 0, 0, fadingAlphaValue);
 
-        Debug.Log("Fading Start\nFading Start Time : " + Time.time + "\nFading dirTime : " + dirTime);
+        Debug.Log("Fading Start " + fade + "\nFading Start Time : " + Time.time + "\nFading dirTime : " + dirTime);
         while (Time.time < dirTime)
         {
             fadingImage.color += changeColorValue;
@@ -69,7 +71,10 @@ public sealed class UIManager : MonoBehaviour
             : new Color(fadingImage.color.r, fadingImage.color.g, fadingImage.color.b, 1);
         if (fade)
             fadingImage.gameObject.SetActive(false);
+        else
+            Debug.Log("Why!!!!!!!");
+
+        Debug.Log("Fading End "+ Time.time);
         isFading = false;
-        Debug.Log("Fading End");
     }
 }

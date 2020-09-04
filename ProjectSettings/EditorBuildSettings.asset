@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test Scenes/TS2.unity
     guid: f97f3d5cf6649614f890fc2a88564077
+  - enabled: 1
+    path: Assets/Scenes/MSH Test Scene/TS3.unity
+    guid: e89dad7ef2eb00e40b317916dbc8f229
   m_configObjects: {}

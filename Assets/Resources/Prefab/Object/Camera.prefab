@@ -89,6 +89,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   basePoint: {fileID: 0}
   player: {fileID: 0}
-  bounduryValue: 20
-  xMargin: 8
-  yMargin: 2.5
+  boundaryValue: 20
+  secondBackgroundMovingSpeed: 0.8
+  firstBackgroundMovingSpeed: 0.9
+  minBoundaryPosition: {x: 0, y: 0}
+  maxBoundaryPosition: {x: 0, y: 0}
+  xRange: 0
+  yRange: 0
+  yMargine: 0
+  firstBackground: {fileID: 0}
+  secondBackground: {fileID: 0}

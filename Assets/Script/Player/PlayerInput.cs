@@ -12,6 +12,12 @@ public class PlayerInput : MonoBehaviour
     //Local 변수
     private float inputAxis;
 
+    public void PlayerInputInit()
+    {
+        player = null;
+        interectController = null;
+    }
+
     public void SetPlayer(Player tempPlayer)
     {
         if(player != null)

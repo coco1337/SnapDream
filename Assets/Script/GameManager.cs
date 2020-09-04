@@ -36,49 +36,39 @@ public sealed class GameManager : MonoBehaviour
 
     void Awake()
     {
+        if (GameManager.instance == null)
+        {
+            GameManager.instance = this;
+        }
+        else if (GameManager.instance != this)
+        {
+            Destroy(gameObject);
+        }
         Screen.SetResolution(1920, 1080, true);
         sceneValue = 0;
         sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
         //Debug.Log(sceneManager.ToString());
         DontDestroyOnLoad(gameObject);
 
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
         isGameManagerActioning = false;
         isExeMenuActioning = false;
         uiManager.Init();
-        uiManager.FadeOut(sceneChangeTime);
-        //Debug.Log(SceneManager.GetActiveScene().name + " Start");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void Start()
-    {
-    }
-
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
         sceneManager = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<ISceneManager>();
-        isGameManagerActioning = false;
-        isExeMenuActioning = false;
-        uiManager.FadeOut(sceneChangeTime);
         sceneManager.SceneInit(sceneValue);
-        Debug.Log(SceneManager.GetActiveScene().name + " Start");
+
+        //Debug.Log(SceneManager.GetActiveScene().name + " Start");
+        //SceneManager.sceneLoaded = OnSceneLoaded;
+        Debug.Log("GameManager Start");
     }
+
+    //private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    //{
+    //    isGameManagerActioning = false;
+    //    isExeMenuActioning = false;
+    //    uiManager.FadeOut(sceneChangeTime);
+    //    Debug.Log(SceneManager.GetActiveScene().name + " Start");
+    //}
+
 
     // Update is called once per frame
     void Update()
@@ -88,7 +78,7 @@ public sealed class GameManager : MonoBehaviour
 
     public void SceneLoad(StageType stageType, int sceneChangeValue = 0)
     {
-        if (!isGameManagerActioning && !uiManager.isFading)
+        if (!isGameManagerActioning && !uiManager.IsFading())
         {
             isGameManagerActioning = true;
             sceneValue = sceneChangeValue;
@@ -102,7 +92,7 @@ public sealed class GameManager : MonoBehaviour
 
     public void SceneRestart()
     {
-        if (!isGameManagerActioning && !uiManager.isFading)
+        if (!isGameManagerActioning && !uiManager.IsFading())
         {
             StartCoroutine(SceneChangeAction(SceneManager.GetActiveScene().name, sceneRestartTime));
         }
@@ -110,14 +100,16 @@ public sealed class GameManager : MonoBehaviour
 
     IEnumerator SceneChangeAction(string sceneName, float changeTime)
     {
-        if (!uiManager.isFading)
+        if (!uiManager.IsFading())
         {
             isGameManagerActioning = true;
             uiManager.FadeIn(changeTime);
-            while (uiManager.isFading)
+            while (uiManager.IsFading())
                 yield return null;
+            if (uiManager.IsFading())
+                Debug.Log("isFading!!!!!");
             isGameManagerActioning = false;
-            SceneManager.LoadScene(sceneName);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
 }

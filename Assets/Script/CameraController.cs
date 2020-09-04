@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     public Transform basePoint;
     public Transform player;
     public float boundaryValue = 20f;
+    public float secondBackgroundMovingSpeed = 0.8f;
+    public float firstBackgroundMovingSpeed = 0.9f;
 
     Vector3 targetPosition;
     [SerializeField] Vector2 minBoundaryPosition;
@@ -14,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] float xRange;
     [SerializeField] float yRange;
     [SerializeField] float yMargine;
+    [SerializeField] Transform firstBackground;
+    [SerializeField] Transform secondBackground;
 
 
     //cutType : 컷의 종류
@@ -33,6 +37,8 @@ public class CameraController : MonoBehaviour
                 cam.fieldOfView = 2.0f * Mathf.Atan(20.8f * 0.5f / -transform.localPosition.z) * Mathf.Rad2Deg;
                 break;
         }
+        firstBackground = basePoint.Find("First Background");
+        secondBackground = basePoint.Find("Second Background");
         SetCameraBackground(basePoint);
         targetPosition.z = transform.position.z;
 
@@ -62,8 +68,6 @@ public class CameraController : MonoBehaviour
         var h = (Mathf.Tan(fov) * a);
         var w = (h / cam.pixelHeight) * cam.pixelWidth;
 
-        Debug.Log("W : " + w + "\nH : " + h);
-
         xRange = (width / 2) - w;
         yRange = (height / 2) - h;
         yMargine = h - 3f;
@@ -79,12 +83,17 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (player != null)
         {
-            CalculateCameraBoundaryPosition();
+            secondBackground.position = new Vector2((transform.position.x - basePoint.position.x) * secondBackgroundMovingSpeed + basePoint.position.x,
+                ((transform.position.y - basePoint.position.y) * 0.8f + basePoint.position.y) - yMargine + 1.8f);
 
+            firstBackground.position = new Vector2(transform.position.x, 
+                ((transform.position.y - basePoint.position.y) * firstBackgroundMovingSpeed + basePoint.position.y) - yMargine + 1.1f);
+
+            CalculateCameraBoundaryPosition();
             targetPosition = transform.position;
             targetPosition.x = Mathf.Clamp(player.position.x, minBoundaryPosition.x, maxBoundaryPosition.x);
             targetPosition.y = Mathf.Clamp(player.position.y + yMargine, minBoundaryPosition.y, maxBoundaryPosition.y);

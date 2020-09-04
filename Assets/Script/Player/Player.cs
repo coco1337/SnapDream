@@ -46,7 +46,8 @@ public class Player : MonoBehaviour, Damageabel
 
     //현재 오브젝트를 미는 중인지 확인하는 함수
     public bool IsDraging() => (playerState == PlayerState.Interaction_Drag);
-    private void Start()
+
+    public void PlayerInit()
     {
         playerState = PlayerState.Idle;
         animator = this.GetComponent<Animator>();
@@ -112,6 +113,8 @@ public class Player : MonoBehaviour, Damageabel
 
     public void StopPlayer()
     {
+        if (playerState == PlayerState.Stop)
+            return;
         playerState = PlayerState.Stop;
         animator.enabled = false;
         foreach (var collider in transform.GetComponents<BoxCollider2D>())
