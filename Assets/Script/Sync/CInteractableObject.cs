@@ -36,6 +36,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	[SerializeField] protected ObjectId objectId;
 	[SerializeField] protected int whichCutNum;
 	[SerializeField] protected bool synced = true;
+	[SerializeField] protected Vector2 activationPosition;
 
 	private Vector2 TopBottomBoundSize => new Vector2(colliderSelf.size.x, boxCastThickness);
 	private Vector2 LeftRightBoundSize => new Vector2(boxCastThickness, colliderSelf.size.y);
@@ -62,6 +63,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	public Vector2 MovingDirection => movingDirection;
 	public int GetId => objectId.GetId;
 	public bool IsSynced => synced;
+	public void SetActivationPosition(Vector2 v) => activationPosition = v;
 
 	public virtual void Init(int cutNum, Vector2 moveDir = new Vector2())
 	{
@@ -227,8 +229,19 @@ public abstract class CInteractableObject : MonoBehaviour
 					return true;
 				else if (i.collider.CompareTag("BoundaryCollider"))	// 카메라 경계 콜라이더
 				{
+					bool dir = false;
+
+					if (loc == HitBoundaryLocation.ELEFT_BOUNDARY)
+					{
+						dir = true;
+					}
+					else if (loc == HitBoundaryLocation.ERIGHT_BOUNDARY)
+					{
+						dir = false;
+					}
+					
 					// 일단 좌우부터 구현
-					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc, dir);
 					return true;
 				}
 			}
@@ -248,7 +261,7 @@ public abstract class CInteractableObject : MonoBehaviour
 			{
 				if (!(StageManager.GetInstance().GetCurrentCutNum() < StageManager.GetInstance().GetCutManager.MaxCutCount / 2))
 				{
-					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc);
+					StageManager.GetInstance().GetCutManager.GetObjectSyncController.SyncOtherObjects(objectId.GetId, loc, true);
 					needSync = true;
 					return true;
 				}
@@ -270,7 +283,7 @@ public abstract class CInteractableObject : MonoBehaviour
 	{
 		if (!isGround)
 		{
-			movingDirection.y += Physics.gravity.y * Time.fixedDeltaTime * gravityScale;
+			movingDirection.y += Physics2D.gravity.y * Time.fixedDeltaTime * gravityScale;
 		}
 		else
 		{
@@ -288,5 +301,17 @@ public abstract class CInteractableObject : MonoBehaviour
 	public void AfterSync(float time)
 	{
 		
+	}
+
+	public void Activate()
+	{
+		if (!(activationPosition.x == 0 && activationPosition.y == 0))
+		{
+			activationPosition = Vector2.zero;
+			var currentCut = StageManager.GetInstance().GetCurrentCutNum();
+
+			// TODO: 카메라기준으로 위치 다시 잡아주기
+			
+		}
 	}
 }

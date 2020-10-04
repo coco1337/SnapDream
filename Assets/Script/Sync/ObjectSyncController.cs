@@ -17,7 +17,7 @@ public sealed class ObjectSyncController : MonoBehaviour
 
   private int objectIdCounter = 0;
 
-  private delegate bool SyncAction(int objId);
+  private delegate bool SyncAction(int objId, bool dir);
 
   private SyncAction[] syncActions = new SyncAction[(int) CInteractableObject.HitBoundaryLocation.MAX];
 
@@ -32,7 +32,7 @@ public sealed class ObjectSyncController : MonoBehaviour
   public int GetObjectId() => objectIdCounter++;
   public void SetCutManager(CutManager c) => cutManager = c;
 
-  public bool SyncOtherObjects(int id, CInteractableObject.HitBoundaryLocation loc) => syncActions[(int) loc](id);
+  public bool SyncOtherObjects(int id, CInteractableObject.HitBoundaryLocation loc, bool dir) => syncActions[(int) loc](id, dir);
 
   private void Start()
   {
@@ -44,7 +44,7 @@ public sealed class ObjectSyncController : MonoBehaviour
   private void AddDelegates()
   {
     syncActions[(int) CInteractableObject.HitBoundaryLocation.ELEFT_BOUNDARY] = HitLeftBoundary;
-    syncActions[(int) CInteractableObject.HitBoundaryLocation.ERIGHT_BOUNDARY] = HitRightBoundary;
+    syncActions[(int) CInteractableObject.HitBoundaryLocation.ERIGHT_BOUNDARY] = HitLeftBoundary;
     syncActions[(int) CInteractableObject.HitBoundaryLocation.ECEIL_BOUNDARY] = HitCeilBoundary;
   }
 
@@ -88,7 +88,8 @@ public sealed class ObjectSyncController : MonoBehaviour
         if (val[i].WhichCutNum == movedCutNum)
         {
           // TODO : 다음 컷 이동, 지금은 위치만 (나중에 constraint 사용 여부 확실하게 정하기)
-          val[i].transform.localPosition = val[i - 1].transform.localPosition;
+	        if (val[i - 1] != null)
+						val[i].transform.localPosition = val[i - 1].transform.localPosition;
         }
       }
     }
@@ -99,9 +100,11 @@ public sealed class ObjectSyncController : MonoBehaviour
   /// </summary>
   /// <param name="objId">ID of CInteractableObject</param>
   /// <returns></returns>
-  private bool HitLeftBoundary(int objId)
+  private bool HitLeftBoundary(int objId, bool dir)
   {
     int currentCutNum = StageManager.GetInstance().GetCurrentCutNum();
+	  var hitDir = new Vector3();
+	  hitDir = dir ? Vector3.left : Vector3.right;
 
     // 싱크 필요한 오브젝트 찾기, foreach 밑에랑 합쳐서 한 개로 만들 수 있을듯
     CInteractableObject interactedObject = default;
@@ -126,12 +129,12 @@ public sealed class ObjectSyncController : MonoBehaviour
 	  
     // TODO : 오브젝트 카메라 기준 포지션 가져오기 - 해당 더미컷의 로컬 포지션으로 변환 -> 레이 쏘기
     var cutCam = StageManager.GetInstance().GetCutManager.GetCamera(currentCutNum);
-	  var hitCut = Physics2D.Raycast(interactedObject.transform.position, Vector3.left, rayDistance,
+	  var hitCut = Physics2D.Raycast(interactedObject.transform.position, hitDir, rayDistance,
 		  1 << LayerMask.NameToLayer("Boundary"));
 	  var originPos = hitCut.point - (Vector2)cutCam.transform.position;
 	  Vector2 dummyPos = dummyCuts[currentCutNum + 1].transform.position;
-	  Debug.DrawRay(dummyPos + originPos, Vector3.left * rayDistance, Color.blue, 10f);
-	  var hitDummy = Physics2D.RaycastAll(dummyPos + originPos, Vector3.left, rayDistance,
+	  Debug.DrawRay(dummyPos + originPos, hitDir * rayDistance, Color.blue, 10f);
+	  var hitDummy = Physics2D.RaycastAll(dummyPos + originPos, hitDir, rayDistance,
 		  1 << LayerMask.NameToLayer("Dummy"));
 
 	  if (hitDummy.Length != 2)
@@ -162,7 +165,40 @@ public sealed class ObjectSyncController : MonoBehaviour
 	  
 	  if (targetCutNum > currentCutNum)
 	  {
-		  // TODO : 미래 컷으로 보낸 경우
+		  // 미래 컷으로 보낸 경우
+		  for (int i = currentCutNum; i <= targetCutNum; ++i)
+		  {
+			  // 현재 컷부터 i 까지 다 없애기
+			  if (i < targetCutNum)
+			  {
+				  for (int j = 0; j < objList.Count; ++j)
+				  {
+					  if (objList[j] != null)
+					  {
+						  if (objList[j].WhichCutNum == i)
+						  {
+							  var temp = objList[j];
+							  objList[j] = null;
+							  Destroy(temp);
+						  }
+					  }
+				  }
+			  }
+			  else if (i == targetCutNum)
+			  {
+				  // TODO : 일단 카메라 기준으로 오브젝트 생성 후, 해당 컷 활성화 될 때 오브젝트 활성화
+				  var o = objList.FirstOrDefault(e => e.WhichCutNum == i);
+
+				  if (o != default)
+				  {
+					  o.SetActivationPosition(destPos);
+				  }
+				  else
+				  {
+					  return false;
+				  }
+			  }
+		  }
 	  }
 	  else
 	  {
@@ -171,12 +207,14 @@ public sealed class ObjectSyncController : MonoBehaviour
 			  // 미래 컷은 안 보여주기 때문에 i > currentCutNum보다 큰 경우는 구현할 필요 없음
 			  if (i < currentCutNum)
 			  {
-				  var instantiated = Instantiate(objList[objId], objList[objId].transform.parent);
+				  var instantiated = Instantiate(interactedObject);
 				  
 				  // 싱크 교체 (위험할 수 있음)
-				  objList[objId].DisconnectSync();
-				  objList[objId] = instantiated;
-				  instantiated.Init(objList[objId].WhichCutNum);
+				  var idx = objList.FindIndex(e => e.WhichCutNum == i);
+				  instantiated.transform.parent = objList[idx].transform.parent;
+				  objList[idx] = instantiated;
+				  instantiated.Init(objList[idx].WhichCutNum);
+				  instantiated.DisconnectSync();
 
 				  instantiated.transform.localPosition = destPos;
 			  }
@@ -186,51 +224,12 @@ public sealed class ObjectSyncController : MonoBehaviour
 			  }
 			  else if (i > currentCutNum)
 			  {
-				  // 미래 컷인 경우
+				  // 미래 컷인 경우 이후에 알아서 싱크 맞추기
 			  }
 		  }
 	  }
-	  // var spawnPos
-	  
-    // // 오브젝트 생성될 좌표 파악하기
-    // var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
-    // var instantiatePosY = interactedObject.transform.localPosition.y - camPos.y;
-    // var previousCam = cutManager.GetCamera(interactedObject.WhichCutNum - 1).transform;
-    // effectedObjects.Clear();
-    //
-    // // 해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
-    // for (int i = 0; i < objList.Count; ++i)
-    // {
-    // 	if ((objList[i].WhichCutNum == currentCutNum || objList[i].WhichCutNum == currentCutNum - 1) && objList[i].IsSynced)
-    // 	{
-    // 		// 현재 컷과 이전 컷에 오브젝트 생성 (어차피 미래 컷은 안보임)
-    // 		var instantiated = Instantiate(objList[i], objList[i].transform.parent);
-    // 		
-    // 		// 오브젝트 싱크 끊기
-    // 		objList[i].DisconnectSync();
-    //
-    // 		// 싱크 교체, 위험
-    // 		objList[i] = instantiated;
-    // 		instantiated.Init(objList[i].WhichCutNum/*, interactedObject.MovingDirection*/);
-    // 		effectedObjects.Add(instantiated);
-    //
-    // 		instantiated.transform.localPosition =
-    // 			new Vector2(previousCam.transform.localPosition.x - cutManager.GetCameraBoundaryWidth,
-    // 				previousCam.transform.localPosition.y - instantiatePosY);
-    // 	}
-    // 	else if (objList[i].WhichCutNum > currentCutNum)
-    // 	{
-    // 		// TODO : 미래컷에 영향 주는것을 보여줘야 하면 여기서
-    // 	}
-    // }
-    //
-    // // TODO : 오브젝트 삭제 전에 보여줄 행동
-    // // interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
-    // interactedObject.DisconnectSync();
-    // Destroy(interactedObject.gameObject);
-    // // StartCoroutine(AfterSyncHorizontalMove(2, interactedObject));
 
-    return true;
+	  return true;
   }
 
   /// <summary>
@@ -250,7 +249,7 @@ public sealed class ObjectSyncController : MonoBehaviour
     Destroy(interactedObject.gameObject);
   }
 
-  private bool HitRightBoundary(int objId)
+  private bool HitRightBoundary(int objId, bool dir)
   {
     return true;
   }
@@ -260,7 +259,7 @@ public sealed class ObjectSyncController : MonoBehaviour
   /// </summary>
   /// <param name="objId"></param>
   /// <returns></returns>
-  private bool HitCeilBoundary(int objId)
+  private bool HitCeilBoundary(int objId, bool dir)
   {
     if (cutManager.MaxCutCount > 2)
     {
@@ -332,272 +331,3 @@ public sealed class ObjectSyncController : MonoBehaviour
     return true;
   }
 }
-
-/* backup
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-public sealed class ObjectSyncController : MonoBehaviour
-{
-	[SerializeField] private GameObject[] eachCut;
-	[SerializeField] private CutManager cutManager;
-
-	private int objectIdCounter = 0;
-
-	private delegate bool SyncAction(int objId);
-	private SyncAction[] syncActions = new SyncAction[(int)CInteractableObject.HitBoundaryLocation.MAX];
-
-	private Dictionary<int, List<CInteractableObject>> objectDictionary =
-		new Dictionary<int, List<CInteractableObject>>();
-	
-	private List<CInteractableObject> effectedObjects = new List<CInteractableObject>();
-
-	public float spawnYPos;
-	public float cameraLength;
-
-	public int GetObjectId() => objectIdCounter++;
-	public void SetCutManager(CutManager c) => cutManager = c;
-
-	public bool SyncOtherObjects(int id, CInteractableObject.HitBoundaryLocation loc) => syncActions[(int) loc](id);
-
-	private void Start()
-	{
-		objectIdCounter = 0;
-		AddDelegates();
-	}
-
-	private void AddDelegates()
-	{
-		syncActions[(int) CInteractableObject.HitBoundaryLocation.ELEFT_BOUNDARY] = HitLeftBoundary;
-		syncActions[(int) CInteractableObject.HitBoundaryLocation.ERIGHT_BOUNDARY] = HitRightBoundary;
-		syncActions[(int) CInteractableObject.HitBoundaryLocation.ECEIL_BOUNDARY] = HitCeilBoundary;
-	}
-
-	public void AddObject(int id, CInteractableObject interactableObj)
-	{
-		// 해당 아이디에 리스트 없으면 생성
-		if (!objectDictionary.ContainsKey(id))
-		{
-			objectDictionary.Add(id, new List<CInteractableObject>());
-		}
-
-		// Dictionary에서 주어진 id에 해당하는 리스트 뽑아와서 처리
-		if (objectDictionary.TryGetValue(id, out var objs))
-		{
-			objs.Add(interactableObj);
-		}
-		else
-		{
-			Debug.LogError("Add interactable Object error");
-		}
-	}
-
-	// 왼쪽 충돌이면 이전 컷부터 변화
-	// 오른쪽 충돌이면 이후 컷부터 변화 - 없음
-
-	public void ExitCollider(InteractableObject obj)
-	{
-		if (obj.IsInstantiated)
-		{
-			obj.Instantiated(false);
-		}
-	}
-
-	public void MoveNextCut(int movedCutNum)
-	{
-		foreach (var dictionary in objectDictionary)
-		{
-			var val = dictionary.Value;
-			for (int i = 0; i < val.Count; ++i)
-			{
-				if (val[i].WhichCutNum == movedCutNum)
-				{
-					// 다음 컷 이동, 지금은 위치만 (나중에 constraint 사용 여부 확실하게 정하기)
-					val[i].transform.localPosition = val[i - 1].transform.localPosition;
-				}
-			}
-		}
-	}
-
-	/// <summary>
-	/// 카메라의 왼쪽 경계에 CInteractableObject가 충돌 판정 있으면
-	/// </summary>
-	/// <param name="objId">ID of CInteractableObject</param>
-	/// <returns></returns>
-	private bool HitLeftBoundary(int objId)
-	{
-		// 컷이 2개일때와 2개 초과일 때로 분류
-		if (cutManager.MaxCutCount > 2)
-		{
-			int currentCutNum = StageManager.GetInstance().GetCurrentCutNum();
-			
-			// 제일 왼쪽 컷들은 물건을 왼쪽으로 넘길 수 없음
-			if (currentCutNum == 0 || currentCutNum == cutManager.MaxCutCount / 2)
-			{
-				return false;
-			}
-
-			// 싱크 필요한 오브젝트 찾기, foreach 밑에랑 합쳐서 한 개로 만들 수 있을듯
-			CInteractableObject interactedObject = default;
-			if (objectDictionary.TryGetValue(objId, out var objList))
-			{
-				interactedObject = objList.FirstOrDefault(e => e.WhichCutNum == currentCutNum);
-			}
-			else
-			{
-				Debug.LogError("Can't find CInteractable Object in Dictionary");
-				return false;
-			}
-
-			if (interactedObject == default)
-			{
-				Debug.LogError("interactable object is default");
-				return false;
-			}
-
-			if (!interactedObject.IsSynced)
-				return false;
-			
-			// 오브젝트 생성될 좌표 파악하기
-			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
-			var instantiatePosY = interactedObject.transform.localPosition.y - camPos.y;
-			var previousCam = cutManager.GetCamera(interactedObject.WhichCutNum - 1).transform;
-			effectedObjects.Clear();
-
-			// 해당 ID에 맞는 오브젝트들을 싱크 필요한 위치로 이동시키거나 없으면 생성해야 됨.
-			for (int i = 0; i < objList.Count; ++i)
-			{
-				if ((objList[i].WhichCutNum == currentCutNum || objList[i].WhichCutNum == currentCutNum - 1) && objList[i].IsSynced)
-				{
-					// 현재 컷과 이전 컷에 오브젝트 생성 (어차피 미래 컷은 안보임)
-					var instantiated = Instantiate(objList[i], objList[i].transform.parent);
-					
-					// 오브젝트 싱크 끊기
-					objList[i].DisconnectSync();
-
-					// 싱크 교체, 위험
-					objList[i] = instantiated;
-					instantiated.Init(objList[i].WhichCutNum/*, interactedObject.MovingDirection*/ /*);
-					effectedObjects.Add(instantiated);
-
-					instantiated.transform.localPosition =
-						new Vector2(previousCam.transform.localPosition.x - cutManager.GetCameraBoundaryWidth,
-							previousCam.transform.localPosition.y - instantiatePosY);
-				}
-				else if (objList[i].WhichCutNum > currentCutNum)
-				{
-					// 미래컷에 영향 주는것을 보여줘야 하면 여기서
-				}
-			}
-
-			// 오브젝트 삭제 전에 보여줄 행동
-			// interactedObject.TranslateAfterHitBoundary(interactedObject.MovingDirection);
-			interactedObject.DisconnectSync();
-			Destroy(interactedObject.gameObject);
-			// StartCoroutine(AfterSyncHorizontalMove(2, interactedObject));
-		}
-		
-		return true;
-	}
-	
-	/// <summary>
-	/// 싱크 맞춰준 후 원래 오브젝트는 잠깐동안 이동연산 하고 삭제
-	/// </summary>
-	/// <param name="time"></param>
-	/// <returns></returns>
-	private IEnumerator AfterSyncHorizontalMove(float time, CInteractableObject interactedObject)
-	{
-		while (time > 0)
-		{
-			interactedObject.transform.Translate(interactedObject.MovingDirection);
-			time -= Time.deltaTime;
-			yield return null;
-		}
-		
-		Destroy(interactedObject.gameObject);
-	}
-
-	private bool HitRightBoundary(int objId)
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// 카메라의 위쪽 경계에 CInteractableObject가 충돌 판정 있으면
-	/// </summary>
-	/// <param name="objId"></param>
-	/// <returns></returns>
-	private bool HitCeilBoundary(int objId)
-	{
-		if (cutManager.MaxCutCount > 2)
-		{
-			CInteractableObject interactedObject = default;
-			int currentCutNum = StageManager.GetInstance().GetCurrentCutNum();
-
-			if (objectDictionary.TryGetValue(objId, out var objList))
-			{
-				interactedObject = objList.FirstOrDefault(e => e.WhichCutNum == currentCutNum);
-			}
-			else
-			{
-				Debug.LogError("Can't find CInteractable Object in Dictionary");
-				return false;
-			}
-
-			if (interactedObject == default)
-			{
-				Debug.LogError("interactable object is default");
-				return false;
-			}
-			
-			var camPos = cutManager.GetCamera(interactedObject.WhichCutNum).transform.localPosition;
-			var instantiatePosX = interactedObject.transform.localPosition.x - camPos.x;
-			var aboveCam = cutManager.GetCamera(interactedObject.WhichCutNum - cutManager.MaxCutCount / 2).transform;
-			// effectedObjects.Clear();
-			
-			for (int i = 0; i < objList.Count; ++i)
-			{
-				/*
-				var a = objList[i].WhichCutNum;
-				var b = currentCutNum;
-				var c = GameManager.GetInstance().GetCutManager.MaxCutCount / 2;
-				var d = objList[i].IsSynced;
-				*/ /*
-				// 3가지로 나눠서 해결, 현재컷보다 과거컷이면 추가생성 후 ID 연결, 현재 컷이면 생성후 기존오브젝트 파괴, 현재보다 미래 컷이면 이동
-				if ((objList[i].WhichCutNum >= currentCutNum - cutManager.MaxCutCount / 2 && objList[i].WhichCutNum < currentCutNum)
-					|| objList[i].WhichCutNum == currentCutNum)
-				{
-					var instantiated = Instantiate(objList[i], objList[i].transform.parent);
-					
-					// 오브젝트 싱크 끊기
-					objList[i].DisconnectSync();
-					
-					// 리스트 항목 교체, 다른 방법 찾기
-					objList[i] = instantiated;
-					instantiated.Init(objList[i].WhichCutNum, interactedObject.MovingDirection);
-					// effectedObjects.Add(instantiated);
-
-					// 생성 위치 다시 잡아줘야됨
-					instantiated.transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
-						aboveCam.transform.localPosition.y + cutManager.GetCameraBoundaryHeight);
-				}
-				else if (objList[i].WhichCutNum > currentCutNum)
-				{
-					objList[i].Init(objList[i].WhichCutNum, interactedObject.MovingDirection);
-					// 위치만 잡아주기
-					objList[i].transform.localPosition = new Vector2(aboveCam.transform.localPosition.x + instantiatePosX,
-						aboveCam.transform.localPosition.y + cutManager.GetCameraBoundaryHeight);
-				}
-			}
-			
-			// 오브젝트 삭제 전에 보여줄 행동
-			interactedObject.DisconnectSync();
-			Destroy(interactedObject.gameObject);
-		}
-		return true;
-	}
-}
-*/
